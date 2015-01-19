@@ -4,10 +4,10 @@ arpc_client_for_pc 为客户端使用
     echo::EchoService_Stub::Stub* stub;
     client = new RpcClient(2, "192.168.1.13", 8999, 5000); // 1:并发sock数 2:host 3:ip 4:超时时间
     if (!((RpcClient*)client)->IsConnected()) {
-		delete client;
+    	delete client;
 		exit(0);
 	} else {
-		std::cout << "connect success\n";
+		std::cout << "connect success\r\n";
 	}
 	((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // 处理服务器主动推的消息
 	((RpcClient*)client)->RegiCloseHandler(close_handler, NULL); // 断开事件处理
@@ -61,7 +61,7 @@ public:
         //    << "uri:" << get_uri << "<br/>";
 
         std::string content_type = "text/html";
-        std::string add_head = "Connection: keep-alive\r\n";
+        std::string add_head = "Connection: keep-alive\r\r\n";
         CHttpResponseMaker::make_string(kk,
                                         request->response,
                                         content_type,
@@ -79,7 +79,7 @@ int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
     //std::stringstream ss;
     //ss << "svr_id:" << svr->_svr_id
     //    << " cli:" << cli_flow
-    //    << " param:" << *((int*)param) << "\n";
+    //    << " param:" << *((int*)param) << "\r\n";
     //printf(ss.str().c_str());
     return 0;
 }
