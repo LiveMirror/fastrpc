@@ -1,0 +1,7 @@
+[2014-07-29 11:32:56]  fail: / QuickHTTPRequest instance has no attribute 'action'  File "fastpy.py", line 312, in process
+    action_key = request.action
+
+[2014-07-29 11:32:56]  fail: /favicon.ico not found
+[2014-07-29 11:35:24]  fail: / QuickHTTPRequest instance has no attribute 'action'  File "fastpy.py", line 312, in process
+    action_key = request.action
+

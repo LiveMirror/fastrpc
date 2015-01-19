@@ -1,0 +1,48 @@
+[2015-01-15 15:17:45] Info:IndexD CClientNetSvr detach thread create,pid=16726,tid=2183120640
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1946154752
+[2015-01-15 15:17:45] Info:IndexD CClientNetSvr detach thread create,pid=16726,tid=2204100352
+[2015-01-15 15:17:45] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=2048911104
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=2162140928
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=2038421248
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=2027931392
+[2015-01-15 15:17:45] Info:IndexD CClientNetSvr detach thread create,pid=16726,tid=2193610496
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1883223808
+[2015-01-15 15:17:45] Info:IndexD CClientNetSvr detach thread create,pid=16726,tid=1893713664
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1904203520
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1738516224
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1862244096
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1872733952
+[2015-01-15 15:17:45] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1851754240
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1841264384
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=2172630784
+[2015-01-15 15:17:45] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1830774528
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1728026368
+[2015-01-15 15:17:45] Info:IndexD CSearchTheadPool thread create,pid=16726,tid=1717536512
+[2015-01-15 15:17:45] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:18:01] Info:IndexD CClientNetSvr detach thread create,pid=16760,tid=1364883200
+[2015-01-15 15:18:01] Info:IndexD CClientNetSvr detach thread create,pid=16760,tid=1354151680
+[2015-01-15 15:18:01] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=1140848384
+[2015-01-15 15:18:01] Info:IndexD CClientNetSvr detach thread create,pid=16760,tid=908060416
+[2015-01-15 15:18:01] Info:IndexD CClientNetSvr detach thread create,pid=16760,tid=1088407296
+[2015-01-15 15:18:01] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=887080704
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=897570560
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=876586752
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=855607040
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=866096896
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=700409600
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=710899456
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=738195200
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=1130358528
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=834627328
+[2015-01-15 15:18:01] Info:Thread Pool 4 Create.Svr Start with Pool mode.
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=845117184
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=727705344
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=689919744
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=824137472
+[2015-01-15 15:18:01] Info:IndexD CSearchTheadPool thread create,pid=16760,tid=469759744
+[2015-01-15 15:18:01] Info:Thread Pool 4 Create.Svr Start with Pool mode.

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="luaplus">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="luaplus\lua">
+      <UniqueIdentifier>{743201e7-d6b6-41a1-a1a2-57632ebd6b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luaplus\luaplus">
+      <UniqueIdentifier>{6dc03d54-faf0-4d90-ac9c-1fdb35b427a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="netproto">
+      <UniqueIdentifier>{76a1a458-cbc5-4c56-8944-28ae6c778e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rpcclient">
+      <UniqueIdentifier>{07b3eee1-d6d2-4631-a8b0-fcb468817396}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\luaplus\include\lua\lapi.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lauxlib.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lcode.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\ldebug.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\ldo.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lfunc.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lgc.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\llex.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\llimits.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lmem.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lobject.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lopcodes.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lparser.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lstate.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lstring.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\ltable.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\ltm.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lua.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\luaconf.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lualib.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lundump.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lvm.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\lua\lzio.h">
+      <Filter>luaplus\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaAutoBlock.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaCall.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaFunction.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaHelper.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaHelper_Object.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaHelper_StackObject.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaLink.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaObject.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaPlus.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaPlusCD.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaPlusHelper.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaPlusInternal.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaStackObject.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaStackTableIterator.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaState.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaStateOutFile.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luaplus\include\luaplus\LuaTableIterator.h">
+      <Filter>luaplus\luaplus</Filter>
+    </ClInclude>
+    <ClInclude Include="netproto\echo.pb.h">
+      <Filter>netproto</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc_client\pbext.h">
+      <Filter>rpcclient</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc_client\rpc_client.h">
+      <Filter>rpcclient</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc_client\RpcCommon.h">
+      <Filter>rpcclient</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\luaplus\include\luaplus\LuaCall.inl">
+      <Filter>luaplus\luaplus</Filter>
+    </None>
+    <None Include="..\luaplus\include\luaplus\LuaStackObject.inl">
+      <Filter>luaplus\luaplus</Filter>
+    </None>
+    <None Include="..\luaplus\include\luaplus\LuaStackTableIterator.inl">
+      <Filter>luaplus\luaplus</Filter>
+    </None>
+    <None Include="..\luaplus\include\luaplus\LuaState.inl">
+      <Filter>luaplus\luaplus</Filter>
+    </None>
+    <None Include="netproto\echo.proto">
+      <Filter>netproto</Filter>
+    </None>
+    <None Include="rpc_client\makefile">
+      <Filter>rpcclient</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CaseRun.rc">
+      <Filter>luaplus</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="netproto\echo.pb.cc">
+      <Filter>netproto</Filter>
+    </ClCompile>
+    <ClCompile Include="rpc_client\main.cpp">
+      <Filter>rpcclient</Filter>
+    </ClCompile>
+    <ClCompile Include="rpc_client\rpc_client.cpp">
+      <Filter>rpcclient</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

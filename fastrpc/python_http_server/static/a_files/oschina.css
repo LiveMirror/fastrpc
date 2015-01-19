@@ -1,0 +1,30 @@
+.ke-icon-shcode {
+	background-image: url('shcode.gif');
+	background-position: 0px 0px;
+	width: 16px;
+	height: 16px;
+}
+.ke-icon-quote {
+	background-image: url('quote.gif');
+	background-position: 0px 0px;
+	width: 16px;
+	height: 16px;
+}
+.ke-icon-inserthr {
+    background-position: 0px -592px;
+    width: 16px;
+    height: 16px;
+}
+.ke-dialog-content {
+	font-family:微软雅黑,Verdana,sans-serif,宋体;
+	background-color: #F0F0EE;
+}
+.ke-dialog-footer {
+	background-color: #F0F0EE;
+}
+.ke-dialog-body .ke-textarea {
+	border-color: #A0A0A0;
+}
+.ke-input-text {
+	border-color: #A0A0A0;
+}

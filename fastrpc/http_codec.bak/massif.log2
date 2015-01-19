@@ -1,0 +1,806 @@
+--------------------------------------------------------------------------------
+Command:            ./test
+Massif arguments:   (none)
+ms_print arguments: massif.out.24810
+--------------------------------------------------------------------------------
+
+
+    KB
+109.8^                                                                  #     
+     |                                                                @@#     
+     |                                                             :::@@#     
+     |                                                           :::::@@#     
+     |                                                        @@::::::@@#:    
+     |                                                     @@@@@::::::@@#:    
+     |                                                   @@@@@@@::::::@@#::   
+     |                                                 @@@@@@@@@::::::@@#::   
+     |                                              :@@@@@@@@@@@::::::@@#::   
+     |                                           ::::@ @@@@@@@@@::::::@@#::   
+     |                                         @@::::@ @@@@@@@@@::::::@@#:::  
+     |                                      :@@@@::::@ @@@@@@@@@::::::@@#:::  
+     |                                    :@:@@@@::::@ @@@@@@@@@::::::@@#:::  
+     |                                  :@:@:@@@@::::@ @@@@@@@@@::::::@@#:::: 
+     |                               :@::@:@:@@@@::::@ @@@@@@@@@::::::@@#:::: 
+     |                             :::@::@:@:@@@@::::@ @@@@@@@@@::::::@@#:::: 
+     |                           :@:::@::@:@:@@@@::::@ @@@@@@@@@::::::@@#:::: 
+     |                         @::@:::@::@:@:@@@@::::@ @@@@@@@@@::::::@@#:::::
+     |                       ::@::@:::@::@:@:@@@@::::@ @@@@@@@@@::::::@@#:::::
+     |                    :::: @::@:::@::@:@:@@@@::::@ @@@@@@@@@::::::@@#::::@
+   0 +----------------------------------------------------------------------->Mi
+     0                                                                   5.546
+
+Number of snapshots: 64
+ Detailed snapshots: [7, 11, 15, 19, 21, 23, 24, 25, 26, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 49, 50, 51, 52, 53 (peak), 63]
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1      1,455,294              552              537            15            0
+  2      1,556,622            3,560            2,589           971            0
+  3      1,665,921            7,256            5,097         2,159            0
+  4      1,763,820           10,392            7,225         3,167            0
+  5      1,863,206           13,464            9,289         4,175            0
+  6      1,924,728           15,368           10,581         4,787            0
+  7      2,028,540           18,592           12,781         5,811            0
+68.74% (12,781B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->61.96% (11,520B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->61.96% (11,520B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->61.96% (11,520B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->61.96% (11,520B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->61.57% (11,448B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->61.57% (11,448B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->61.57% (11,448B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->61.57% (11,448B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.39% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.44% (640B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.42% (636B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.42% (636B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.42% (636B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.02% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->03.04% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->02.89% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->02.89% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->02.89% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->02.89% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->02.89% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->02.89% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->02.89% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.15% (28B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.30% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  8      2,086,536           20,296           13,925         6,371            0
+  9      2,145,525           22,088           15,141         6,947            0
+ 10      2,217,003           24,216           16,585         7,631            0
+ 11      2,281,782           26,208           17,949         8,259            0
+68.49% (17,949B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->62.64% (16,416B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->62.64% (16,416B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->62.64% (16,416B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->62.64% (16,416B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->62.36% (16,344B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->62.36% (16,344B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->62.36% (16,344B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->62.36% (16,344B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.27% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.48% (912B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.46% (908B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.46% (908B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.46% (908B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.02% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->02.16% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->02.05% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->02.05% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->02.05% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->02.05% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->02.05% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->02.05% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->02.05% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.11% (28B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.21% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 12      2,380,797           29,096           19,917         9,179            0
+ 13      2,496,051           32,416           22,169        10,247            0
+ 14      2,544,896           33,936           23,193        10,743            0
+ 15      2,614,262           35,952           24,561        11,391            0
+68.32% (24,561B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.08% (22,680B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.08% (22,680B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.08% (22,680B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.08% (22,680B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->62.88% (22,608B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->62.88% (22,608B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->62.88% (22,608B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->62.88% (22,608B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.20% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.50% (1,260B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.49% (1,256B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.49% (1,256B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.49% (1,256B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.57% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->01.49% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->01.49% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->01.49% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->01.49% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->01.49% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->01.49% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->01.49% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.08% (28B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.16% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 16      2,668,029           37,520           25,625        11,895            0
+ 17      2,729,576           39,312           26,841        12,471            0
+ 18      2,821,928           42,000           28,665        13,335            0
+ 19      2,887,776           43,904           29,957        13,947            0
+68.23% (29,957B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.30% (27,792B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.30% (27,792B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.30% (27,792B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.30% (27,792B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.14% (27,720B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.14% (27,720B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.14% (27,720B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.14% (27,720B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.16% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.52% (1,544B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.51% (1,540B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.51% (1,540B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.51% (1,540B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.29% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->01.22% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->01.22% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->01.22% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->01.22% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->01.22% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->01.22% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->01.22% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.06% (28B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.13% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 20      2,951,238           45,720           31,177        14,543            0
+ 21      3,064,763           48,944           33,377        15,567            0
+68.19% (33,377B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.40% (31,032B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.40% (31,032B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.40% (31,032B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.40% (31,032B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.26% (30,960B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.26% (30,960B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.26% (30,960B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.26% (30,960B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.15% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.52% (1,724B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.51% (1,720B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.51% (1,720B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.51% (1,720B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.15% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->01.10% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->01.10% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->01.10% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->01.10% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->01.10% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->01.10% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->01.10% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.06% (28B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.11% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 22      3,139,344           51,072           34,821        16,251            0
+ 23      3,222,062           53,424           36,417        17,007            0
+68.17% (36,417B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.48% (33,912B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.48% (33,912B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.48% (33,912B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.48% (33,912B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.34% (33,840B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.34% (33,840B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.34% (33,840B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.34% (33,840B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.13% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.53% (1,884B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.52% (1,880B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.52% (1,880B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.52% (1,880B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.06% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->01.01% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->01.01% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->01.01% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->01.01% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->01.01% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->01.01% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->01.01% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.05% (28B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.10% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 24      3,300,701           55,664           37,937        17,727            0
+68.15% (37,937B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.51% (35,352B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.51% (35,352B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.51% (35,352B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.51% (35,352B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.38% (35,280B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.38% (35,280B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.38% (35,280B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.38% (35,280B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.13% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.53% (1,964B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.52% (1,960B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.52% (1,960B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.52% (1,960B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.02% (565B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->01.02% (565B) in 2 places, all below massif's threshold (01.00%)
+|   
+->00.10% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 25      3,363,608           57,456           39,153        18,303            0
+68.14% (39,153B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.53% (36,504B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.53% (36,504B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.53% (36,504B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.53% (36,504B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.41% (36,432B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.41% (36,432B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.41% (36,432B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.41% (36,432B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.13% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.53% (2,028B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.52% (2,024B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.52% (2,024B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.52% (2,024B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.08% (621B) in 4 places, all below massif's threshold (01.00%)
+  
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 26      3,455,740           60,032           40,901        19,131            0
+68.13% (40,901B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.57% (38,160B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.57% (38,160B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.57% (38,160B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.57% (38,160B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.45% (38,088B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.45% (38,088B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.45% (38,088B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.45% (38,088B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.12% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.53% (2,120B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.52% (2,116B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.52% (2,116B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.52% (2,116B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->01.03% (621B) in 4 places, all below massif's threshold (01.00%)
+  
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 27      3,527,785           62,024           42,261        19,763            0
+ 28      3,576,001           63,368           43,173        20,195            0
+ 29      3,648,325           65,384           44,541        20,843            0
+ 30      3,744,715           68,072           46,365        21,707            0
+ 31      3,853,482           71,120           48,425        22,695            0
+68.09% (48,425B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.68% (45,288B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.68% (45,288B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.68% (45,288B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.68% (45,288B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.58% (45,216B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.58% (45,216B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.58% (45,216B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.58% (45,216B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.10% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (2,516B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.53% (2,512B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.53% (2,512B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.53% (2,512B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.87% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 32      3,961,726           74,120           50,469        23,651            0
+ 33      4,022,298           75,824           51,617        24,207            0
+68.07% (51,617B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.72% (48,312B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.72% (48,312B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.72% (48,312B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.72% (48,312B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.62% (48,240B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.62% (48,240B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.62% (48,240B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.62% (48,240B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.09% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (2,684B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.53% (2,680B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.53% (2,680B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.53% (2,680B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.82% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 34      4,078,487           77,392           52,681        24,711            0
+68.07% (52,681B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.73% (49,320B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.73% (49,320B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.73% (49,320B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.73% (49,320B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.63% (49,248B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.63% (49,248B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.63% (49,248B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.63% (49,248B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.09% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (2,740B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (2,736B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (2,736B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (2,736B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.80% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 35      4,163,555           79,768           54,281        25,487            0
+68.05% (54,281B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.72% (50,832B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.72% (50,832B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.72% (50,832B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.72% (50,832B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.63% (50,760B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.63% (50,760B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.63% (50,760B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.63% (50,760B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.09% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (2,828B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (2,824B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (2,824B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (2,824B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.01% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.78% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 36      4,223,781           81,448           55,421        26,027            0
+68.04% (55,421B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.74% (51,912B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.74% (51,912B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.74% (51,912B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.74% (51,912B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.65% (51,840B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.65% (51,840B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.65% (51,840B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.65% (51,840B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.09% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (2,888B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (2,884B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (2,884B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (2,884B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.76% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 37      4,287,444           83,216           56,633        26,583            0
+68.06% (56,633B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.77% (53,064B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.77% (53,064B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.77% (53,064B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.77% (53,064B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.68% (52,992B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.68% (52,992B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.68% (52,992B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.68% (52,992B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.09% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (2,948B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (2,944B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (2,944B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (2,944B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.75% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 38      4,351,711           85,008           57,849        27,159            0
+68.05% (57,849B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.78% (54,216B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.78% (54,216B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.78% (54,216B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.78% (54,216B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.69% (54,144B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.69% (54,144B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.69% (54,144B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.69% (54,144B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.08% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (3,012B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (3,008B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (3,008B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (3,008B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.73% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 39      4,416,267           86,800           59,065        27,735            0
+68.05% (59,065B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.79% (55,368B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.79% (55,368B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.79% (55,368B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.79% (55,368B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.71% (55,296B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.71% (55,296B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.71% (55,296B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.71% (55,296B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.08% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (3,076B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (3,072B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (3,072B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (3,072B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.72% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 40      4,481,894           88,592           60,281        28,311            0
+68.04% (60,281B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.80% (56,520B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.80% (56,520B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.80% (56,520B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.80% (56,520B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.72% (56,448B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.72% (56,448B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.72% (56,448B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.72% (56,448B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.08% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (3,140B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (3,136B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (3,136B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (3,136B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.70% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 41      4,547,542           90,384           61,497        28,887            0
+68.04% (61,497B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.81% (57,672B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.81% (57,672B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.81% (57,672B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.81% (57,672B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.73% (57,600B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.73% (57,600B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.73% (57,600B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.73% (57,600B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.08% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.54% (3,204B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (3,200B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (3,200B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (3,200B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.69% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 42      4,654,178           93,296           63,473        29,823            0
+68.03% (63,473B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.82% (59,544B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.82% (59,544B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.82% (59,544B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.82% (59,544B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.75% (59,472B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.75% (59,472B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.75% (59,472B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.75% (59,472B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.08% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (3,308B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.54% (3,304B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.54% (3,304B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.54% (3,304B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.67% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 43      4,727,201           95,224           64,769        30,455            0
+ 44      4,801,097           97,240           66,137        31,103            0
+ 45      4,874,909           99,256           67,505        31,751            0
+ 46      4,948,805          101,272           68,873        32,399            0
+ 47      5,063,689          104,408           71,001        33,407            0
+ 48      5,145,707          106,648           72,521        34,127            0
+ 49      5,191,606          107,968           73,429        34,539            0
+68.01% (73,429B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.89% (68,976B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.89% (68,976B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.89% (68,976B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.89% (68,976B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.82% (68,904B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.82% (68,904B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.82% (68,904B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.82% (68,904B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.07% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (3,832B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.55% (3,828B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.55% (3,828B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.55% (3,828B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.58% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 50      5,232,699          109,088           74,189        34,899            0
+68.01% (74,189B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.89% (69,696B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.89% (69,696B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.89% (69,696B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.89% (69,696B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.82% (69,624B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.82% (69,624B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.82% (69,624B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.82% (69,624B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.07% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (3,872B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.55% (3,868B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.55% (3,868B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.55% (3,868B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.57% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 51      5,273,708          110,208           74,949        35,259            0
+68.01% (74,949B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.89% (70,416B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.89% (70,416B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.89% (70,416B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.89% (70,416B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.83% (70,344B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.83% (70,344B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.83% (70,344B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.83% (70,344B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.07% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (3,912B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.55% (3,908B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.55% (3,908B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.55% (3,908B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.56% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 52      5,314,717          111,328           75,709        35,619            0
+68.01% (75,709B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.90% (71,136B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.90% (71,136B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.90% (71,136B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.90% (71,136B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.83% (71,064B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.83% (71,064B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.83% (71,064B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.83% (71,064B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.06% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (3,952B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.55% (3,948B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.55% (3,948B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.55% (3,948B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.56% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 53      5,355,747          112,448           76,469        35,979            0
+68.00% (76,469B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->63.90% (71,856B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->63.90% (71,856B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->63.90% (71,856B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->63.90% (71,856B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->63.84% (71,784B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->63.84% (71,784B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->63.84% (71,784B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->63.84% (71,784B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->00.06% (72B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->03.55% (3,992B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.55% (3,988B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.55% (3,988B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.55% (3,988B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (4B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.55% (621B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 54      5,401,738          104,432           71,037        33,395            0
+ 55      5,447,687           93,656           63,737        29,919            0
+ 56      5,493,615           82,792           56,365        26,427            0
+ 57      5,539,516           71,952           49,001        22,951            0
+ 58      5,585,419           61,088           41,629        19,459            0
+ 59      5,631,358           50,248           34,261        15,987            0
+ 60      5,677,286           39,384           26,889        12,495            0
+ 61      5,723,289           28,520           19,517         9,003            0
+ 62      5,769,192           17,656           12,145         5,511            0
+ 63      5,815,220            6,792            4,773         2,019            0
+70.27% (4,773B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->58.30% (3,960B) 0x419989: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<Json::Value::CZString const, Json::Value> > >::allocate(unsigned long, void const*) (new_allocator.h:89)
+| ->58.30% (3,960B) 0x41957C: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_get_node() (stl_tree.h:359)
+|   ->58.30% (3,960B) 0x418E1B: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_create_node(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:369)
+|     ->58.30% (3,960B) 0x418171: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_(std::_Rb_tree_node_base const*, std::_Rb_tree_node_base const*, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:881)
+|       ->57.24% (3,888B) 0x4168B5: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1215)
+|       | ->57.24% (3,888B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|       |   ->57.24% (3,888B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|       |     ->57.24% (3,888B) 0x41108D: main (test.cpp:16)
+|       |       
+|       ->01.06% (72B) 0x418302: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique(std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1177)
+|         ->01.06% (72B) 0x4168D3: std::_Rb_tree<Json::Value::CZString, std::pair<Json::Value::CZString const, Json::Value>, std::_Select1st<std::pair<Json::Value::CZString const, Json::Value> >, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_tree.h:1217)
+|           ->01.06% (72B) 0x415E44: std::map<Json::Value::CZString, Json::Value, std::less<Json::Value::CZString>, std::allocator<std::pair<Json::Value::CZString const, Json::Value> > >::insert(std::_Rb_tree_iterator<std::pair<Json::Value::CZString const, Json::Value> >, std::pair<Json::Value::CZString const, Json::Value> const&) (stl_map.h:540)
+|             ->01.06% (72B) 0x413C2C: Json::Value::operator[](unsigned int) (json_value.cpp:1024)
+|               ->01.06% (72B) 0x41108D: main (test.cpp:16)
+|                 
+->07.91% (537B) 0x3BE6E9C3A7: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+| ->07.91% (537B) 0x3BE6E9D179: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| | ->07.91% (537B) 0x3BE6E9D5CA: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |   ->07.91% (537B) 0x3BE6E978CF: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) (in /usr/lib64/libstdc++.so.6.0.13)
+| |     ->07.91% (537B) 0x3BE6E9BA93: std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |       ->07.91% (537B) 0x3BE6E92913: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib64/libstdc++.so.6.0.13)
+| |         ->07.91% (537B) 0x3BE6E92B8D: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib64/libstdc++.so.6.0.13)
+| |           ->07.91% (537B) 0x411036: main (test.cpp:13)
+| |             
+| ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->03.24% (220B) 0x415906: Json::DefaultValueAllocator::duplicateStringValue(char const*, unsigned int) (json_value.cpp:85)
+| ->03.24% (220B) 0x412092: Json::Value::Value(Json::Value const&) (json_value.cpp:462)
+| | ->03.24% (220B) 0x412394: Json::Value::operator=(Json::Value const&) (json_value.cpp:547)
+| |   ->03.24% (220B) 0x41109C: main (test.cpp:16)
+| |     
+| ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+| 
+->00.82% (56B) in 1+ places, all below ms_print's threshold (01.00%)
+

@@ -1,0 +1,53 @@
+/**
+************************************ 
+* 	Copyright (c) 2012，Baidu
+*	All rights reserved.
+************************************
+*\n
+* 	@file mysql_pool.h
+* 	@breif mysql主从节点的连接池
+*\n
+* 	@version 0.0.1
+* 	@author clarencelei
+* 	@date 2012.10.22
+*/
+#ifndef _SRC_INCLUDE_MYSQL_POOL_H_
+#define _SRC_INCLUDE_MYSQL_POOL_H_
+
+#include <semaphore.h>
+#include <list>
+#include "conn_pool.h"
+#include "my_lib.h"
+
+class CMysqlPool
+{
+public:
+	CMysqlPool();
+	~CMysqlPool();
+
+
+	static CMysqlPool *GetInstance();
+	static void DestroyInstance();
+
+	int Init(const char* strMasterHost,const int nMasterPort,const int nMasterConnNum, //  主mysql的信息
+		const char* strMasterDb,const char* strMasterUser,const char* strMasterPasswd,
+		const int nSlaveNums,const int nSlaveConnNum,char strSlaveHost[MAX_SLAVE_NUM][HOST_LEN],int pSlavePort[MAX_SLAVE_NUM], // 从mysql的信息
+		const char* strDb,const char* strUser,const char* strPasswd);
+	
+	void UnInit();
+
+	// 获取读写句柄，根据nType的读写类型获取，nId为句柄池编号
+	CConnection* GetConn(int nType,int &nId);
+
+	void ReleaseConn(int nId,CConnection *pCon);
+
+
+private:
+	static CMysqlPool *s_pMysqlPool; //全局唯一实例
+	CConnPool** m_pPoolMgr;    // 主从多个连接池
+	int   m_nMgrNum; // 连接池个数
+	pthread_mutex_t m_mutexPool;  // 锁
+	int   m_nFlag;                // 
+};
+
+#endif

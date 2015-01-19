@@ -1,0 +1,30 @@
+cc_library(
+    name='jsonpro',
+    srcs=[
+        'json_protobuf.cpp'
+    ],
+    deps=[
+        '//thirdparty/jsoncpp:jsoncpp',
+        '//thirdparty/protobuf:protobuf'
+    ]
+)
+
+proto_library(
+    name='check_protobuf_types',
+    srcs=[
+        'check_protobuf_types.proto'
+    ],
+    deps=[
+    ]
+)
+
+cc_binary(
+    name='check_json_protobuf',
+    srcs=[
+        'check_json_protobuf.cpp'
+    ],
+    deps=[
+        ':jsonpro',
+        ':check_protobuf_types',
+    ]
+)
