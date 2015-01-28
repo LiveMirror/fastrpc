@@ -44,7 +44,7 @@ public:
 			if (done) {
 				done->Run();
 			}
-			delete request; // »Øµ÷Òª×¢ÒâÄÚ´æÊÍ·Å
+			delete request; // å›è°ƒè¦æ³¨æ„å†…å­˜é‡Šæ”¾
 			delete response;
 			if (++recv_c == 5) {
 				std::cout << "success\n";
@@ -62,7 +62,7 @@ void echo_done(echo::EchoRequest* request,
 		if (done) {
 			done->Run();
 		}
-		delete request; // »Øµ÷Òª×¢ÒâÄÚ´æÊÍ·Å
+		delete request; // å›è°ƒè¦æ³¨æ„å†…å­˜é‡Šæ”¾
 		delete response;
 		if (++recv_c == 5) {
 			std::cout << "success\n";
@@ -78,21 +78,21 @@ void close_handler(void* param) {
 }
 
 int main(int argc, char *argv[]) {
-    //RpcClient client(10, "192.168.1.13", 8998, 1000); // 1:²¢·¢sockÊı 2:host 3:ip 4:³¬Ê±Ê±¼ä
+    //RpcClient client(10, "192.168.1.13", 8998, 1000); // 1:å¹¶å‘sockæ•° 2:host 3:ip 4:è¶…æ—¶æ—¶é—´
     //echo::EchoService::Stub stub(&client);
 
 	Test test;
     ::google::protobuf::RpcChannel* client;
     echo::EchoService_Stub::Stub* stub;
-    client = new RpcClient(2, "192.168.1.13", 8999, 5000); // 1:²¢·¢sockÊı 2:host 3:ip 4:³¬Ê±Ê±¼ä
+    client = new RpcClient(2, "192.168.1.13", 8999, 5000); // 1:å¹¶å‘sockæ•° 2:host 3:ip 4:è¶…æ—¶æ—¶é—´
 	if (!((RpcClient*)client)->IsConnected()) {
 		delete client;
 		exit(0);
 	} else {
 		std::cout << "connect success\n";
 	}
-	((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // ´¦Àí·şÎñÆ÷Ö÷¶¯ÍÆµÄÏûÏ¢
-	((RpcClient*)client)->RegiCloseHandler(close_handler, NULL); // ¶Ï¿ªÊÂ¼ş´¦Àí
+	((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // å¤„ç†æœåŠ¡å™¨ä¸»åŠ¨æ¨çš„æ¶ˆæ¯
+	((RpcClient*)client)->RegiCloseHandler(close_handler, NULL); // æ–­å¼€äº‹ä»¶å¤„ç†
 	int i =0;
 	while (++i < 5) {
 		//xcore::sleep(1000);
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
         echo::EchoRequest* request = new echo::EchoRequest();
         request->set_message("client_hello");
         echo::EchoResponse* response = new echo::EchoResponse();
-        ::google::protobuf::Closure* callback_callback = NULL; // ¿ÉÒÔµİ¹éÎŞÏŞ»Øµ÷
+        ::google::protobuf::Closure* callback_callback = NULL; // å¯ä»¥é€’å½’æ— é™å›è°ƒ
         ::google::protobuf::Closure *callback = pbext::NewCallback(&test,
 			                                                       &Test::echo_done,
                                                                    request,
@@ -114,14 +114,16 @@ int main(int argc, char *argv[]) {
 		//	response,
 		//	callback_callback);
 
-        stub->Echo(NULL, request, response, callback); // Òì²½, callbackÎª¿ÕÔòÊÇÍ¬²½
+        stub->Echo(NULL, request, response, callback); // å¼‚æ­¥, callbackä¸ºç©ºåˆ™æ˜¯åŒæ­¥
     }
 
     echo::EchoRequest req;
     req.set_message("cli hello 2");
     echo::EchoResponse res;
-    stub->Echo(NULL, &req, &res, NULL); // Í¬²½
-    std::cout << "sync: " << res.response() << "\n";
+    CliController controller;
+    stub->Echo(&controller, &req, &res, NULL); // åŒæ­¥                                    
+    std::cout << "is timeout:" << controller.IsTimeOut()
+    << " sync: " << res.response() << "\n";
 
 	xcore::sleep(5000);
 	delete client;
@@ -130,4 +132,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
