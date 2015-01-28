@@ -13,14 +13,17 @@
 
 struct RpcCliMethod {
 public:
-    RpcCliMethod(::google::protobuf::Message *request,
+    RpcCliMethod(::google::protobuf::RpcController* controller,
+                 ::google::protobuf::Message *request,
                  ::google::protobuf::Message *response,
                  ::google::protobuf::Closure* done)
-        : request_(request),
+        : controller_(controller),
+          request_(request),
           response_(response),
           done_(done) {
           }
 
+    ::google::protobuf::RpcController* controller_;
     ::google::protobuf::Message *request_;
     ::google::protobuf::Message *response_;
     ::google::protobuf::Closure *done_;
