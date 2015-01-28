@@ -19,6 +19,9 @@ void TimeCleaner::on_timer(XTimer* pTimer, uint32 id, void* ptr) {
         if (NULL == rcm) {
             return;
         }
+        if (rcm->controller_) {
+            ((CliController*)rcm->controller_)->is_timeout = true;
+        }
         ::google::protobuf::Closure* done = rcm->done_;
         done->Run();
         delete rcm;
@@ -37,7 +40,8 @@ void RpcClient::CallMethod(const ::google::protobuf::MethodDescriptor* method,
         done = ::google::protobuf::NewCallback(&FinishWait,
                                                monitor);
     }
-    RpcCliMethod* cli_method = new RpcCliMethod((::google::protobuf::Message*)request,
+    RpcCliMethod* cli_method = new RpcCliMethod(controller,
+                                                (::google::protobuf::Message*)request,
                                                 response,
                                                 done);
     unsigned newid = GetNextId();
