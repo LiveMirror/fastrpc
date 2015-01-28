@@ -32,7 +32,7 @@
 class RpcClient;
 
 typedef struct _ParamItem {
-	RpcClient* cli;
+    RpcClient* cli;
 	XSocket* sock;
 	XSemaphore consem;
 } ParamItem;
@@ -50,6 +50,25 @@ ProcessType CallBackProcess(void *argument);
 
 typedef int ext_process(CHttpParser& ps, std::string& data, void* param);
 typedef void event_handler(void* param);
+
+class CliController : public ::google::protobuf::RpcController {
+public:
+    CliController() {
+        is_timeout = false;
+    }
+    virtual ~CliController() {}
+
+    virtual void Reset() {}
+    virtual bool Failed() const {return false;}
+    virtual std::string ErrorText() const {return "";}
+    virtual void StartCancel() {}
+
+    virtual void SetFailed(const string& reason) {}
+    virtual bool IsCanceled() const {return false;}
+    virtual void NotifyOnCancel(::google::protobuf::Closure* callback) {}
+    bool is_timeout;
+    bool IsTimeOut() {return is_timeout;}
+};
 
 class RpcClient : public ::google::protobuf::RpcChannel {
 public:
