@@ -9,7 +9,7 @@ using namespace std;
 
 int CliD_Pool(CASyncSvr* p_svr,unsigned clid_flow,char *data,unsigned len,unsigned ip,unsigned short port)
 {
-    int ret = p_svr->_pool->PushDataBuf(clid_flow,data,len,ip,port);
+    int ret = p_svr->_pool->PushDataBuf(p_svr,clid_flow,data,len,ip,port);
     if ( ret!=0 ) LOG(LOG_ALL,"Error:flow=%u exist,replace it\n",clid_flow);
     return 0;
 }
@@ -33,7 +33,7 @@ string GetBody(const char *data,const unsigned &len,unsigned &bodylen)
 
     unsigned headerlen = (body+4-data);
     if ( headerlen>1024 ) {
-        // Í·²¿ÓĞÎÊÌâ
+        // å¤´éƒ¨æœ‰é—®é¢˜
         return "";
     }
     bodylen = len - headerlen;
@@ -55,7 +55,7 @@ int GetFlowFromHeader(const string &header,unsigned &flow)
         if ( posend==string::npos ) return -1;
         else
         {
-            sflow = header.substr(pos+8,posend-pos-8);//1ÊÇ¿Õ¸ñ
+            sflow = header.substr(pos+8,posend-pos-8);//1æ˜¯ç©ºæ ¼
             flow = atoi(sflow.c_str());
         }
     }
@@ -79,11 +79,11 @@ int MainD_CliD(CASyncSvr* p_svr,unsigned clid_flow,char *data,unsigned len,unsig
     //p_svr->_client_d->mPending.enqueue(dataObj);
 
     CClientNetSvr &cli = (  *((CClientNetSvr*)p_svr->_client_d) );
-    // ±ØĞë¸ù¾İflow_noÄÃµ½offset
+    // å¿…é¡»æ ¹æ®flow_noæ‹¿åˆ°offset
     unsigned cd_flow = clid_flow;
     int offset = cli.sp->cliF2O->GetOffset(cd_flow);
 
-    if ( offset==-1 )  // socketÒÑ¾­¹Ø±Õ»òÕß³¬Ê±ÁË
+    if ( offset==-1 )  // socketå·²ç»å…³é—­æˆ–è€…è¶…æ—¶äº†
     {
         return -1;
     }
