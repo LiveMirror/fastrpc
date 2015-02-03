@@ -12,7 +12,7 @@ using namespace std;
 /**
 *
 * <pre>
-* Òì²½±à³ÌµÄ ClientD,MainD,BackD½»»¥Ä£¿é
+* å¼‚æ­¥ç¼–ç¨‹çš„ ClientD,MainD,BackDäº¤äº’æ¨¡å—
 *
 * </pre>
 **/
@@ -25,7 +25,7 @@ enum
     SVR_BackD_MainD = 2,
     SVR_NOTIFY_MainD_TIMEOUT = 3,
 
-	ASYNC_RET_FINISH = 4,
+    ASYNC_RET_FINISH = 4,
 	ASYNC_RET_FAIL = 5,
 };
 
@@ -48,6 +48,7 @@ struct CDataBuf {
     unsigned oper;
     unsigned type;
     TDestInfo destinfo;
+    CASyncSvr* svr;
 
     CDataBuf(){
         data = NULL;
@@ -56,6 +57,7 @@ struct CDataBuf {
         type = SVR_CliD_MainD;
         oper = SEND_AND_CLOSE;
         memset(&destinfo,0,sizeof(TDestInfo));
+        svr = NULL;
     }
     ~CDataBuf() {
 		data = NULL;
@@ -96,19 +98,19 @@ struct CDataBuf {
 
 
 
-// Í¬²½±à³Ìº¯Êı
+// åŒæ­¥ç¼–ç¨‹å‡½æ•°
 int CliD_Pool(CASyncSvr* p_svr,unsigned clid_flow,char *data,unsigned len,unsigned ip,unsigned short port);
 int Pool_CliD(CASyncSvr* p_svr,unsigned clid_flow,char *data,unsigned len);
 
-// Òì²½±à³Ìº¯Êı
+// å¼‚æ­¥ç¼–ç¨‹å‡½æ•°
 int CliD_MainD(CASyncSvr* p_svr,unsigned clid_flow,char *data,unsigned len,unsigned ip,unsigned short port);
 int MainD_CliD(CASyncSvr* p_svr,unsigned clid_flow,char *data,unsigned len,unsigned _op = SEND_NORMAL);
 int MainD_BackD(unsigned flow,char *data,unsigned len,const char *strip,unsigned short port);
 int BackD_MainD(char *data,unsigned len,unsigned backip=0,unsigned short backport=0,int obj_type=SVR_BackD_MainD);
 
-// Èç¹ûºó¶ËÒ²ÊÇHttpĞ­Òé£¬´ÓHeaderÖĞÄÃµ½FlowNo
+// å¦‚æœåç«¯ä¹Ÿæ˜¯Httpåè®®ï¼Œä»Headerä¸­æ‹¿åˆ°FlowNo
 int GetFlowFromHeader(const string &header,unsigned &flow);
-string GetBody(const char *data,const unsigned &len,unsigned &bodylen); // ·µ»ØbodyµÄ³¤¶È
+string GetBody(const char *data,const unsigned &len,unsigned &bodylen); // è¿”å›bodyçš„é•¿åº¦
 
 #endif
 
