@@ -7,6 +7,9 @@
 
 using namespace std;
 
+list<CDataBuf>* CSearchTheadPool::clientQueue = NULL;
+CSem* CSearchTheadPool::_csem = NULL;
+CMutex* CSearchTheadPool::_mutex = NULL;
 
 CASyncSvr::CASyncSvr(const char *strip,int port,int max_conn,int threadnum,bool basync,unsigned svr_id)
 {
@@ -39,7 +42,7 @@ bool CASyncSvr::RegiCloseHandler(ext_handler* close_handler, void* close_handler
 
 int CASyncSvr::Start(int listen_sd)
 {
-    // ClientD Ïß³Ì
+    // ClientD çº¿ç¨‹
     _client_d = new CClientNetSvr(this,_max_conn);
     assert(_client_d!=NULL);
     _client_d->Start(listen_sd);
@@ -50,7 +53,7 @@ int CASyncSvr::Start(int listen_sd)
         _main_d = new CMainAsyncSvr();assert(_main_d!=NULL);
         _mainWorker.start(CMainAsyncSvr::run,(void*)_main_d);
 
-        // Æô¶¯BackD£¬ºó¶Ësvr²»ÐèÒªºÜ¶àÁ¬½Ósocket
+        // å¯åŠ¨BackDï¼ŒåŽç«¯svrä¸éœ€è¦å¾ˆå¤šè¿žæŽ¥socket
         _back_d = new CBackNetSvr(100,200,200);assert(_back_d!=NULL);
         _back_d->Start();
         _backWorker.start(CBackNetSvr::run,(void*)_back_d);
@@ -103,9 +106,8 @@ CSearchTheadPool::CSearchTheadPool(CASyncSvr* asvr, int threadNum)
 {
     m_queue_size = 0;
     p_svr = asvr;
-	m_iThreadNum = threadNum;
+    m_iThreadNum = threadNum;
     m_iStop = 0;
-    sem_init(&_sem, 0 ,0);
 }
 
 int CSearchTheadPool::Start()
@@ -179,7 +181,7 @@ void *CSearchTheadPool::ThreadProcess(void *argument)
 			continue;
 		}
 		//pool.MoveToBusy(tid);
-		ptask->Run(&in_buf, pool.p_svr);
+		ptask->Run(&in_buf, in_buf.svr);
         in_buf.Free();
 		//pool.MoveToIdle(tid);
 	}
@@ -188,32 +190,33 @@ void *CSearchTheadPool::ThreadProcess(void *argument)
 	return (void*)0;
 }
 
-int CSearchTheadPool::PushDataBuf(unsigned flow,char *data,unsigned len, unsigned ip, unsigned short port)
+int CSearchTheadPool::PushDataBuf(CASyncSvr* p_svr,unsigned flow,char *data,unsigned len, unsigned ip, unsigned short port)
 {
     CDataBuf buf;
     buf.destinfo._ip = ip;
     buf.destinfo._port = port;
     buf.Copy(data,len,flow);
+    buf.svr = p_svr;
 
     {
-        MutexGuard g(_mutex);
-        clientQueue.push_back(buf);
+        MutexGuard g(*CSearchTheadPool::_mutex);
+        CSearchTheadPool::clientQueue->push_back(buf);
         m_queue_size++;
     }
-    sem_post(&_sem);
+    CSearchTheadPool::_csem->Notify();
     return 0;
 }
 
 CDataBuf CSearchTheadPool::PopDataBuf()
 {
     CDataBuf buf;
-    sem_wait(&_sem);
+    CSearchTheadPool::_csem->Wait();
 
-    MutexGuard g(_mutex);
-    if ( !clientQueue.empty() )
+    MutexGuard g(*CSearchTheadPool::_mutex);
+    if ( !CSearchTheadPool::clientQueue->empty() )
     {
-        buf = clientQueue.front();
-        clientQueue.pop_front();
+        buf = CSearchTheadPool::clientQueue->front();
+        CSearchTheadPool::clientQueue->pop_front();
         m_queue_size--;
     }
     return buf;
@@ -221,7 +224,7 @@ CDataBuf CSearchTheadPool::PopDataBuf()
 
 int CSearchTheadPool::BroadCast()
 {
-    for(int i=0; i<m_iThreadNum*2; i++) sem_post(&_sem);
+    for(int i=0; i<m_iThreadNum*8; i++) CSearchTheadPool::_csem->Notify();
     return 0;
 }
 
@@ -229,7 +232,7 @@ int CSearchTheadPool::BroadCast()
 
 int CSearchTheadPool::MoveToIdle(pthread_t tid)
 {
-	MutexGuard g(_mutex);
+	MutexGuard g(*CSearchTheadPool::_mutex);
 
 	list<pthread_t>::iterator busyIter = m_BusyThreadList.begin();
 	while( busyIter != m_BusyThreadList.end() )
@@ -247,7 +250,7 @@ int CSearchTheadPool::MoveToIdle(pthread_t tid)
 
 int CSearchTheadPool::MoveToBusy(pthread_t tid)
 {
-	MutexGuard g(_mutex);
+	MutexGuard g(*CSearchTheadPool::_mutex);
 
 	list<pthread_t>::iterator idleIter = m_IdleThreadList.begin();
 	while( idleIter != m_IdleThreadList.end() )
@@ -280,7 +283,7 @@ int CSearchTheadPool::ThreadInfo(string &info)
 	oss << string("OK\r\n");
 
     {
-        MutexGuard g(_mutex);
+        MutexGuard g(*CSearchTheadPool::_mutex);
         oss << m_BusyThreadList.size() << string(" Busy Thread.\n");
         oss << m_IdleThreadList.size() << string(" Idle Thread.\n");
     }
@@ -423,7 +426,10 @@ int app_main(std::string& ip, unsigned short port, int sock_num,
     //InitDaemon();
     //SignalAll();
 
-    //bind PORT¶Ë¿Ú
+    //bind PORTç«¯å£
+    CSearchTheadPool::clientQueue = new list<CDataBuf>();
+    CSearchTheadPool::_csem = new CSem();
+    CSearchTheadPool::_mutex = new CMutex();
     int listen_sd;
     if ((listen_sd = do_tcplisten(ip.c_str(), port, 10240)) == -1)
     {
@@ -441,14 +447,14 @@ int app_main(std::string& ip, unsigned short port, int sock_num,
     tp.rpc_param = rpc_param;
 
     if (Multi_Process_or_Thread == "Thread") {
-        //¶àÏß³Ì
+        //å¤šçº¿ç¨‹
         for(int i = 0; i < io_thread_num - 1; ++i) {
             pthread_t tid = 0;
             int ret = pthread_create(&tid,NULL,process,&tp);
             assert(ret==0);
         }
     } else {
-        //¶à½ø³Ì
+        //å¤šè¿›ç¨‹
         for (int i = 0; i < io_thread_num; i++) {
             pid_t pid = fork();
             if (pid < 0) {
