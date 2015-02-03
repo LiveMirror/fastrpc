@@ -27,23 +27,23 @@
 *
 *
 * <pre>
-* Òì²½±à³Ìsvr£¬°üÀ¨µ¥Ïß³ÌÒì²½svr£¬Ïß³Ì³ØÍ¬²½svr
-* Òì²½±à³Ì°üº¬3¸öÄ£¿é
-* ClientD ¸ºÔğºÍ¿Í»§¶ËµÄÍøÂç½»»¥
-* MainD   ×öÒì²½Âß¼­µÄ¹¤×÷
-* BackD   ¸ºÔğºÍºóÌ¨µÄÍøÂç½»»¥
+* å¼‚æ­¥ç¼–ç¨‹svrï¼ŒåŒ…æ‹¬å•çº¿ç¨‹å¼‚æ­¥svrï¼Œçº¿ç¨‹æ± åŒæ­¥svr
+* å¼‚æ­¥ç¼–ç¨‹åŒ…å«3ä¸ªæ¨¡å—
+* ClientD è´Ÿè´£å’Œå®¢æˆ·ç«¯çš„ç½‘ç»œäº¤äº’
+* MainD   åšå¼‚æ­¥é€»è¾‘çš„å·¥ä½œ
+* BackD   è´Ÿè´£å’Œåå°çš„ç½‘ç»œäº¤äº’
 *
-* Í¬²½±à³Ìsvr,°üº¬2¸öÄ£¿é
-* ClientD ¸ºÔğºÍ¿Í»§¶ËµÄÍøÂç½»»¥£¬Ëû°ÑÊı¾İÊÕÍêºóÔÙ½»¸øPool
-* Pool    Í¬²½Ïß³Ì´¦Àí¶¯×÷
+* åŒæ­¥ç¼–ç¨‹svr,åŒ…å«2ä¸ªæ¨¡å—
+* ClientD è´Ÿè´£å’Œå®¢æˆ·ç«¯çš„ç½‘ç»œäº¤äº’ï¼Œä»–æŠŠæ•°æ®æ”¶å®Œåå†äº¤ç»™Pool
+* Pool    åŒæ­¥çº¿ç¨‹å¤„ç†åŠ¨ä½œ
 
 
 
-* Àı×Ó£¬¾ßÌåÇë¿´ CompleteFun.h µÄËµÃ÷£º
+* ä¾‹å­ï¼Œå…·ä½“è¯·çœ‹ CompleteFun.h çš„è¯´æ˜ï¼š
 
-* async_echo_svr Òì²½Ä£Ê½ÊµÏÖ£¬client·¢ËÍÊı¾İ¹ıÀ´£¬È»ºóÖ±½Ó·µ»Ø
-* async_web_svr  Òì²½Ä£Ê½µÄwebÉÏ´«ÏÂÔØ·şÎñÆ÷ÊµÏÖ
-* pool_web_svr   Í¬²½Ä£Ê½µÄwebÉÏ´«ÏÂÔØ·şÎñÆ÷ÊµÏÖ
+* async_echo_svr å¼‚æ­¥æ¨¡å¼å®ç°ï¼Œclientå‘é€æ•°æ®è¿‡æ¥ï¼Œç„¶åç›´æ¥è¿”å›
+* async_web_svr  å¼‚æ­¥æ¨¡å¼çš„webä¸Šä¼ ä¸‹è½½æœåŠ¡å™¨å®ç°
+* pool_web_svr   åŒæ­¥æ¨¡å¼çš„webä¸Šä¼ ä¸‹è½½æœåŠ¡å™¨å®ç°
 * </pre>
 **/
 
@@ -59,17 +59,40 @@ class CBackNetSvr;
 class CMainAsyncSvr;
 
 /*
-	Òì²½svr
-	ÊµÏÖÒì²½Ä£Ê½ĞèÒªµÄ²½Öè£º
-	1. ÊµÏÖ int CClientSocketReq::is_complete(char *data,unsigned data_len)
-	2. ÊµÏÖ int CBackSocketReq::is_complete(char *data,unsigned data_len)
-	3. ÊµÏÖ xCallbackObj *CMainAsyncSvr::CreateAsyncObj(CDataBuf *item)
-	Çë¿´ async_echo_svr Àı×Ó ºÍ async_web_svr Àı×Ó
+    å¼‚æ­¥svr
+	å®ç°å¼‚æ­¥æ¨¡å¼éœ€è¦çš„æ­¥éª¤ï¼š
+	1. å®ç° int CClientSocketReq::is_complete(char *data,unsigned data_len)
+	2. å®ç° int CBackSocketReq::is_complete(char *data,unsigned data_len)
+	3. å®ç° xCallbackObj *CMainAsyncSvr::CreateAsyncObj(CDataBuf *item)
+	è¯·çœ‹ async_echo_svr ä¾‹å­ å’Œ async_web_svr ä¾‹å­
 
-	Í¬²½Ä£Ê½ºÍÒì²½Ä£Ê½µÄÇĞ»»£¬·Ç³£¼òµ¥£¬async_web_svr ºÍ pool_web_svr ²î²»¶àÒ»Ñù¡£
+	åŒæ­¥æ¨¡å¼å’Œå¼‚æ­¥æ¨¡å¼çš„åˆ‡æ¢ï¼Œéå¸¸ç®€å•ï¼Œasync_web_svr å’Œ pool_web_svr å·®ä¸å¤šä¸€æ ·ã€‚
 
 */
 typedef int ext_handler(CASyncSvr* svr, unsigned cli_flow, void* param);
+
+class CSem {
+public:
+    CSem() {
+        sem_init(&_sem, 0 ,0);
+    }
+
+    ~CSem() {
+        sem_destroy(&_sem);
+    }
+
+    void Wait() {
+        sem_wait(&_sem);
+    }
+
+    void Notify() {
+        sem_post(&_sem);
+    }
+
+private:
+    sem_t _sem;
+};
+
 
 class CASyncSvr {
 public:
@@ -80,11 +103,11 @@ public:
     int Stop();
     bool IsAsyncSvr() { return _basync_svr; }
 
-	// ²»Ò»¶¨ĞèÒª£¬µ«¿ÉÒÔÓÃÓÚ³õÊ¼»¯ÒµÎñ±äÁ¿
+	// ä¸ä¸€å®šéœ€è¦ï¼Œä½†å¯ä»¥ç”¨äºåˆå§‹åŒ–ä¸šåŠ¡å˜é‡
     virtual void Initail() { }
     virtual void Finish() {}
 
-    // Í¬²½Ä£Ê½£¬´´½¨ÒµÎñTask
+    // åŒæ­¥æ¨¡å¼ï¼Œåˆ›å»ºä¸šåŠ¡Task
     virtual CTask* CCreatePoolTask();
 
     void SendBack(unsigned clid_flow,char *data,unsigned len,unsigned _op = SEND_NORMAL);
@@ -115,13 +138,13 @@ public:
 };
 
 /*
-	Í¬²½Ä£Ê½
-	¿ª·¢ÕßÖ»ĞèÒª¼Ì³Ğ£¬²¢ÊµÏÖRunº¯Êı£¬InitialºÍFinishÓÃÓÚ´´½¨ºÍÊÍ·ÅË½ÓĞ±äÁ¿
-	´´½¨Ò»¸ösvrµÄ²½Öè£º
-	1. ÊµÏÖ CClientSocketReq::is_complete
+	åŒæ­¥æ¨¡å¼
+	å¼€å‘è€…åªéœ€è¦ç»§æ‰¿ï¼Œå¹¶å®ç°Runå‡½æ•°ï¼ŒInitialå’ŒFinishç”¨äºåˆ›å»ºå’Œé‡Šæ”¾ç§æœ‰å˜é‡
+	åˆ›å»ºä¸€ä¸ªsvrçš„æ­¥éª¤ï¼š
+	1. å®ç° CClientSocketReq::is_complete
 	2. CTask *CASyncSvr::CCreatePoolTask()
-	3. ¼Ì³ĞÀà CTask£¬²¢ÊµÏÖRunº¯Êı
-	Çë¿´ pool_web_svr£¬ÆäÊµÏÖÒ»¸öweb svrÊµÏÖÉÏ´«ÏÂÔØ
+	3. ç»§æ‰¿ç±» CTaskï¼Œå¹¶å®ç°Runå‡½æ•°
+	è¯·çœ‹ pool_web_svrï¼Œå…¶å®ç°ä¸€ä¸ªweb svrå®ç°ä¸Šä¼ ä¸‹è½½
 */
 
 
@@ -143,23 +166,28 @@ public:
 
     CSearchTheadPool(CASyncSvr* asvr,int threadNum);
     ~CSearchTheadPool() {
-        sem_destroy(&_sem);
     }
 
     unsigned GetPendingQueue() {return m_queue_size;}
     int ThreadInfo(string &info);
-    // Ö÷Ïß³Ìµ÷ÓÃµÄº¯Êı
+    // ä¸»çº¿ç¨‹è°ƒç”¨çš„å‡½æ•°
     int Start();
     int Stop();
 
     CDataBuf PopDataBuf();
-    int PushDataBuf(unsigned flow,char *data,unsigned len, unsigned ip, unsigned short port);
+    int PushDataBuf(CASyncSvr* p_svr,unsigned flow,char *data,unsigned len, unsigned ip, unsigned short port);
 
     static void *ThreadProcess(void *argument);
     int SignStopStatus();
     bool PoolEnable();
     CASyncSvr* p_svr;
     int m_iStop;
+
+    static list<CDataBuf>* clientQueue;
+
+    static CSem* _csem;
+    //CMutex _sem_mutex;
+    static CMutex* _mutex;
 
 protected:
 
@@ -173,11 +201,6 @@ private:
 
 	int m_iThreadNum;
     int m_queue_size;
-	list<CDataBuf> clientQueue;
-
-    sem_t _sem;
-    CMutex _sem_mutex;
-	CMutex _mutex;
 
 	list<pthread_t> m_IdleThreadList;
 	list<pthread_t> m_BusyThreadList;
