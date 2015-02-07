@@ -1,100 +1,86 @@
-arpc_client_for_pc 为客户端使用 
-<br/>
-<br/>::google::protobuf::RpcChannel* client;
-<br/>    echo::EchoService_Stub::Stub* stub;
-<br/>    client = new RpcClient(2, "192.168.1.13", 8999, 5000); // 1:并发sock数 2:host 3:ip 4:超时时间
-<br/>    if (!((RpcClient*)client)->IsConnected()) {
-<br/>    	delete client;
-<br/>		exit(0);
-<br/>	} else {
-<br/>		std::cout << "connect success\n";
-<br/>	}
-<br/>	((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // 处理服务器主动推的消息
-<br/>	((RpcClient*)client)->RegiCloseHandler(close_handler, NULL); // 断开事件处理
-<br/>    stub = new echo::EchoService_Stub::Stub(client);
-<br/>    request->set_message("client_hello");
-<br/>    stub->Echo(NULL, request, response, callback); // 异步, callback为空则是同步
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>arpc_server 为服务器使用
-<br/>
-<br/>class EchoServiceImpl : public echo::EchoService { // rpc 函数实现
-<br/>    virtual void Echo(::google::protobuf::RpcController* controller,
-<br/>                      const ::echo::EchoRequest* request,
-<br/>                      ::echo::EchoResponse* response,
-<br/>                      ::google::protobuf::Closure* done) {
-<br/>
-<br/>        response->set_response(request->message()+" server_hello");
-<br/>        //RpcController* p_con = (RpcController*)controller;
-<br/>        //unsigned cli_flow = p_con->_cli_flow;
-<br/>        //CASyncSvr* svr = p_con->_svr;
-<br/>        //RpcServer::PushToClient(svr, cli_flow, response); // 这是服务器额外主动推消息
-<br/>        if (done) {
-<br/>            done->Run();
-<br/>        }
-<br/>    }
-<br/>};
-<br/>
-<br/>class MyHttpHandler : public HttpHandler { // 同时可处理http请求
-<br/>public:
-<br/>    virtual void Init(CASyncSvr* svr) {}
-<br/>    virtual void OnRec(HttpRequest* request,
-<br/>                       ::google::protobuf::Closure *done) {
-<br/>        CHttpParser* ps = request->ps;
-<br/>        ps->parse_form_body();
-<br/>        std::string kk = ps->get_param("kk");
-<br/>        //string str_cmd = ps->get_object();
-<br/>        //string get_uri = ps->get_uri();
-<br/>        //std::stringstream ss;
-<br/>        //ss << "kk:" << kk << "<br/>"
-<br/>        //    << "cmd:" << str_cmd << "<br/>"
-<br/>        //    << "uri:" << get_uri << "<br/>";
-<br/>
-<br/>        std::string content_type = "text/html";
-<br/>        std::string add_head = "Connection: keep-alive\r\n";
-<br/>        CHttpResponseMaker::make_string(kk,
-<br/>                                        request->response,
-<br/>                                        content_type,
-<br/>                                        add_head);
-<br/>
-<br/>        if (done) {
-<br/>            done->Run();
-<br/>        }
-<br/>    }
-<br/>    virtual void Finish(CASyncSvr* svr) {}
-<br/>};
-<br/>
-<br/>
-<br/>int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
-<br/>    //std::stringstream ss;
-<br/>    //ss << "svr_id:" << svr->_svr_id
-<br/>    //    << " cli:" << cli_flow
-<br/>    //    << " param:" << *((int*)param) << "\n";
-<br/>    //printf(ss.str().c_str());
-<br/>    return 0;
-<br/>}
-<br/>
-<br/>int main(int argc, char *argv[])
-<br/>{
-<br/>    RpcServer server("192.168.1.13", 8999);
-<br/>    RPCREGI_ONEP(server, EchoServiceImpl);
-<br/>    HTTPREGI(server, MyHttpHandler);
-<br/>    server.RegiClientCloseHandler(close_handler, NULL);
-<br/>    server.start();
-<br/>    return 0;
-<br/>}
-<br/>
-<br/>参考各自目录下的main.cpp即可
-<br/>
-<br/>
-<br/>欢迎bugfix，有协程编程经验同学将其改进成协程的编程方式
+简单易用，几乎和调用本地方法一样使用即可。
+使用protobuf生成代码 支持同时处理pbrpc调用和http请求
+客户端支持 windows linux android使用
+支持同步异步方式调用 支持单向推送 
+支持闲时关闭链接 支持自动重连与断开事件处理
+同步压测 4核机子虚拟机
+简单echo(因为nginx是读文件公平竞争 我们也是读文件) 1000并发 6wqps; nginx 4.5wqps
+异步压测1000并发 40+w qps
+另有400多行实现的 python web服务器 以供参考
+http://www.oschina.net/p/fastpy
+
+例子
+
+首先定义protobuf 协议
+
+package echo;
+message EchoRequest
+{
+required string message = 1;
+};
+message EchoResponse
+{
+required string response = 1;
+};
+service EchoService
+{
+rpc Echo(EchoRequest) returns (EchoResponse);
+};
+option cc_generic_services = true;
+
+然后客户端调用：
+RpcClient client(10, "192.168.1.13", 8999, 1000); // 1:并发sock数 2:host 3:ip 4:超时时间
+echo::EchoService::Stub stub(&client);
+
+echo::EchoRequest req;
+req.set_message("cli hello");
+echo::EchoResponse res;
+stub.Echo(NULL, &req, &res, NULL); // 同步
+
+服务器调用：
+class EchoServiceImpl : public echo::EchoService { // 实现pb生成的接口
+    virtual void Echo(::google::protobuf::RpcController* controller,
+                      const ::echo::EchoRequest* request,
+                      ::echo::EchoResponse* response,
+                      ::google::protobuf::Closure* done) {
+        response->set_response(request->message()+" server_hello");
+        if (done) {
+            done->Run();
+        }
+    }
+};
+
+RpcServer server("192.168.1.13", 8999);
+RPCREGI_ONEP(server, EchoServiceImpl);
+server.start();
+
+服务器http 处理：
+
+class MyHttpHandler : public HttpHandler {
+public:
+    virtual void Init(CASyncSvr* svr) {}
+    virtual void OnRec(HttpRequest* request,
+                       ::google::protobuf::Closure *done) {
+        CHttpParser* ps = request->ps;
+        ps->parse_form_body(); // 解析post数据
+        std::string kk = ps->get_param("kk");
+        std::string res = kk + " server hello":
+        std::string content_type = "text/html";
+        std::string add_head = "Connection: keep-alive\r\n";
+        CHttpResponseMaker::make_string(kk,
+                                        request->response,
+                                        content_type,
+                                        add_head);
+        if (done) {
+            done->Run();
+        }
+    }
+    virtual void Finish(CASyncSvr* svr) {}
+};
+
+RpcServer server("192.168.1.13", 8999);
+RPCREGI(server, EchoServiceImpl);
+HTTPREGI(server, MyHttpHandler);
+server.start();
+
+浏览器访问 http://192.168.1.13:8999/xxx?kk=hello
