@@ -48,18 +48,18 @@ CClientSocketReq::~CClientSocketReq(){
 
 
 /*
-* <0 Ğ´Ê§°Ü£¬»á´¥·¢SOCK_CLEARÊÂ¼ş
-* =0 Êı¾İÈ«²¿Ğ´Íê±Ï£¬²¢½«sockÖØĞÂ·ÅÈëepollÖĞ½øĞĞ¼àÌı¶ÁÇëÇó(Ïàµ±ÓÚ³¤Á¬½Ó)
-* =1 Êı¾İĞ´³É¹¦£¬µ«Ã»ÓĞÈ«²¿Ğ´Íê£¬·Å»ØepollµÈ´ıÏÂ´ÎÔÙ¼àÌıµ½¿ÉĞ´×´Ì¬
+* <0 å†™å¤±è´¥ï¼Œä¼šè§¦å‘SOCK_CLEARäº‹ä»¶
+* =0 æ•°æ®å…¨éƒ¨å†™å®Œæ¯•ï¼Œå¹¶å°†socké‡æ–°æ”¾å…¥epollä¸­è¿›è¡Œç›‘å¬è¯»è¯·æ±‚(ç›¸å½“äºé•¿è¿æ¥)
+* =1 æ•°æ®å†™æˆåŠŸï¼Œä½†æ²¡æœ‰å…¨éƒ¨å†™å®Œï¼Œæ”¾å›epollç­‰å¾…ä¸‹æ¬¡å†ç›‘å¬åˆ°å¯å†™çŠ¶æ€
 
 */
 
 int write_client(ependingpool* ep, int sock, void **arg)
 {
-	unsigned write_succ_size = 0;
+    unsigned write_succ_size = 0;
 	int ret = -1;
 
-	// ¿ÉĞ´£¬Ö±½Ó´Ó»º´æÔÚ·¢ËÍ
+	// å¯å†™ï¼Œç›´æ¥ä»ç¼“å­˜åœ¨å‘é€
 	CClientSocketReq *psock_req = (CClientSocketReq*)(*arg);
 
 
@@ -114,10 +114,10 @@ int write_client(ependingpool* ep, int sock, void **arg)
     return 1;
 }
 /*
-* <0 ¶ÁÊ§°Ü£¬»á´¥·¢SOCK_CLEARÊÂ¼ş
-* =0 Êı¾İÈ«²¿¶ÁÈ¡Íê±Ï£¬²¢½«sock·ÅÈë¾ÍĞ÷¶ÓÁĞÖĞ
-* =1 Êı¾İ¶Á³É¹¦£¬µ«Ã»ÓĞÈ«²¿¶ÁÈ¡Íê±Ï£¬ĞèÒªÔÙ´Î½øĞĞ¼àÌı£¬sock»á±»·Å»ØepollÖĞ
-* =2 ·Åµ½todo event
+* <0 è¯»å¤±è´¥ï¼Œä¼šè§¦å‘SOCK_CLEARäº‹ä»¶
+* =0 æ•°æ®å…¨éƒ¨è¯»å–å®Œæ¯•ï¼Œå¹¶å°†sockæ”¾å…¥å°±ç»ªé˜Ÿåˆ—ä¸­
+* =1 æ•°æ®è¯»æˆåŠŸï¼Œä½†æ²¡æœ‰å…¨éƒ¨è¯»å–å®Œæ¯•ï¼Œéœ€è¦å†æ¬¡è¿›è¡Œç›‘å¬ï¼Œsockä¼šè¢«æ”¾å›epollä¸­
+* =2 æ”¾åˆ°todo event
 
 */
 int read_client(ependingpool* ep, int sock, void **arg)
@@ -126,8 +126,8 @@ int read_client(ependingpool* ep, int sock, void **arg)
 	unsigned read_size = 0;
     CClientSocketReq *psock_req = (CClientSocketReq*)(*arg);
     ShareParam* sp = (ShareParam*)ep->ext_data;
-    char* client_recv_buff = sp->client_recv_buff;
-    int client_recv_len = sp->client_recv_len;
+    char*& client_recv_buff = sp->client_recv_buff;
+    unsigned& client_recv_len = sp->client_recv_len;
 
     unsigned hasread=0;
     //unsigned i = 0;
@@ -159,7 +159,7 @@ int read_client(ependingpool* ep, int sock, void **arg)
     }
 
 
-    // Ö±½Ó·µ»Ø2£¬todo event²Ù×÷
+    // ç›´æ¥è¿”å›2ï¼Œtodo eventæ“ä½œ
     return 2;
 }
 
@@ -185,7 +185,7 @@ int todo_client(ependingpool* ep, struct ependingpool::ependingpool_task_t *v)
             unsigned long ip = 0;
             sock2peer(sock,ip);
 
-            // ²úÉúflow_no,±ØĞë±£´æoffset
+            // äº§ç”Ÿflow_no,å¿…é¡»ä¿å­˜offset
             unsigned cd_flow = psock_req->flow;
             psock_req->offset = offset;
             sp->cliF2O->Add(cd_flow,offset);
@@ -198,15 +198,15 @@ int todo_client(ependingpool* ep, struct ependingpool::ependingpool_task_t *v)
         }
     } while( ret>0 );
 
-    // ·µ»Ø0£¬¼àÌı OUT£¬Ğ´²Ù×÷
-    // ·µ»Ø1£¬¼àÌı IN
-    // ·µ»Ø2£¬¹Ø±ÕÁ¬½Óclear_item
-    // ·µ»Ø3£¬Ê²Ã´Ò²²»×ö
+    // è¿”å›0ï¼Œç›‘å¬ OUTï¼Œå†™æ“ä½œ
+    // è¿”å›1ï¼Œç›‘å¬ IN
+    // è¿”å›2ï¼Œå…³é—­è¿æ¥clear_item
+    // è¿”å›3ï¼Œä»€ä¹ˆä¹Ÿä¸åš
     if ( ret >= 0 ) {
-		// Õâ¸ö°ü»¹Ã»½ÓÊÕÍê£¬ĞèÒª¼ÌĞø¶Á
+		// è¿™ä¸ªåŒ…è¿˜æ²¡æ¥æ”¶å®Œï¼Œéœ€è¦ç»§ç»­è¯»
         return 3;
 	}
-	// ¶ÁÊ§°Ü£¬´¥·¢SOCK_CLEARÊÂ¼ş
+	// è¯»å¤±è´¥ï¼Œè§¦å‘SOCK_CLEARäº‹ä»¶
 	return -1;
 }
 
@@ -219,7 +219,7 @@ int ini_client(ependingpool* ep, int sock, void **arg)
 	{
 		return -1;
 	}
-	//½«Ö¸Õë¸³¸øsockÀ¦°óµÄÖ¸Õë
+	//å°†æŒ‡é’ˆèµ‹ç»™sockæ†ç»‘çš„æŒ‡é’ˆ
 	*arg = sock_req;
 	return 0;
 }
@@ -256,7 +256,7 @@ int accept_client(ependingpool* ep, int lis, void **arg)
 
     DebugSockInfo("accept client 1",work_sock,0);
 
-    //ÕâÀïĞèÒªÉèÖÃ·Ç¶ÂÈûÄ£Ê½£¬ ·ñÔò¶ÁĞ´µÄÊ±ºò»á±»hand×¡
+    //è¿™é‡Œéœ€è¦è®¾ç½®éå µå¡æ¨¡å¼ï¼Œ å¦åˆ™è¯»å†™çš„æ—¶å€™ä¼šè¢«handä½
     if (do_setsocktonoblock(work_sock)) {
         close(work_sock);
 
@@ -269,7 +269,7 @@ int accept_client(ependingpool* ep, int lis, void **arg)
 }
 
 int server_hup(ependingpool* ep, int sock,void **arg){
-     LOG(LOG_ALL,"sock error: %d server socket error detected by epollhup.\n", sock);
+     //LOG(LOG_ALL,"sock error: %d server socket error detected by epollhup.\n", sock);
      return 0;
 
 }
@@ -292,16 +292,16 @@ CClientNetSvr::CClientNetSvr(CASyncSvr* asvr,const int &_max,int _sock_num/* =10
     pool_queue_len = _queue_len;
 
     pool.set_epoll_timeo(-1);
-    //ÉèÖÃÁ¬½Ó³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
+    //è®¾ç½®è¿æ¥è¶…æ—¶æ—¶é—´(ç§’), é»˜è®¤ä¸º1s
     pool.set_conn_timeo(60*30);
-    //ÉèÖÃ¶Á³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
+    //è®¾ç½®è¯»è¶…æ—¶æ—¶é—´(ç§’), é»˜è®¤ä¸º1s
     pool.set_read_timeo(60*30);
-    //ÉèÖÃĞ´³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
+    //è®¾ç½®å†™è¶…æ—¶æ—¶é—´(ç§’), é»˜è®¤ä¸º1s
     pool.set_write_timeo(60*30);
 
-    //ÉèÖÃ¿É´æ´¢socketµÄÊıÁ¿
+    //è®¾ç½®å¯å­˜å‚¨socketçš„æ•°é‡
     pool.set_sock_num(max_conn);
-    //ÉèÖÃÒÑ¾ÍĞ÷¶ÓÁĞµÄ³¤¶È
+    //è®¾ç½®å·²å°±ç»ªé˜Ÿåˆ—çš„é•¿åº¦
     pool.set_queue_len(pool_sock_num);
     sp = new ShareParam(CLIENT_COMPLETE_MAX_BUFFER);
     sp->p_svr = p_svr;
@@ -334,15 +334,15 @@ void CClientNetSvr::Start(int listen_sd)
     //printf("listen %d,%s\n",listen_sd,strIP.c_str());
 
     pool.set_listen_fd(listen_sd);
-    //Õë¶Ô²»Í¬µÄÊÂ¼şÊ¹ÓÃÏàÓ¦µÄ»Øµ÷º¯Êı
+    //é’ˆå¯¹ä¸åŒçš„äº‹ä»¶ä½¿ç”¨ç›¸åº”çš„å›è°ƒå‡½æ•°
     ret = pool.set_event_callback(ependingpool::SOCK_ACCEPT, accept_client);   //printf("set ret%d\n",ret);
 
 
-    //³õÊ¼»¯ÓësockÀ¦°óµÄÊı¾İ
+    //åˆå§‹åŒ–ä¸sockæ†ç»‘çš„æ•°æ®
     pool.set_event_callback(ependingpool::SOCK_INIT, ini_client);
-    //ÊÍ·ÅÓësockÀ¦°óµÄÊı¾İ
+    //é‡Šæ”¾ä¸sockæ†ç»‘çš„æ•°æ®
     pool.set_event_callback(ependingpool::SOCK_CLEAR, clear_client);
-    //Ê¹ÓÃ·Ç¶ÂÈû¶ÁĞ´·½Ê½£¬Ä£ÄâÒì²½¶ÁĞ´
+    //ä½¿ç”¨éå µå¡è¯»å†™æ–¹å¼ï¼Œæ¨¡æ‹Ÿå¼‚æ­¥è¯»å†™
     pool.set_event_callback(ependingpool::SOCK_READ, read_client);
     pool.set_event_callback(ependingpool::SOCK_WRITE, write_client);
     pool.set_todo_event_ex(todo_client, NULL);
