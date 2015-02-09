@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include <stdlib.h>
 
 
 #include "CNetfun.h"
@@ -18,7 +19,7 @@ long GetMillisecondTime()
 {
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    return tv.tv_sec * 1000 + tv.tv_usec / 1000;  // ·µ»ØºÀÃë
+    return tv.tv_sec * 1000 + tv.tv_usec / 1000;  // è¿”å›è±ªç§’
 }
 
 long GetMicrosecondTime()
@@ -152,51 +153,56 @@ int do_tcplisten(const char *strip,int port, int queue)
 
 
 /*
-read_size		·µ»ØÒÑ¾­¶ÁÈ¡µÄ³¤¶È
-buff_size       buffµÄ»º³å³¤¶È
-return 0        ³É¹¦
-return -1       Ê§°Ü£¬ĞèÒª¹Ø±Õsocket
-return -2       ¹Ø±Õ
+read_size    	è¿”å›å·²ç»è¯»å–çš„é•¿åº¦
+buff_size       buffçš„ç¼“å†²é•¿åº¦
+return 0        æˆåŠŸ
+return -1       å¤±è´¥ï¼Œéœ€è¦å…³é—­socket
+return -2       å…³é—­
 */
-int noblock_read_buff(int sock, char *buff, unsigned *read_size, unsigned buff_size)
+int noblock_read_buff(int sock, char*& buff, unsigned *read_size, unsigned& buff_size)
 {
     int ret;
 	*read_size = 0;
 
     while (1) {
         ret = read(sock, buff+(*read_size), buff_size-(*read_size));
-        //·Ç¶ÂÈû¶Á³öÏÖEINTRÊÇÕı³£ÏÖÏó, ÔÙ¶ÁÒ»´Î¼´¿É
+        //éå µå¡è¯»å‡ºç°EINTRæ˜¯æ­£å¸¸ç°è±¡, å†è¯»ä¸€æ¬¡å³å¯
         if (-1 == ret && (EINTR == errno))
             continue;
         break;
     }
     if (ret < 0) {
         if (EAGAIN == errno) {
-            //³öÏÖEAGAIN±íÊ¾¶ÁµÄÊ±ºò£¬ÍøÂçµ×²ãÕ»ÀïÃ»Êı¾İ,·µ»Ø1µÈ´ıÏÂ´Î¶ÁÈ¡
+            //å‡ºç°EAGAINè¡¨ç¤ºè¯»çš„æ—¶å€™ï¼Œç½‘ç»œåº•å±‚æ ˆé‡Œæ²¡æ•°æ®,è¿”å›1ç­‰å¾…ä¸‹æ¬¡è¯»å–
             //ul_writelog(UL_LOG_DEBUG, "read EAGAIN");
             return 0;
         }
-        //¶ÁÊı¾İ³ö´íÁË
+        //è¯»æ•°æ®å‡ºé”™äº†
         //ul_writelog(UL_LOG_WARNING, "read buff fail [%m]");
         return -1;
     }
     if (0 == ret) {
         //ul_writelog(UL_LOG_DEBUG, "read 0, close it");
-        //¶Áµ½0Ò»°ãÊÇ¶Ô¶ËcloseÖ÷¶¯¶Ï¿ª
+        //è¯»åˆ°0ä¸€èˆ¬æ˜¯å¯¹ç«¯closeä¸»åŠ¨æ–­å¼€
         return -2;
     }
 
     *read_size += ret;
+    if (*read_size + 1024 > buff_size) {
+        buff_size += 100*1024;
+        buff = (char*)realloc(buff, buff_size);
+        printf("realloc %d\n", buff_size);
+    }
     return 0;
 }
 
 /*
-buff				Ğ´µÄÄÚÈİ
-buff_size			×¼±¸Ğ´ÈëµÄ´óĞ¡
-write_succ_size     ·µ»ØÕæÕıĞ´ÈëµÄ´óĞ¡
-return 0			³É¹¦
-return -1			Ê§°Ü
-return -2           ¹Ø±Õ
+buff				å†™çš„å†…å®¹
+buff_size			å‡†å¤‡å†™å…¥çš„å¤§å°
+write_succ_size     è¿”å›çœŸæ­£å†™å…¥çš„å¤§å°
+return 0			æˆåŠŸ
+return -1			å¤±è´¥
+return -2           å…³é—­
 */
 int noblock_write_buff(int sock, CRWCache& sendcache, unsigned *write_succ_size)
 {
@@ -216,11 +222,11 @@ int noblock_write_buff(int sock, CRWCache& sendcache, unsigned *write_succ_size)
         if ( EAGAIN == errno || errno == EINPROGRESS ) {
             return 0;
         }
-        //Ğ´Êı¾İ³ö´íÁË
+        //å†™æ•°æ®å‡ºé”™äº†
         //ul_writelog(UL_LOG_WARNING, "write buff fail [%m]");
         return -1;
     }
-    if (0 == ret) { // 0Ò»°ãÊÇ¶Ô¶ËcloseÖ÷¶¯¶Ï¿ª
+    if (0 == ret) { // 0ä¸€èˆ¬æ˜¯å¯¹ç«¯closeä¸»åŠ¨æ–­å¼€
         return -2;
     }
     *write_succ_size += ret;
