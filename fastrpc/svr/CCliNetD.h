@@ -26,7 +26,7 @@ using namespace std;
 *
 *
 * <pre>
-* Ç°¶Ë½ÓÈëÒì²½µ¥Ïß³ÌÄ£¿é
+* å‰ç«¯æ¥å…¥å¼‚æ­¥å•çº¿ç¨‹æ¨¡å—
 *
 * </pre>
 **/
@@ -39,22 +39,22 @@ public:
     CRWCache recvcache;
 
     /*
-    ÖØÔØº¯Êı£¬ÅĞ¶ÏÍøÂçÊı¾İ½ÓÊÕÊÇ·ñÍêÕû
+    é‡è½½å‡½æ•°ï¼Œåˆ¤æ–­ç½‘ç»œæ•°æ®æ¥æ”¶æ˜¯å¦å®Œæ•´
 
-    is_complete ºÍ check_recv_one ·µ»ØÖµ
-    ret<0 Ğ¡ÓÚÁã,·µ»ØÊ§°Ü
-    ret>0 ´óÓÚÁã,·µ»ØµÃµ½µÄ×Ö½ÚÊı
-    ret=0 µÈÓÚÁã,»¹Òª¼ÌĞø½ÓÊÕ
-    ×¢ÒâÈç¹û°ü´óÓÚ CLIENT_COMPLETE_MAX_BUFFER ºÍ BACK_COMPLETE_MAX_BUFFER£¬ĞèÒª·ÅÆú°ü¡£
+    is_complete å’Œ check_recv_one è¿”å›å€¼
+    ret<0 å°äºé›¶,è¿”å›å¤±è´¥
+    ret>0 å¤§äºé›¶,è¿”å›å¾—åˆ°çš„å­—èŠ‚æ•°
+    ret=0 ç­‰äºé›¶,è¿˜è¦ç»§ç»­æ¥æ”¶
+    æ³¨æ„å¦‚æœåŒ…å¤§äº CLIENT_COMPLETE_MAX_BUFFER å’Œ BACK_COMPLETE_MAX_BUFFERï¼Œéœ€è¦æ”¾å¼ƒåŒ…ã€‚
     */
     virtual int is_complete(char *data,unsigned data_len);
 
-    // ¼ì²éÊÇ·ñÊÕµ½Ò»¸öÍêÕûµÄ°ü£¬È»ºó°ÑËû·Åµ½buffÀïÃæ£¬lenÊÇ³¤¶È
+    // æ£€æŸ¥æ˜¯å¦æ”¶åˆ°ä¸€ä¸ªå®Œæ•´çš„åŒ…ï¼Œç„¶åæŠŠä»–æ”¾åˆ°buffé‡Œé¢ï¼Œlenæ˜¯é•¿åº¦
     int check_recv_one(char *buff,unsigned &len)
     {
         len = 0;
         int ret = is_complete(recvcache.data(),recvcache.data_len());
-        if ( ret>0 ) // ÊÕµ½Ò»¸öÍêÕûµÄ°ü
+        if ( ret>0 ) // æ”¶åˆ°ä¸€ä¸ªå®Œæ•´çš„åŒ…
         {
             //memcpy(buff,recvcache.data(),ret);
             //recvcache.skip(ret);
@@ -73,7 +73,7 @@ public:
 
     unsigned flow;
     int offset;
-    // Í³¼Æ
+    // ç»Ÿè®¡
     timeval tBegin;
     timeval tEnd;
 };
@@ -93,13 +93,14 @@ public:
 
 
 /*
-    Ğ­ÒéÊı¾İ½á¹¹
-    ¡¾nshead¡¿¡¾¶¯Ì¬ÄÚÈİ¡¿Ã»ÓĞReqHeader
+    åè®®æ•°æ®ç»“æ„
+    ã€nsheadã€‘ã€åŠ¨æ€å†…å®¹ã€‘æ²¡æœ‰ReqHeader
 */
 typedef struct _ShareParam {
     _ShareParam (int max_len) {
         client_recv_len = max_len;
-        client_recv_buff = new char[max_len];
+        //client_recv_buff = new char[max_len];
+        client_recv_buff = (char*)malloc(max_len);
         cliF2O = new CFlow2Offset();
         flow = 0;
     }
@@ -121,7 +122,7 @@ class CClientNetSvr
 public:
     static void *run(void *instance);
 
-    // buf_len ½ÓÊÕ»º³åÇøµÄ³¤¶È
+    // buf_len æ¥æ”¶ç¼“å†²åŒºçš„é•¿åº¦
     CClientNetSvr(CASyncSvr* asvr,const int &_max,int _sock_num=10000,int _queue_len=10000);
     ~CClientNetSvr();
 
@@ -148,66 +149,66 @@ public:
 
 /*
 
-=2 ²Ù×÷³É¹¦£¬ ´¥·¢SOCK_CLEARÊÂ¼ş£¬µ«²»¹Ø±Õ¾ä±ú£¬¿ÉÒÔ°Ñ¾ä±úÒÆ³öependingpool
+=2 æ“ä½œæˆåŠŸï¼Œ è§¦å‘SOCK_CLEARäº‹ä»¶ï¼Œä½†ä¸å…³é—­å¥æŸ„ï¼Œå¯ä»¥æŠŠå¥æŸ„ç§»å‡ºependingpool
 
 
-_block_sizeÊÇÉı¼¶ÒÑ¾­ÉêÇëµÄ¿Õ¼ä
+_block_sizeæ˜¯å‡çº§å·²ç»ç”³è¯·çš„ç©ºé—´
 
-connect ÊÇ status_send_connecting
-
-
-dcc_req_send:  // Ò»°ãÎÒÃÇÖ»ÓÃµ½Õâ¸ö£¬È»ºóÖ±½Ó¾ÍÊÇ status_send_connecting
-
-(ret != -EWOULDBLOCK) && (ret != -EINPROGRESS) ·Ç×èÈûconnect£¬Èç¹û·µ»ØÕâ¸ö£¬ÏÂ´Î¾Í¿É¶Á¿ÉĞ´
-
-epollÓĞÁ½ÖÖÄ£Ê½,Edge Triggered(¼ò³ÆET) ºÍ Level Triggered(¼ò³ÆLT).ÔÚ²ÉÓÃÕâÁ½ÖÖÄ£Ê½Ê±Òª×¢ÒâµÄÊÇ,Èç¹û²ÉÓÃETÄ£Ê½,ÄÇÃ´½öµ±×´Ì¬·¢Éú±ä»¯Ê±²Å»áÍ¨Öª,¶ø²ÉÓÃLTÄ£Ê½ÀàËÆÓÚÔ­À´µÄselect/poll²Ù×÷,Ö»Òª»¹ÓĞÃ»ÓĞ´¦ÀíµÄÊÂ¼ş¾Í»áÒ»Ö±Í¨Öª.
-
-±ß½ç´¥·¢µÄĞ§ÂÊ¸ß£¬µ«³ÌĞòÊµÏÖÉÏÒªĞ¡ĞÄ£¬Â©µôÃ»´¦ÀíµÄ²»»áµÃµ½ÌáĞÑÁË¡£
-¶øµçÆ½´¥·¢µÄ³ÌĞòÊµÏÖÉÏ·½±ã£¬Ğ§ÂÊÒªµÍĞ©£¬ËÆºõlibeventºÍlighttpd¶¼ÓÃµÄËü¡£
+connect æ˜¯ status_send_connecting
 
 
-EPOLLIN  ¿É¶Á£¬°üÀ¨socketÕı³£¹Ø±Õ
-EPOLLOUT ¿ÉĞ´
-EPOLLERR ·¢Éú´íÎó
-EPOLLHUP socket¶ÌÁË
-EPOLLONEAHOT Ö»¼àÌıÒ»´ÎÊÂ¼ş£¬ÈçÏë¼àÌı£¬±ØĞëÔÙ´Îepoll_ctl
+dcc_req_send:  // ä¸€èˆ¬æˆ‘ä»¬åªç”¨åˆ°è¿™ä¸ªï¼Œç„¶åç›´æ¥å°±æ˜¯ status_send_connecting
+
+(ret != -EWOULDBLOCK) && (ret != -EINPROGRESS) éé˜»å¡connectï¼Œå¦‚æœè¿”å›è¿™ä¸ªï¼Œä¸‹æ¬¡å°±å¯è¯»å¯å†™
+
+epollæœ‰ä¸¤ç§æ¨¡å¼,Edge Triggered(ç®€ç§°ET) å’Œ Level Triggered(ç®€ç§°LT).åœ¨é‡‡ç”¨è¿™ä¸¤ç§æ¨¡å¼æ—¶è¦æ³¨æ„çš„æ˜¯,å¦‚æœé‡‡ç”¨ETæ¨¡å¼,é‚£ä¹ˆä»…å½“çŠ¶æ€å‘ç”Ÿå˜åŒ–æ—¶æ‰ä¼šé€šçŸ¥,è€Œé‡‡ç”¨LTæ¨¡å¼ç±»ä¼¼äºåŸæ¥çš„select/pollæ“ä½œ,åªè¦è¿˜æœ‰æ²¡æœ‰å¤„ç†çš„äº‹ä»¶å°±ä¼šä¸€ç›´é€šçŸ¥.
+
+è¾¹ç•Œè§¦å‘çš„æ•ˆç‡é«˜ï¼Œä½†ç¨‹åºå®ç°ä¸Šè¦å°å¿ƒï¼Œæ¼æ‰æ²¡å¤„ç†çš„ä¸ä¼šå¾—åˆ°æé†’äº†ã€‚
+è€Œç”µå¹³è§¦å‘çš„ç¨‹åºå®ç°ä¸Šæ–¹ä¾¿ï¼Œæ•ˆç‡è¦ä½äº›ï¼Œä¼¼ä¹libeventå’Œlighttpdéƒ½ç”¨çš„å®ƒã€‚
+
+
+EPOLLIN  å¯è¯»ï¼ŒåŒ…æ‹¬socketæ­£å¸¸å…³é—­
+EPOLLOUT å¯å†™
+EPOLLERR å‘ç”Ÿé”™è¯¯
+EPOLLHUP socketçŸ­äº†
+EPOLLONEAHOT åªç›‘å¬ä¸€æ¬¡äº‹ä»¶ï¼Œå¦‚æƒ³ç›‘å¬ï¼Œå¿…é¡»å†æ¬¡epoll_ctl
 
 
 
-keep_alive close(fd)£¬²¢´Óepoll_ctl(del)
+keep_alive close(fd)ï¼Œå¹¶ä»epoll_ctl(del)
 reset_item(int handle, bool keep_alive)
 pool_epoll_offset_mod(handle, EPOLLIN | EPOLLHUP | EPOLLERR | EPOLLONESHOT);
 
 clear_item
-²»close£¨fd£©£¬Ö»ÊÇpool_epoll_offset_del(handle);
+ä¸closeï¼ˆfdï¼‰ï¼Œåªæ˜¯pool_epoll_offset_del(handle);
 
 
-¼ÓÈëepoll£¬¶¼ÊÇÄ¬ÈÏ²ÎÊı
+åŠ å…¥epollï¼Œéƒ½æ˜¯é»˜è®¤å‚æ•°
 accept_sock
 insert_item_sock
 
 
 
-¡¾CCD¡¿
+ã€CCDã€‘
 
-1. ¡¾epoll event¡¿ send ·¢ËÍÍê±Ï£¬¸ÄÎª IN,Î´·¢ËÍÍê£¬²»×öÈÎºÎ´¦Àí
-2. ¡¾epoll event¡¿ recv ²»×öÈÎºÎ´¦Àí
-3. ¡¾item data¡¿ sendÍê³É£¬²»×öÈÎºÎ´¦Àí£¬Î´Íê³É£¬¸ÄÎªin¡¢out
-
-
-
-1.  ¡¾item data¡¿ÒÑ¾­Á¬½Ó£¬send·¢ËÍÍê£¬²»×öÈÎºÎ´¦Àí£¬Î´·¢ËÍÍê£¬ĞŞ¸ÄÎªin/out
-²»´æÔÚÁ¬½Ó£¬·¢ËÍÍê£¬¸ÄÎªIN,Î´·¢ËÍÍê£¬¸ÄÎªin/out
-
-
-2.  ¡¾epoll event¡¿ ·¢ËÍÍê£¬¸ÄÎªIN£¬Î´·¢ËÍÍê£¬²»×öÈÎºÎ´¦Àí
-3.  ¡¾epoll event¡¿ recv ²»×öÈÎºÎ´¦Àí
+1. ã€epoll eventã€‘ send å‘é€å®Œæ¯•ï¼Œæ”¹ä¸º IN,æœªå‘é€å®Œï¼Œä¸åšä»»ä½•å¤„ç†
+2. ã€epoll eventã€‘ recv ä¸åšä»»ä½•å¤„ç†
+3. ã€item dataã€‘ sendå®Œæˆï¼Œä¸åšä»»ä½•å¤„ç†ï¼Œæœªå®Œæˆï¼Œæ”¹ä¸ºinã€out
 
 
 
-insert_item »áĞŞ¸ÄÎª last_active£¬²¢ÉèÖÃÎª sock_status = READY
-reset_item Èç¹û±£³Ö³¤Á¬½Ó true £¬»álast_active£¬²¢ÉèÖÃÎª sock_status = READY
-write_reset_item »álast_active£¬²¢ÉèÖÃÎª sock_status = WRITE_BUSY
+1.  ã€item dataã€‘å·²ç»è¿æ¥ï¼Œsendå‘é€å®Œï¼Œä¸åšä»»ä½•å¤„ç†ï¼Œæœªå‘é€å®Œï¼Œä¿®æ”¹ä¸ºin/out
+ä¸å­˜åœ¨è¿æ¥ï¼Œå‘é€å®Œï¼Œæ”¹ä¸ºIN,æœªå‘é€å®Œï¼Œæ”¹ä¸ºin/out
+
+
+2.  ã€epoll eventã€‘ å‘é€å®Œï¼Œæ”¹ä¸ºINï¼Œæœªå‘é€å®Œï¼Œä¸åšä»»ä½•å¤„ç†
+3.  ã€epoll eventã€‘ recv ä¸åšä»»ä½•å¤„ç†
+
+
+
+insert_item ä¼šä¿®æ”¹ä¸º last_activeï¼Œå¹¶è®¾ç½®ä¸º sock_status = READY
+reset_item å¦‚æœä¿æŒé•¿è¿æ¥ true ï¼Œä¼šlast_activeï¼Œå¹¶è®¾ç½®ä¸º sock_status = READY
+write_reset_item ä¼šlast_activeï¼Œå¹¶è®¾ç½®ä¸º sock_status = WRITE_BUSY
 
 do_read_event
 if (READ_BUSY != m_ay_sock[offset].sock_status) {
@@ -227,7 +228,7 @@ m_ay_sock[offset].sock_status = WRITE_BUSY;
 
 }
 
-·Åµ½¾ÍĞ÷¶ÓÁĞ£¬ »áĞŞ¸ÄÎª last_active
+æ”¾åˆ°å°±ç»ªé˜Ÿåˆ—ï¼Œ ä¼šä¿®æ”¹ä¸º last_active
 m_ay_sock[offset].sock_status = BUSY;
 */
 
