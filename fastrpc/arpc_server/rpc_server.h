@@ -208,6 +208,7 @@ public:
         for(int i = 0; i < rpc_size; ++i) {
             AddService(i, service);
         }
+        return true;
     }
 
     // 单例
@@ -215,6 +216,7 @@ public:
         for(int i = 0; i < rpc_size; ++i) {
             AddHttpHandler(handler);
         }
+        return true;
     }
 
     RpcMethodMap* pop_service() {
@@ -293,4 +295,3 @@ public:
 };
 
 #endif
-
