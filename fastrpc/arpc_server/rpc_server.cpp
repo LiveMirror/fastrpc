@@ -1,4 +1,5 @@
 #include "rpc_server.h"
+
 #include "xcore_atomic.h"
 
 static void HandleServiceDone(HandleServiceEntry *entry) {
@@ -88,7 +89,7 @@ void* CUploadDownWebSvr::Run(CDataBuf *item, CASyncSvr* svr)
     int content_len = ps->getContentLen();
 
     string opcode = ps->get_head_field("op");
-    string cli_id = ps->get_head_field("cli_id"); // ¿Í»§¶Ë°üÎ¨Ò»±êÊ¶
+    string cli_id = ps->get_head_field("cli_id"); // å®¢æˆ·ç«¯åŒ…å”¯ä¸€æ ‡è¯†
     if (http_handler &&
         (opcode.empty() || cli_id.empty())) {
         /// http
@@ -170,13 +171,13 @@ void* CUploadDownWebSvr::Run(CDataBuf *item, CASyncSvr* svr)
 
 
 
-//////////////http·şÎñÄ¬ÈÏÅäÖÃ£¬×ßhttpÔòÎŞĞè¸Ä¶¯////////////////////
+//////////////httpæœåŠ¡é»˜è®¤é…ç½®ï¼Œèµ°httpåˆ™æ— éœ€æ”¹åŠ¨////////////////////
 /*
-is_complete ºÍ check_recv_one ·µ»ØÖµ
-ret<0 Ğ¡ÓÚÁã,·µ»ØÊ§°Ü
-ret>0 ´óÓÚÁã,·µ»ØµÃµ½µÄ×Ö½ÚÊı
-ret=0 µÈÓÚÁã,»¹Òª¼ÌĞø½ÓÊÕ
-×¢ÒâÈç¹û°ü´óÓÚ CLIENT_COMPLETE_MAX_BUFFER ºÍ BACK_COMPLETE_MAX_BUFFER£¬ĞèÒª·ÅÆú°ü¡£
+is_complete å’Œ check_recv_one è¿”å›å€¼
+ret<0 å°äºé›¶,è¿”å›å¤±è´¥
+ret>0 å¤§äºé›¶,è¿”å›å¾—åˆ°çš„å­—èŠ‚æ•°
+ret=0 ç­‰äºé›¶,è¿˜è¦ç»§ç»­æ¥æ”¶
+æ³¨æ„å¦‚æœåŒ…å¤§äº CLIENT_COMPLETE_MAX_BUFFER å’Œ BACK_COMPLETE_MAX_BUFFERï¼Œéœ€è¦æ”¾å¼ƒåŒ…ã€‚
 */
 int CClientSocketReq::is_complete(char *data,unsigned data_len)
 {
@@ -188,7 +189,7 @@ int CBackSocketReq::is_complete(char *data,unsigned data_len)
     return http_complete_func(data,data_len);
 }
 
-//ÒµÎñÂß¼­Ä¬ÈÏÍ¬²½Ä£Ê½
+//ä¸šåŠ¡é€»è¾‘é»˜è®¤åŒæ­¥æ¨¡å¼
 xCallbackObj *CMainAsyncSvr::CreateAsyncObj(CDataBuf *item)
 {
     return NULL;
@@ -200,9 +201,10 @@ CTask *CASyncSvr::CCreatePoolTask()
 }
 
 bool RpcServer::start() {
-    //IsClientAsyn = false; // Ä¬ÈÏtrue£¬¿Í»§¶ËÈç¹ûÊÇÍ¬²½Ä£Ê½£¬ÉèÎªfalse£¬¿É¼õÉÙ¼ÓËø
-    //Multi_Process_or_Thread = "Process"; // Ä¬ÈÏThread£¬ioÄ£¿éÊ¹ÓÃ¶àÏß³Ì»¹ÊÇ¶à½ø³Ì
+    //IsClientAsyn = false; // é»˜è®¤trueï¼Œå®¢æˆ·ç«¯å¦‚æœæ˜¯åŒæ­¥æ¨¡å¼ï¼Œè®¾ä¸ºfalseï¼Œå¯å‡å°‘åŠ é”
+    //Multi_Process_or_Thread = "Process"; // é»˜è®¤Threadï¼Œioæ¨¡å—ä½¿ç”¨å¤šçº¿ç¨‹è¿˜æ˜¯å¤šè¿›ç¨‹
     LOG_OPEN(LOG_DEBUG,LOG_TYPE_DAILY,"./","arpc_server");
-    app_main(host_, port_, RPCSOCKNUM, RPCIONUM, RPCWORKNUM, this);
+    int cpu_num = ipcs_common::GetCpuNum();
+    app_main(host_, port_, RPCSOCKNUM, cpu_num+1, 2, this);
     return true;
 }
