@@ -84,3 +84,4 @@
 <br/>server.start();
 <br/>
 <br/>浏览器访问 http://192.168.1.13:8999/xxx?kk=hello
+<br/> 更多丰富功能请参阅代码
