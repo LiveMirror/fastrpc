@@ -29,15 +29,16 @@
 #include "base64.h"
 #include "common_config.h"
 #include "my_lib.h"
-#include "closure.h"
-#include "this_thread.h"
-#include "timer_manager.h"
+//#include "closure.h"
+//#include "this_thread.h"
+//#include "timer_manager.h"
+#include "system_information.h"
 #include "CLog.h"
 #include "myconfig.h"
 #include "common_config.h"
 
 #define RPCIONUM 4
-#define RPCWORKNUM 4
+#define RPCWORKNUM 2
 #define RPCSOCKNUM 20000
 
 #define RPCREGI(x, y)      \
@@ -167,7 +168,8 @@ public:
         rpc_pop_index = 0;
         http_pop_index = 0;
         has_http_handler = false;
-        rpc_size = RPCIONUM*RPCWORKNUM;
+        int cpu_num = ipcs_common::GetCpuNum();
+        rpc_size = (cpu_num + 1)*2;
         rpc_list = new RpcMethodMap[rpc_size];
         pthread_mutex_init(&_mux,NULL);
     }
@@ -199,6 +201,20 @@ public:
         has_http_handler = true;
         http_handler_list.push_back(handler);
         return true;
+    }
+
+    // 单例
+    bool RegiService(::google::protobuf::Service *service) {
+        for(int i = 0; i < rpc_size; ++i) {
+            AddService(i, service);
+        }
+    }
+
+    // 单例
+    bool RegiHttpHandler(HttpHandler* handler) {
+        for(int i = 0; i < rpc_size; ++i) {
+            AddHttpHandler(handler);
+        }
     }
 
     RpcMethodMap* pop_service() {
