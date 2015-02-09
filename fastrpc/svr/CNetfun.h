@@ -17,15 +17,15 @@ using namespace std;
 *
 *
 * <pre>
-* ÍøÂç¶ÁĞ´º¯Êı
+* ç½‘ç»œè¯»å†™å‡½æ•°
 * </pre>
 **/
 
 
 
 
-const unsigned CLIENT_COMPLETE_MAX_BUFFER = (30*1024*1024); // ½ÓÊÕ¿Í»§¶Ë×î´óµÄ°ü
-const unsigned BACK_COMPLETE_MAX_BUFFER = (1);   // ½ÓÊÕºóÌ¨×î´óµÄ°ü
+const unsigned CLIENT_COMPLETE_MAX_BUFFER = (1*1024*1024); // æ¥å—ç¼“å†²åŒºåˆå§‹åŒ–å¤§å°
+const unsigned BACK_COMPLETE_MAX_BUFFER = (1);   // æ¥æ”¶åå°æœ€å¤§çš„åŒ…
 
 
 
@@ -51,21 +51,21 @@ long GetMillisecondTime();
 long GetMicrosecondTime();
 
 /*
-read_size		·µ»ØÒÑ¾­¶ÁÈ¡µÄ³¤¶È
-buff_size       buffµÄ»º³å³¤¶È
-return 0        ³É¹¦
-return -1       Ê§°Ü£¬ĞèÒª¹Ø±Õsocket
-return -2       ¹Ø±Õ
+read_size    	è¿”å›å·²ç»è¯»å–çš„é•¿åº¦
+buff_size       buffçš„ç¼“å†²é•¿åº¦
+return 0        æˆåŠŸ
+return -1       å¤±è´¥ï¼Œéœ€è¦å…³é—­socket
+return -2       å…³é—­
 */
-int noblock_read_buff(int sock, char *buff, unsigned *read_size, unsigned buff_size);
+int noblock_read_buff(int sock, char*& buff, unsigned *read_size, unsigned& buff_size);
 
 /*
-buff				Ğ´µÄÄÚÈİ
-buff_size			×¼±¸Ğ´ÈëµÄ´óĞ¡
-write_succ_size     ·µ»ØÕæÕıĞ´ÈëµÄ´óĞ¡
-return 0			³É¹¦
-return -1			Ê§°Ü
-return -2       ¹Ø±Õ
+buff				å†™çš„å†…å®¹
+buff_size			å‡†å¤‡å†™å…¥çš„å¤§å°
+write_succ_size     è¿”å›çœŸæ­£å†™å…¥çš„å¤§å°
+return 0			æˆåŠŸ
+return -1			å¤±è´¥
+return -2       å…³é—­
 */
 int noblock_write_buff(int sock, CRWCache& sendcache, unsigned *write_succ_size);
 
