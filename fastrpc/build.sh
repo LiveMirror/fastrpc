@@ -1,4 +1,3 @@
-
 #protobuf
 #ullib
 #mongo-driver
@@ -48,11 +47,6 @@ make
 cd $CUR_DIR
 
 cd arpc_client_for_pc
-make clean
-make
-cd $CUR_DIR
-
-cd arpc_client_for_server
 make clean
 make
 cd $CUR_DIR
