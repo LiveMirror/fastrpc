@@ -26,24 +26,24 @@ void DebugSockInfo(const char *info,int sock,int ret,unsigned rws,unsigned dlen)
 
 
 /*
-* <0 Ğ´Ê§°Ü£¬»á´¥·¢SOCK_CLEARÊÂ¼ş
-* =0 Êı¾İÈ«²¿Ğ´Íê±Ï£¬²¢½«sockÖØĞÂ·ÅÈëepollÖĞ½øĞĞ¼àÌı¶ÁÇëÇó(Ïàµ±ÓÚ³¤Á¬½Ó)
-* =1 Êı¾İĞ´³É¹¦£¬µ«Ã»ÓĞÈ«²¿Ğ´Íê£¬·Å»ØepollµÈ´ıÏÂ´ÎÔÙ¼àÌıµ½¿ÉĞ´×´Ì¬
+* <0 å†™å¤±è´¥ï¼Œä¼šè§¦å‘SOCK_CLEARäº‹ä»¶
+* =0 æ•°æ®å…¨éƒ¨å†™å®Œæ¯•ï¼Œå¹¶å°†socké‡æ–°æ”¾å…¥epollä¸­è¿›è¡Œç›‘å¬è¯»è¯·æ±‚(ç›¸å½“äºé•¿è¿æ¥)
+* =1 æ•°æ®å†™æˆåŠŸï¼Œä½†æ²¡æœ‰å…¨éƒ¨å†™å®Œï¼Œæ”¾å›epollç­‰å¾…ä¸‹æ¬¡å†ç›‘å¬åˆ°å¯å†™çŠ¶æ€
 
 */
 
 int write_back_svr(ependingpool* ep, int sock, void **arg)
 {
-	unsigned write_succ_size = 0;
+    unsigned write_succ_size = 0;
 	int ret = -1;
 
-	// ¿ÉĞ´£¬Ö±½Ó´Ó»º´æÔÚ·¢ËÍ
+	// å¯å†™ï¼Œç›´æ¥ä»ç¼“å­˜åœ¨å‘é€
 	CBackSocketReq *psock_req = (CBackSocketReq*)(*arg);
 
 	if (psock_req->sendcache.data_len() == 0 )
 	{
         DebugSockInfo("write 0",sock,0,0,0);
-		return 0; // Ã»Êı¾İ·¢ËÍ£¬¼àÌırecv¶Á¡£
+		return 0; // æ²¡æ•°æ®å‘é€ï¼Œç›‘å¬recvè¯»ã€‚
 	}
 
 
@@ -76,65 +76,65 @@ int write_back_svr(ependingpool* ep, int sock, void **arg)
 
 	if ( psock_req->sendcache.data_len() == 0 )
 	{
-		return 0;// Êı¾İÈ«²¿Ğ´Íê±Ï£¬²¢½«sockÖØĞÂ·ÅÈëepollÖĞ½øĞĞ¼àÌı¶ÁÇëÇó(Ïàµ±ÓÚ³¤Á¬½Ó)
+		return 0;// æ•°æ®å…¨éƒ¨å†™å®Œæ¯•ï¼Œå¹¶å°†socké‡æ–°æ”¾å…¥epollä¸­è¿›è¡Œç›‘å¬è¯»è¯·æ±‚(ç›¸å½“äºé•¿è¿æ¥)
 	}
-	// Ã»ÓĞĞ´Íê
+	// æ²¡æœ‰å†™å®Œ
 	return 1;
 }
 /*
-* <0 ¶ÁÊ§°Ü£¬»á´¥·¢SOCK_CLEARÊÂ¼ş
-* =0 Êı¾İÈ«²¿¶ÁÈ¡Íê±Ï£¬²¢½«sock·ÅÈë¾ÍĞ÷¶ÓÁĞÖĞ
-* =1 Êı¾İ¶Á³É¹¦£¬µ«Ã»ÓĞÈ«²¿¶ÁÈ¡Íê±Ï£¬ĞèÒªÔÙ´Î½øĞĞ¼àÌı£¬sock»á±»·Å»ØepollÖĞ
+* <0 è¯»å¤±è´¥ï¼Œä¼šè§¦å‘SOCK_CLEARäº‹ä»¶
+* =0 æ•°æ®å…¨éƒ¨è¯»å–å®Œæ¯•ï¼Œå¹¶å°†sockæ”¾å…¥å°±ç»ªé˜Ÿåˆ—ä¸­
+* =1 æ•°æ®è¯»æˆåŠŸï¼Œä½†æ²¡æœ‰å…¨éƒ¨è¯»å–å®Œæ¯•ï¼Œéœ€è¦å†æ¬¡è¿›è¡Œç›‘å¬ï¼Œsockä¼šè¢«æ”¾å›epollä¸­
 
 */
 int read_back_svr(ependingpool* ep, int sock, void **arg)
 {
-	int ret = 0;
-	unsigned read_size = 0;
-    CBackSocketReq *psock_req = (CBackSocketReq*)(*arg);
+	//int ret = 0;
+	//unsigned read_size = 0;
+    //CBackSocketReq *psock_req = (CBackSocketReq*)(*arg);
 
 
 
-    unsigned hasread=0;
-    unsigned i = 0;
-    while ( i<100 ) {
-        ret = noblock_read_buff(sock,back_recv_buff,&read_size,back_recv_len);
-        if ( ret!=0 ){  return -1;    }
-        if ( read_size>0 ) psock_req->recvcache.append(back_recv_buff,(unsigned)read_size);
+    //unsigned hasread=0;
+    //unsigned i = 0;
+    //while ( i<100 ) {
+    //    ret = noblock_read_buff(sock,back_recv_buff,&read_size,back_recv_len);
+    //    if ( ret!=0 ){  return -1;    }
+    //    if ( read_size>0 ) psock_req->recvcache.append(back_recv_buff,(unsigned)read_size);
 
-        if ( read_size>0 ) hasread += read_size;
-        if ( ret==0 && errno==EAGAIN && read_size==0 ) {
-            //LOG(LOG_ALL,"EAGAIN|sock %d|i|%u|%d|%s|has read|%u\n",sock,i,errno,strerror(errno),hasread);
-            i=2000000;
-            continue;
-        }
-        //LOG(LOG_ALL,"INFO|sock %d|i|%u|%d|%s|has read|%u\n",sock,i,errno,strerror(errno),hasread);
-        i++;
-    }
-
-
+    //    if ( read_size>0 ) hasread += read_size;
+    //    if ( ret==0 && errno==EAGAIN && read_size==0 ) {
+    //        //LOG(LOG_ALL,"EAGAIN|sock %d|i|%u|%d|%s|has read|%u\n",sock,i,errno,strerror(errno),hasread);
+    //        i=2000000;
+    //        continue;
+    //    }
+    //    //LOG(LOG_ALL,"INFO|sock %d|i|%u|%d|%s|has read|%u\n",sock,i,errno,strerror(errno),hasread);
+    //    i++;
+    //}
 
 
 
-    int ic = 0;
-    unsigned one_len = 0;
-    do {
-        ret = psock_req->check_recv_one(back_recv_buff,one_len);
-        if ( ret>0 ) {
-            unsigned long ip;
-            interaction_sock2ip(sock,ip);
-            BackD_MainD(back_recv_buff,one_len);
-            //DebugSockInfo("read 2 get one",sock,ret,one_len,psock_req->recvcache.data_len());
-            if ( psock_req->recvcache.data_len()==0 ) ret = 0;
-        }
-        ic++;
-    } while( ret>0 && ic<100 );
 
-	if ( ret >= 0 ) {
-		// Õâ¸ö°ü»¹Ã»½ÓÊÕÍê£¬ĞèÒª¼ÌĞø¶Á
-		return 1;
-	}
-	// ÆäËûÇé¿öÉÙÓÚ0£¬¶ÁÊ§°Ü£¬´¥·¢SOCK_CLEARÊÂ¼ş
+
+    //int ic = 0;
+    //unsigned one_len = 0;
+    //do {
+    //    ret = psock_req->check_recv_one(back_recv_buff,one_len);
+    //    if ( ret>0 ) {
+    //        unsigned long ip;
+    //        interaction_sock2ip(sock,ip);
+    //        BackD_MainD(back_recv_buff,one_len);
+    //        //DebugSockInfo("read 2 get one",sock,ret,one_len,psock_req->recvcache.data_len());
+    //        if ( psock_req->recvcache.data_len()==0 ) ret = 0;
+    //    }
+    //    ic++;
+    //} while( ret>0 && ic<100 );
+
+	//if ( ret >= 0 ) {
+	//	// è¿™ä¸ªåŒ…è¿˜æ²¡æ¥æ”¶å®Œï¼Œéœ€è¦ç»§ç»­è¯»
+	//	return 1;
+	//}
+	// å…¶ä»–æƒ…å†µå°‘äº0ï¼Œè¯»å¤±è´¥ï¼Œè§¦å‘SOCK_CLEARäº‹ä»¶
 	return -1;
 }
 
@@ -145,7 +145,7 @@ int init_back_svr(ependingpool* ep, int sock, void **arg)
 	{
 		return -1;
 	}
-	//½«Ö¸Õë¸³¸øsockÀ¦°óµÄÖ¸Õë
+	//å°†æŒ‡é’ˆèµ‹ç»™sockæ†ç»‘çš„æŒ‡é’ˆ
 	*arg = sock_req;
 	return 0;
 }
@@ -173,29 +173,29 @@ CBackNetSvr::CBackNetSvr(const int &_max,int _sock_num/* =10000 */,int _queue_le
 
 
     pool.set_epoll_timeo(1);
-    //ÉèÖÃÁ¬½Ó³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
+    //è®¾ç½®è¿æ¥è¶…æ—¶æ—¶é—´(ç§’), é»˜è®¤ä¸º1s
     pool.set_conn_timeo(10);
-    //ÉèÖÃ¶Á³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
+    //è®¾ç½®è¯»è¶…æ—¶æ—¶é—´(ç§’), é»˜è®¤ä¸º1s
     pool.set_read_timeo(10);
-    //ÉèÖÃĞ´³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
+    //è®¾ç½®å†™è¶…æ—¶æ—¶é—´(ç§’), é»˜è®¤ä¸º1s
     pool.set_write_timeo(10);
 
-    //ÉèÖÃ¿É´æ´¢socketµÄÊıÁ¿
+    //è®¾ç½®å¯å­˜å‚¨socketçš„æ•°é‡
     pool.set_sock_num(pool_sock_num);
-    //ÉèÖÃÒÑ¾ÍĞ÷¶ÓÁĞµÄ³¤¶È
+    //è®¾ç½®å·²å°±ç»ªé˜Ÿåˆ—çš„é•¿åº¦
     pool.set_queue_len(pool_sock_num);
 }
 
 void CBackNetSvr::Start()
 {
-    //³õÊ¼»¯ÓësockÀ¦°óµÄÊı¾İ
+    //åˆå§‹åŒ–ä¸sockæ†ç»‘çš„æ•°æ®
     pool.set_event_callback(ependingpool::SOCK_INIT, init_back_svr);
-    //ÊÍ·ÅÓësockÀ¦°óµÄÊı¾İ
+    //é‡Šæ”¾ä¸sockæ†ç»‘çš„æ•°æ®
     pool.set_event_callback(ependingpool::SOCK_CLEAR, clear_back_svr);
-    //Ê¹ÓÃ·Ç¶ÂÈû¶ÁĞ´·½Ê½£¬Ä£ÄâÒì²½¶ÁĞ´
+    //ä½¿ç”¨éå µå¡è¯»å†™æ–¹å¼ï¼Œæ¨¡æ‹Ÿå¼‚æ­¥è¯»å†™
     pool.set_event_callback(ependingpool::SOCK_READ, read_back_svr);
     pool.set_event_callback(ependingpool::SOCK_WRITE, write_back_svr);
-    //Êı¾İ´¦Àí×öµÄÊÂÇéºÜÉÙÃ»±ØÒªÊ¹ÓÃfetch½øĞĞ¶àÏß³Ì´¦Àí,Ê¹ÓÃtodoµ¥Ïß³Ì´¦Àí¾Í¿ÉÒÔÁË
+    //æ•°æ®å¤„ç†åšçš„äº‹æƒ…å¾ˆå°‘æ²¡å¿…è¦ä½¿ç”¨fetchè¿›è¡Œå¤šçº¿ç¨‹å¤„ç†,ä½¿ç”¨todoå•çº¿ç¨‹å¤„ç†å°±å¯ä»¥äº†
     //pool.set_event_callback(ependingpool::SOCK_TODO, todo_back_svr);
     return;
 }
@@ -227,8 +227,8 @@ void CBackNetSvr::MainLoop()
                 /*
                     ip2back_flow[key_ip_port] = back_flow
                 */
-                unsigned key_ip_port = (item->flow); // MainSvr¹ıÀ´µÄflow¾ÍÊÇip£ºportÁË
-				unsigned back_flow = ip2back_flow.GetHandle(key_ip_port); // ²»Ò»¶¨´æÔÚµÄ
+                unsigned key_ip_port = (item->flow); // MainSvrè¿‡æ¥çš„flowå°±æ˜¯ipï¼športäº†
+				unsigned back_flow = ip2back_flow.GetHandle(key_ip_port); // ä¸ä¸€å®šå­˜åœ¨çš„
 
                 int offset = -1;
                 int sock = -1;
@@ -238,7 +238,7 @@ void CBackNetSvr::MainLoop()
                 }
 
 
-                if ( item->data == NULL && item->len == 0 ) // ¹Ø±ÕÁ¬½Ó
+                if ( item->data == NULL && item->len == 0 ) // å…³é—­è¿æ¥
                 {
 					if (sock>0) {
 						pool.reset_item(offset,false);
@@ -252,21 +252,21 @@ void CBackNetSvr::MainLoop()
 				void *arg;
 				ret = pool.fetch_handle_arg(offset,&arg);
 
-				// Èç¹û»¹Ã»Á¬½Ó£¬ÄÇÃ´¾ÍÁ¬½Ó
+				// å¦‚æœè¿˜æ²¡è¿æ¥ï¼Œé‚£ä¹ˆå°±è¿æ¥
 				if ( sock<0 || ret!=0 )
 				{
 					if ( sock>0 ) {
-						// ²»´æÔÚpool£¬ÒòÎª³¬Ê±ÁË£¬ÕâÊ±ºòĞèÒª¹Ø±Õ
+						// ä¸å­˜åœ¨poolï¼Œå› ä¸ºè¶…æ—¶äº†ï¼Œè¿™æ—¶å€™éœ€è¦å…³é—­
 						ip2back_flow.DelHandel(key_ip_port);
 					}
-					// Á¬½Ó
+					// è¿æ¥
 					CSocketTCP socket;
 					socket.create();
 					socket.set_nonblock();
 					ret = socket.connect(item->destinfo._ip,item->destinfo._port);
 					if ((ret != 0 )&& (ret != -EWOULDBLOCK) && (ret != -EINPROGRESS))
 					{
-						// Ê§°ÜÏìÓ¦
+						// å¤±è´¥å“åº”
 						LOG(LOG_ALL,"connect failed %s:%d.\n",ip2str(item->destinfo._ip).c_str(),item->destinfo._port);
                         BackD_MainD(NULL,0,item->destinfo._ip,item->destinfo._port);
                         item->Free();
@@ -285,14 +285,14 @@ void CBackNetSvr::MainLoop()
                         assert(req!=NULL);
                         req->sendcache.append(item->data,item->len);
 
-						// 0±íÊ¾¼àÌı¶Á²Ù×÷£¬·Ç0 ±íÊ¾¼àÌıĞ´²Ù×÷
+						// 0è¡¨ç¤ºç›‘å¬è¯»æ“ä½œï¼Œé0 è¡¨ç¤ºç›‘å¬å†™æ“ä½œ
 						ret = pool.insert_item_sock(sock,aoff,req,-1);
 						if ( ret<0 ) {
-							//ÏìÓ¦
+							//å“åº”
                             LOG(LOG_ALL,"insert_item_sock failed %s:%d.\n",ip2str(item->destinfo._ip).c_str(),item->destinfo._port);
                             BackD_MainD(NULL,0,item->destinfo._ip,item->destinfo._port);
 						} else{
-                            // ²úÉúflow_dcc
+                            // äº§ç”Ÿflow_dcc
                             unsigned bflow = GenClientFlowNo(aoff,sock);
 							ip2back_flow.AddHandle(key_ip_port,bflow);
 						}// if ret<0
@@ -302,17 +302,17 @@ void CBackNetSvr::MainLoop()
 				}
 				else
 				{
-					//ÒÑ¾­Á¬½Ó
+					//å·²ç»è¿æ¥
                     CBackSocketReq *psock_req = NULL;
                     psock_req = (CBackSocketReq*)(arg);
-                    // Ôö¼Óµ½·¢ËÍcacheºóÃæ£¬ÔÙ·¢ËÍ£¬Ã»·¢ËÍÍê£¬ÒªÔö¼Ó EPOLLOUT
-                    // ÒÔºóÓÅ»¯ if ( psock_req->sendcache.data_len() == 0 ){}
+                    // å¢åŠ åˆ°å‘é€cacheåé¢ï¼Œå†å‘é€ï¼Œæ²¡å‘é€å®Œï¼Œè¦å¢åŠ  EPOLLOUT
+                    // ä»¥åä¼˜åŒ– if ( psock_req->sendcache.data_len() == 0 ){}
 
                     if ( psock_req!= NULL )
                     {
                         psock_req->sendcache.append(item->data,item->len);
-                        // ²»»áÖ±½Óµ÷ÓÃ»Øµ÷º¯Êı£¬Ö»ÊÇÉèÖÃÎªEPOLLOUT£¬Ã»¼àÌıEPOLLINÁË
-                        // ÏÂ´ÎÊÂ¼şµ½ÁË£¬²ÅÖ±½Óµ÷ÓÃ»Øµ÷º¯ÊıĞ´
+                        // ä¸ä¼šç›´æ¥è°ƒç”¨å›è°ƒå‡½æ•°ï¼Œåªæ˜¯è®¾ç½®ä¸ºEPOLLOUTï¼Œæ²¡ç›‘å¬EPOLLINäº†
+                        // ä¸‹æ¬¡äº‹ä»¶åˆ°äº†ï¼Œæ‰ç›´æ¥è°ƒç”¨å›è°ƒå‡½æ•°å†™
                         ret = pool.write_reset_item(offset);
                         if ( ret!= 0 )
                         {
