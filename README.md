@@ -6,7 +6,7 @@
 <br/>同步压测 4核机子虚拟机
 <br/>简单echo(因为nginx是读文件公平竞争 我们也是读文件) 1000并发 6wqps; nginx 4.5wqps
 <br/>异步压测1000并发 40+w qps
-<br/>另有400多行实现的 python web服务器 以供参考
+<br/>另有400多行实现的 python web服务器，原理一样的，以供参考（通用的多线程reactor模式，用非阻塞模拟异步io）
 <br/>http://www.oschina.net/p/fastpy
 <br/>
 <br/>例子
