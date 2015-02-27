@@ -84,4 +84,4 @@
 <br/>server.start();
 <br/>
 <br/>浏览器访问 http://192.168.1.13:8999/xxx?kk=hello
-<br/> 更多丰富功能请参阅代码
+<br/> 更多丰富功能请参阅代码，如果要用到python开发包请参考这里安装http://web.49jie.com/?p=1644
