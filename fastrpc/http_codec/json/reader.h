@@ -1,7 +1,7 @@
 #ifndef CPPTL_JSON_READER_H_INCLUDED
 # define CPPTL_JSON_READER_H_INCLUDED
 
-# include "features.h"
+# include "json/features.h"
 # include "value.h"
 # include <deque>
 # include <stack>
@@ -39,7 +39,7 @@ namespace Json {
        *                        is \c false.
        * \return \c true if the document was successfully parsed, \c false if an error occurred.
        */
-      bool parse( const std::string &document, 
+      bool parse( const std::string &document,
                   Value &root,
                   bool collectComments = true );
 
@@ -53,7 +53,7 @@ namespace Json {
        *                        is \c false.
        * \return \c true if the document was successfully parsed, \c false if an error occurred.
        */
-      bool parse( const char *beginDoc, const char *endDoc, 
+      bool parse( const char *beginDoc, const char *endDoc,
                   Value &root,
                   bool collectComments = true );
 
@@ -64,7 +64,7 @@ namespace Json {
                   bool collectComments = true );
 
       /** \brief Returns a user friendly string that list errors in the parsed document.
-       * \return Formatted error message with the list of errors with their location in 
+       * \return Formatted error message with the list of errors with their location in
        *         the parsed document. An empty string is returned if no error occurred
        *         during parsing.
        */
@@ -110,7 +110,7 @@ namespace Json {
       bool expectToken( TokenType type, Token &token, const char *message );
       bool readToken( Token &token );
       void skipSpaces();
-      bool match( Location pattern, 
+      bool match( Location pattern,
                   int patternLength );
       bool readComment();
       bool readCStyleComment();
@@ -124,19 +124,19 @@ namespace Json {
       bool decodeString( Token &token );
       bool decodeString( Token &token, std::string &decoded );
       bool decodeDouble( Token &token );
-      bool decodeUnicodeCodePoint( Token &token, 
-                                   Location &current, 
-                                   Location end, 
+      bool decodeUnicodeCodePoint( Token &token,
+                                   Location &current,
+                                   Location end,
                                    unsigned int &unicode );
-      bool decodeUnicodeEscapeSequence( Token &token, 
-                                        Location &current, 
-                                        Location end, 
+      bool decodeUnicodeEscapeSequence( Token &token,
+                                        Location &current,
+                                        Location end,
                                         unsigned int &unicode );
-      bool addError( const std::string &message, 
+      bool addError( const std::string &message,
                      Token &token,
                      Location extra = 0 );
       bool recoverFromError( TokenType skipUntilToken );
-      bool addErrorAndRecover( const std::string &message, 
+      bool addErrorAndRecover( const std::string &message,
                                Token &token,
                                TokenType skipUntilToken );
       void skipUntilSpace();
@@ -146,11 +146,11 @@ namespace Json {
                                      int &line,
                                      int &column ) const;
       std::string getLocationLineAndColumn( Location location ) const;
-      void addComment( Location begin, 
-                       Location end, 
+      void addComment( Location begin,
+                       Location end,
                        CommentPlacement placement );
       void skipCommentTokens( Token &token );
-   
+
       typedef std::stack<Value *> Nodes;
       Nodes nodes_;
       Errors errors_;

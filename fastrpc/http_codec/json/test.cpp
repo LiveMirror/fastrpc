@@ -9,17 +9,17 @@ using namespace std;
 int main()
 {
     {
-        for (int i = 0; i < 1; ++i) {
-            Json::Value val;
-            for (int j = 0; j < 10000000; ++j) {
-                val[j] = "hhh";
-            }
+        Json::Value val;
+        for (int i = 0; i < 10; ++i) {
+            std::stringstream ss;
+            ss << 1;
+            std::string key = ss.str();
+            val[key]= Json::Value(i);
         }
-        usleep(1*1000*1000);
-        printf("end\n");
+        Json::FastWriter fast_writer;
+        std::string res = fast_writer.write(val);
+        std::cout << res;
     }
-    usleep(300*1000*1000);
-    return 0;
 
 
 

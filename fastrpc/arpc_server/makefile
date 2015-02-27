@@ -20,12 +20,13 @@ INC_DIR=-I/usr/include -I/usr/local/include
 INC_DIR+=-I./
 INC_DIR+=-I./protobuf
 INC_DIR+=-I../svr -I../http_codec/api -I../ependingpool/output/include/
-INC_DIR+=-I../http_codec/http
+INC_DIR+=-I../http_codec/http -I../http_codec/json
 INC_DIR+=-I../comm/include
 #INC_DIR+=-I../mongo-driver/include
 INC_DIR+=-I../protobuf/include
 INC_DIR+=-I../ipcs_common/include
 INC_DIR+=-I../xcore/include
+INC_DIR+=-I/usr/include/python2.6
 
 LIBS = -L/usr/lib  -lpthread
 LIBS += ../svr/libasvr.a ../http_codec/libhttpapi.a
@@ -35,6 +36,7 @@ LIBS += ../comm/output/libcomm.a
 LIBS += ../protobuf/lib/libprotobuf.a
 LIBS += ../ipcs_common/libipcs_common.a
 LIBS += ../xcore/libxcore.a
+LIBS += -lpython2.6
 #LIBS += -lmysqlclient -lboost_filesystem -lboost_program_options -lboost_system -lboost_thread-mt
 
 .PHONY: all clean

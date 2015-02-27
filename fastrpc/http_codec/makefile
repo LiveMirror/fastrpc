@@ -10,7 +10,7 @@ ROOT_DIR	= $(shell pwd)
 SRC_DIR		= $(ROOT_DIR)/json $(ROOT_DIR)/http $(ROOT_DIR)/api
 SRC_FILES  := $(shell find $(SRC_DIR) -name '*.cpp')
 OBJ_FILES  := $(SRC_FILES:.cpp=.o)
-INC_DIR    := -I$(ROOT_DIR)/ -I$(ROOT_DIR)/http -I$(ROOT_DIR)/api -D_USE_HTTP_PROTO_
+INC_DIR    := -I$(ROOT_DIR)/ -I$(ROOT_DIR)/http -I$(ROOT_DIR)/api -I$(ROOT_DIR)/json -D_USE_HTTP_PROTO_
 CFLAGS     :=
 
 LIB_NAME   := httpapi
