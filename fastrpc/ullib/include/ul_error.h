@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: ul_error.h,v 1.3 2009/12/29 03:24:00 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file ul_error.h
- * @author feimat(feimat@baidu.com)
+ * @author feimat(feimat@feimat.com)
  * @version $Revision: 1.3 $ 
  * @brief 
  *  

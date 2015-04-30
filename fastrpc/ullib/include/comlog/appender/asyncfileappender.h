@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: asyncfileappender.h,v 1.4 2009/09/18 11:02:57 sun_xiao Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file asyncfileappender.h
- * @author feimat(com@baidu.com)
+ * @author feimat(com@feimat.com)
  * @date 2008/08/28 18:06:09
  * @version $Revision: 1.4 $ 
  * @brief 

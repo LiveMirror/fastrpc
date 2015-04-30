@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: com_log.h,v 1.2 2009/03/25 12:34:11 feimat Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file com_log.h
- * @author feimat(feimat@baidu.com)
+ * @author feimat(feimat@feimat.com)
  * @date 2008/09/12 18:27:02
  * @version $Revision: 1.2 $ 
  * @brief 

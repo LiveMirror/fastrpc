@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: loghead.h,v 1.2 2009/03/25 12:34:11 feimat Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file loghead.h
- * @author feimat(com@baidu.com)
+ * @author feimat(com@feimat.com)
  * @date 2008/09/12 12:30:24
  * @version $Revision: 1.2 $ 
  * @brief 

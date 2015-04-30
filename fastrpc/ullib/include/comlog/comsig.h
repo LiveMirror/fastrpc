@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: comsig.h,v 1.2 2009/03/25 12:34:11 feimat Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file comsig.h
- * @author feimat(com@baidu.com)
+ * @author feimat(com@feimat.com)
  * @date 2008/03/31 12:02:33
  * @version $Revision: 1.2 $ 
  * @brief 

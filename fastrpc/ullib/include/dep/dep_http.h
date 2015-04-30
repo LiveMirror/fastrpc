@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: dep_http.h,v 1.2 2008/08/13 02:28:55 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
  * @file ul_http.h
- * @author com-dev(com-dev@baidu.com)
+ * @author com-dev(com-dev@feimat.com)
  * @date 2007/12/13 22:30:33
  * @version $Revision: 1.2 $ 
  * @brief 旧版http库，只做旧功能维护，不做功能性更新升级。 

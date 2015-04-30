@@ -510,9 +510,9 @@ bool xcore_test_sock_addr()
 	printf("addr2 is: %s\n", addr2.to_str().c_str());
 	XSockAddr addr3("202.118.66.6:80");
 	printf("addr3 is: %s\n", addr3.to_str().c_str());
-	XSockAddr addr4("www.baidu.com.cn");
+	XSockAddr addr4("www.feimat.com.cn");
 	printf("addr4 is: %s\n", addr4.to_str().c_str());
-	XSockAddr addr5("www.baidu.com.cn:80");
+	XSockAddr addr5("www.feimat.com.cn:80");
 	printf("addr5 is: %s\n", addr5.to_str().c_str());
 
 	sockaddr_in sockaddrin = addr3;

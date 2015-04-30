@@ -2,7 +2,7 @@
 #define __STATISTIC_H__
 
 /*
-	feimat@baidu.com
+	feimat@feimat.com
 	myindex服务器framework的第三方库的统计代码 
 
 	会把client请求各个过程的耗时，成功次数，失败次数，平均延时，最大延时，最小延时统计出来。

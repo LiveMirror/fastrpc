@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: appenderfactory.h,v 1.2.22.2 2010/03/25 10:09:28 zhang_rui Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file appenderfactory.h
- * @author feimat(com@baidu.com)
+ * @author feimat(com@feimat.com)
  * @date 2008/09/04 18:05:08
  * @version $Revision: 1.2.22.2 $ 
  * @brief 

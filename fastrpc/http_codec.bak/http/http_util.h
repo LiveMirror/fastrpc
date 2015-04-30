@@ -1,12 +1,12 @@
 /***************************************************************************
  *
- * Copyright (c) 2013 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2013 feimat.com, Inc. All Rights Reserved
  *
  **************************************************************************/
 
 /**
  * @file http_util.h
- * @hemingzhe02@baidu.com
+ * @hemingzhe02@feimat.com
  * @date 2013/03/19
  * @brief
  *

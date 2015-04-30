@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: xdebug.h,v 1.4 2009/09/18 11:02:57 sun_xiao Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file xdebug.h
- * @author feimat(feimat@baidu.com)
+ * @author feimat(feimat@feimat.com)
  * @date 2008/03/10 15:44:19
  * @version $Revision: 1.4 $ 
  * @brief 

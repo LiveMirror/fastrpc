@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: ependingpool.h,v 1.9 2009/11/30 08:09:27 baonh Exp $
  *
  **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
  * @file ependingpool.h
- * @author baonh(baonenghui@baidu.com)
+ * @author baonh(baonenghui@feimat.com)
  * @version $Revision: 1.9 $
  * @brief ependingpool是一个 TCP 连接池
  *
@@ -536,7 +536,7 @@ public:
 	 * @note 失败的时候不会主动关闭sock, 请在外部将sock关闭， arg 也不会调用SOCK_CLEAR事件
 	 *       请注意释放内存.
 	 *       默认情况下接口是线程不安全，需要使用set_insert_item_sock_thrsafe进行设置。使用时请注意
-     *       2013-02-01修改 feimat@baidu.com
+     *       2013-02-01修改 feimat@feimat.com
      *       为适应异步模块，增加返回offset的位置，以便可以操作 write_reset_item
 
 	**/

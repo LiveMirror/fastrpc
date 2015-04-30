@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: sendsvr.h,v 1.3.2.1 2010/03/25 08:18:08 zhang_rui Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file sendsvr.h
- * @author feimat(feimat@baidu.com)
+ * @author feimat(feimat@feimat.com)
  * @date 2008/03/07 18:25:47
  * @version $Revision: 1.3.2.1 $ 
  * @brief

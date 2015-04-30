@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: ul_log.h,v 1.2.40.1 2010/04/15 06:38:17 zhang_rui Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file ul_log.h
- * @author baonh(baonh@baidu.com)
+ * @author baonh(baonh@feimat.com)
  * @version $Revision: 1.2.40.1 $ 
  * @brief  »’÷æø‚ 
  * 

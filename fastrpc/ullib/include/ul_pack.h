@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: ul_pack.h,v 1.3 2009/09/18 11:02:57 sun_xiao Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file ul_pack.h
- * @author baonh(baonh@baidu.com)
+ * @author baonh(baonh@feimat.com)
  * @version $Revision: 1.3 $ 
  * @brief pack°ü¶ÁÐ´
  *  

@@ -1,7 +1,7 @@
 
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: ul_def.h,v 1.4 2009/03/25 12:34:11 feimat Exp $ 
  * 
  **************************************************************************/
@@ -10,7 +10,7 @@
  
 /**
  * @file ul_def.h
- * @author baonh(baonh@baidu.com)
+ * @author baonh(baonh@feimat.com)
  * @version $Revision: 1.4 $ 
  * @brief ullib库公共定义 
  *  

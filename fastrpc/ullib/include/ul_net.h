@@ -9,7 +9,7 @@
 //   Wrap and functional functions about net communication.
 //
 // Author: Wang Chengqing
-//         cwang@baidu.com
+//         cwang@feimat.com
 //**********************************************************
 
 #ifndef __UL_NETLIB_H__

@@ -22,7 +22,7 @@ using namespace std;
 
 
 /**
-* @author feimat@baidu.com
+* @author feimat@feimat.com
 *
 *
 * <pre>

@@ -1,7 +1,7 @@
-// Copyright (c) 2013, baidu Inc.
+// Copyright (c) 2013, feimat Inc.
 // All rights reserved.
 //
-// Author: hemingzhe <hemingzhe02@baidu.com>
+// Author: hemingzhe <hemingzhe02@feimat.com>
 // Created: 05/10/13
 // Description:
 

@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: ul_exlink.h,v 1.2 2008/08/13 02:28:55 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
  * @file ul_exlink.h
- * @author com-dev (com-dev@baidu.com)
+ * @author com-dev (com-dev@feimat.com)
  * @date 2007/12/14 11:07:50
  * @version $Revision: 1.2 $ 
  * @brief url›Õ»° 

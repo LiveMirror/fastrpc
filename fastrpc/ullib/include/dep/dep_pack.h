@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: dep_pack.h,v 1.2 2008/08/13 02:28:55 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file ul_pack.h
- * @author baonh(baonh@baidu.com)
+ * @author baonh(baonh@feimat.com)
  * @version $Revision: 1.2 $ 
  * @brief pack°ü¶ÁÐ´
  *  

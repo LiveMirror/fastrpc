@@ -1,6 +1,6 @@
 /***************************************************************************
 * 
-* Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+* Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
 * $Id: logstat.h,v 1.2.22.2 2010/04/05 13:30:46 zhang_rui Exp $ 
 * 
 **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
 * @file logstat.h
-* @author feimat(feimat@baidu.com)
+* @author feimat(feimat@feimat.com)
 * @date 2008/02/12 23:54:03
 * @version $Revision: 1.2.22.2 $ 
 * @brief 

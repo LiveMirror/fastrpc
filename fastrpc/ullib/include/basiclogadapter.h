@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2009 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2009 feimat.com, Inc. All Rights Reserved
  * $Id: basiclogadapter.h,v 1.4 2009/09/18 11:02:57 sun_xiao Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
  * @file basiclogadapter.h
- * @author feimat(com@baidu.com)
+ * @author feimat(com@feimat.com)
  * @date 2009/03/05 16:46:36
  * @version $Revision: 1.4 $ 
  * @brief 
@@ -72,7 +72,7 @@ class BasicLogAdapter{
 	public:
 		BasicLogAdapter();
 		/**
-		 * @brief ÷±Ω”…Ë÷√Categoryæ‰±˙£(comlog)
+		 * @brief ÷±Ω”…Ë÷√Categoryæ‰±˙?comlog)
 		 *
 		 * @param [in] cate   : comspace::Category*
 		 * @return  int 0≥…π¶£¨∆‰”‡ ß∞‹

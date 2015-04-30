@@ -1,13 +1,13 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: comlog.h,v 1.5.6.2 2010/04/05 13:30:46 zhang_rui Exp $ 
  * 
  **************************************************************************/
  
 /**
  * @file comlog.h
- * @author feimat(feimat@baidu.com)
+ * @author feimat(feimat@feimat.com)
  * @date 2008/01/30 17:21:07
  * @version $Revision: 1.5.6.2 $ 
  * @brief 
@@ -33,8 +33,7 @@
 #define COM_MAXSERVERSUPPORT 		32		//×î´óÖ§³ÖÁ¬½ÓµÄserverÊýÄ¿
 #define COM_MODULENAMESIZE 			64		//Ä£¿éÃûµÄ×î³¤³¤¶È
 #define COM_MAXLOGFILE				2018	//Ã¿¸öÈÕÖ¾ÎÄ¼þÖ§³ÖµÄ×î´ó³¤¶È£¬µ¥Î»m
-#define COM_MAXCUTTIME				10000000 //×î´óÈÕÖ¾ÇÐ¸îÊ±¼ä£¬µ¥Î»·ÖÓ
-#define COM_MAXAPPENDERNAME			16		//AppenderÃû×ÖµÄ×î´ó³¤¶È
+#define COM_MAXCUTTIME				10000000 //×î´óÈÕÖ¾ÇÐ¸îÊ±¼ä£¬µ¥Î»·Ö?#define COM_MAXAPPENDERNAME			16		//AppenderÃû×ÖµÄ×î´ó³¤¶È
 #define COM_RESERVEDSIZE			32		//com_device_tÖÐ±£Áô×Ö¶ÎµÄ³¤¶È
 #define COM_RESERVEDNUM             64      //com_device_tÖÐ±£ÁôÀ©Õ¹×Ö¶ÎµÄ¸öÊý
 

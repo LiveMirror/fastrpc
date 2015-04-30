@@ -115,7 +115,7 @@ int ul_check_url(char* url);
 
 /**
  * 从站点名中获取主干部分\n
- * 比如"www.baidu.com"将获得"baidu"
+ * 比如"www.feimat.com"将获得"feimat"
  *
  * @param site 站点名
  * @param[out] trunk 存放主干部分的缓冲区
@@ -381,7 +381,7 @@ int ul_parse_url_vhplink(const char *input,char *site,char *port,char *path,char
 int ul_check_url_ex(char *url);
 
 /////////////////////////////////////////////////////////////////////
-//modified by zhangyan04@baidu.com..
+//modified by zhangyan04@feimat.com..
  
 /**
  *  根据url解析出其中的各个部分,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256

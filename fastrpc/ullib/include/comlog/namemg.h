@@ -1,13 +1,13 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: namemg.h,v 1.2.22.2 2010/04/05 13:30:46 zhang_rui Exp $ 
  * 
  **************************************************************************/
  
 /**
  * @file namemg.h
- * @author feimat(feimat@baidu.com)
+ * @author feimat(feimat@feimat.com)
  * @date 2008/02/13 10:56:50
  * @version $Revision: 1.2.22.2 $ 
  * @brief 

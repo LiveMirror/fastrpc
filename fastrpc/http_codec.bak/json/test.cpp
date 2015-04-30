@@ -55,11 +55,11 @@ int main()
     //}
 
 
-    //cout << "by feimat@baidu.com" << endl;
+    //cout << "by feimat@feimat.com" << endl;
 
     //Json::Value testV;
     //testV["xpr"]="hello";
-    //testV["search"]="baidu";
+    //testV["search"]="feimat";
     //testV["A"]="10";
 
     //string strFrom = testV.toStyledString();

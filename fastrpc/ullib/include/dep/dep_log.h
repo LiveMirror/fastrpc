@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: dep_log.h,v 1.2 2008/08/13 02:28:55 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file dep/dep_log.h
- * @author baonh(baonh@baidu.com)
+ * @author baonh(baonh@feimat.com)
  * @date 2007/12/09 19:14:25
  * @version $Revision: 1.2 $ 
  * @brief 不推荐使用的日志库函数 

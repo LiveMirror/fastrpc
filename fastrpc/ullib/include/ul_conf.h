@@ -6,7 +6,7 @@
  *   This program give some tools to manage the config file.
  *
  * Author: Cui Shanshan
- *         scui@baidu.com
+ *         scui@feimat.com
  */
 #ifndef _UL_MODULE_CONF_
 #define _UL_MODULE_CONF_

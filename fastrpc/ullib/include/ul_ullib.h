@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: ul_ullib.h,v 1.2 2008/08/13 02:28:55 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file ul_ullib.h
- * @author baonh(baonenghui@baidu.com)
+ * @author baonh(baonenghui@feimat.com)
  * @version $Revision: 1.2 $ 
  * @brief 
  *  

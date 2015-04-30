@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  * $Id: logswitcher.h,v 1.2.22.1 2010/03/25 08:18:08 zhang_rui Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
  
 /**
  * @file logswitcher.h
- * @author feimat(com@baidu.com)
+ * @author feimat(com@feimat.com)
  * @date 2008/09/12 15:35:42
  * @version $Revision: 1.2.22.1 $ 
  * @brief 

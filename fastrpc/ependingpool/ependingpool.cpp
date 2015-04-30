@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
  *
  **************************************************************************/
 
@@ -958,7 +958,7 @@ int ependingpool::check_item()
 	if (num <= 0) { //没有触发事件
 		return num;
 	}
-    int async_offset = -1; // 修改by feimat@baidu.com 2013-02-01
+    int async_offset = -1; // 修改by feimat@feimat.com 2013-02-01
 	int offset = -1;
 	m_read_socket_num = 0;
 	m_write_socket_num = 0;

@@ -1,6 +1,6 @@
 /***************************************************************************
 * 
-* Copyright (c) 2008 Baidu.com, Inc. All Rights Reserved
+* Copyright (c) 2008 feimat.com, Inc. All Rights Reserved
 * $Id: event.h,v 1.3.14.1 2010/03/25 08:18:08 zhang_rui Exp $ 
 * 
 **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
 * @file event.h
-* @author feimat(feimat@baidu.com)
+* @author feimat(feimat@feimat.com)
 * @date 2008/01/30 18:56:39
 * @version $Revision: 1.3.14.1 $ 
 * @brief 

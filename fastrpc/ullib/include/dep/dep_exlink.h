@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2007 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2007 feimat.com, Inc. All Rights Reserved
  * $Id: dep_exlink.h,v 1.2 2008/08/13 02:28:55 baonh Exp $ 
  * 
  **************************************************************************/
@@ -9,7 +9,7 @@
 
 /**
  * @file ul_exlink.h
- * @author com-dev (com-dev@baidu.com)
+ * @author com-dev (com-dev@feimat.com)
  * @date 2007/12/14 11:07:50
  * @version $Revision: 1.2 $ 
  * @brief url萃取 
@@ -24,7 +24,7 @@
 #define  UL_MAX_LINK_NUM     2000
 #define  UL_MAX_TEXT_LEN   100
 
-#define UL_METHOD_BAIDU		0
+#define UL_METHOD_feimat		0
 #define UL_METHOD_WGET16	1
 #define UL_METHOD_WGET18	2
 
@@ -71,14 +71,14 @@ int ul_absolute_url(char *url, char *relurl, char *absurl);
  * @param[in]  link_info 返回link信息的缓冲结构指针
  * @param[in]  num       能够存储的url信息的个数(>0)
  * @param[in]  method    解析的方法
- * - UL_METHOD_BAIDU 
+ * - UL_METHOD_feimat 
  * - UL_METHOD_WGET16
  * - UL_METHOD_WGET18	
  * @param[out]  link_info 返回解析出的新的url的结构
  * @return 操作结果
  * - >=0   成功，返回萃取成功的url数
  * - <0    失败
- * @note 使用UL_METHOD_BAIDU method运行时，函数运行内部需要额外申请256K的栈空间。
+ * @note 使用UL_METHOD_feimat method运行时，函数运行内部需要额外申请256K的栈空间。
  */
 int extract_link(char *url, char *page, int pagesize, link_info_t * link_info, int num, int method);
 #endif

@@ -446,7 +446,7 @@ char* TFCDebugLog::GetPackCurTimeFormat(char* szDateTime)
     return GetPackTimeFormat((int)time(NULL), szDateTime);
 };
 
-/*modify by feimat@baidu.com */
+/*modify by feimat@feimat.com */
 char* TFCDebugLog::GetTimeFormat(int iTime, char* szDateTime)
 {
     timeval tval;
