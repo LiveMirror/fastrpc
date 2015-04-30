@@ -1,7 +1,7 @@
 // Copyright (c) 2013, Baidu Inc.
 // All rights reserved.
 //
-// Author: feimat <feimat@qq.com>
+// Author: jack <jack@qq.com>
 // Created: 02/25/13
 // Description: thread test
 

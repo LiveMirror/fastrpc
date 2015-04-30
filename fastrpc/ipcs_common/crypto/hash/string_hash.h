@@ -1,7 +1,7 @@
 // Copyright (c) 2012, Baidu Inc.
 // All rights reserved.
 //
-// Author: feimat <feimat@qq.com>
+// Author: jack <jack@qq.com>
 // Created: 12/29/12
 // Description: sring hash library
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2013, Baidu.com Inc.
 // All rights reserved.
 //
-// Author: feimat <feimat@qq.com>
+// Author: jack <jack@qq.com>
 // Created: 02/13/13
 // Description: gcc x64 impl
 
