@@ -78,7 +78,7 @@ void close_handler(void* param) {
 }
 
 int main(int argc, char *argv[]) {
-    //RpcClient client(10, "192.168.1.13", 8998, 1000); // 想演示这几个类无论是new还是直接声明对象
+    //RpcClient client(10, "192.168.1.13", 8998, 1000); //想演示这几个类无论是new还是直接声明对象都可以啦
     //echo::EchoService::Stub stub(&client);
 
 	Test test;
