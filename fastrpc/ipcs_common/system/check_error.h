@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Baidu Inc.
+// Copyright (c) 2013, feimat Inc.
 // All rights reserved.
 //
 // Author: jack <jack@qq.com>
