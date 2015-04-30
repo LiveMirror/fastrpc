@@ -89,4 +89,5 @@
 <br/>还有异步调用rpc 以及 服务器向客户端单向推送消息的例子参考以下两个main.cpp文件即可
 <br/>客户端：arpc_client_for_pc/main.cpp
 <br/>服务器端: arpc_server/main.cpp
+<br/>http的处理库：http_codec/http/http_util.cpp
 <br/> 更多丰富功能请参阅代码，如果要用到python开发包请参考这里安装http://web.49jie.com/?p=1644
