@@ -78,14 +78,14 @@ void close_handler(void* param) {
 }
 
 int main(int argc, char *argv[]) {
-    //RpcClient client(10, "192.168.1.13", 8998, 1000); // 1:并发sock数 2:host 3:ip 4:超时时间
+    //RpcClient client(10, "192.168.1.13", 8998, 1000); // 想演示这几个类无论是new还是直接声明对象
     //echo::EchoService::Stub stub(&client);
 
 	Test test;
     ::google::protobuf::RpcChannel* client;
     echo::EchoService_Stub::Stub* stub;
     client = new RpcClient(2, "192.168.1.13", 8999, 5000); // 1:并发sock数 2:host 3:ip 4:超时时间
-	if (!((RpcClient*)client)->IsConnected()) {
+	if (!((RpcClient*)client)->IsConnected()) { // 判断服务器是否连接成功
 		delete client;
 		exit(0);
 	} else {
