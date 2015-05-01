@@ -9,9 +9,8 @@ class EchoServiceImpl : public echo::EchoService {
 
         response->set_response(request->message()+" server_hello");
         //RpcController* p_con = (RpcController*)controller;
-        //unsigned cli_flow = p_con->_cli_flow;//当前请求包的标示，不同svr有可能出现相同的cli_flow
-        //CASyncSvr* svr = p_con->_svr;//svr不是唯一的，可根据svr->_svr_id来区分
-        //所以svr->_svr_id结合cli_flow才是某一个请求包的唯一标示
+        //unsigned cli_flow = p_con->_cli_flow;
+        //CASyncSvr* svr = p_con->_svr;
         //RpcServer::PushToClient(svr, cli_flow, response); // 这是服务器额外主动推消息
         if (done) {
             done->Run();
@@ -64,9 +63,10 @@ public:
 
 int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
     //std::stringstream ss;
-    //ss << "svr_id:" << svr->_svr_id
-    //    << " cli:" << cli_flow
+    //ss << "svr_id:" << svr->_svr_id //svr不是唯一的，可根据svr->_svr_id来区分
+    //    << " cli:" << cli_flow //当前客户端socket的标示，不同svr有可能出现相同的cli_flow
     //    << " param:" << *((int*)param) << "\n";
+    //所以svr_id结合cli_flow才是某一个客户端socket连接的唯一标示
     //printf(ss.str().c_str());
     return 0;
 }
