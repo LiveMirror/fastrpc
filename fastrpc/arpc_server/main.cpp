@@ -11,7 +11,7 @@ class EchoServiceImpl : public echo::EchoService {
         //RpcController* p_con = (RpcController*)controller;
         //unsigned cli_flow = p_con->_cli_flow;
         //CASyncSvr* svr = p_con->_svr;
-        //RpcServer::PushToClient(svr, cli_flow, response); // 这是服务器额外主动推消息
+        //RpcServer::PushToClient(svr, cli_flow, response); //这是服务器向客户端单向推消息
         if (done) {
             done->Run();
         }
