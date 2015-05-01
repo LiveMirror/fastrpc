@@ -69,12 +69,12 @@ void echo_done(echo::EchoRequest* request,
 		}
 }
 
-int ext_processer(CHttpParser& ps, std::string& data, void* param) {
+int ext_processer(CHttpParser& ps, std::string& data, void* param) {//param为注册时传的参数
 	std::string mes_name = ps.get_head_field("mes_name");
 	return 0;
 }
 
-void close_handler(void* param) {
+void close_handler(void* param) { // param为注册时传的参数
 }
 
 int main(int argc, char *argv[]) {
