@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		std::cout << "connect success\n";
 	}
-	((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // 处理服务器主动推的消息
+	((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // 处理服务器向客户端单向推的消息
 	((RpcClient*)client)->RegiCloseHandler(close_handler, NULL); // 断开事件处理
 	int i =0;
 	while (++i < 5) {
