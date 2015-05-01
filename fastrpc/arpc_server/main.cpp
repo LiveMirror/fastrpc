@@ -9,8 +9,9 @@ class EchoServiceImpl : public echo::EchoService {
 
         response->set_response(request->message()+" server_hello");
         //RpcController* p_con = (RpcController*)controller;
-        //unsigned cli_flow = p_con->_cli_flow;
-        //CASyncSvr* svr = p_con->_svr;
+        //unsigned cli_flow = p_con->_cli_flow;//当前请求包的标示，不同svr有可能出现相同的cli_flow
+        //CASyncSvr* svr = p_con->_svr;//svr不是唯一的，可根据svr->_svr_id来区分
+        //所以svr->_svr_id结合cli_flow才是某一个请求包的唯一标示
         //RpcServer::PushToClient(svr, cli_flow, response); // 这是服务器额外主动推消息
         if (done) {
             done->Run();
