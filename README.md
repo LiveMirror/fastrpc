@@ -86,7 +86,7 @@
 <br/>浏览器访问 http://192.168.1.13:8999/xxx?kk=hello
 <br/>
 <br/>上面只是简单演示了同步rpc请求的例子，
-<br/>还有异步调用rpc 以及 服务器向客户端单向推送消息的例子参考以下两个main.cpp文件即可
+<br/>异步调用rpc、服务器向客户端单向推送和各种网络事件处理的例子参考以下两个main.cpp文件即可
 <br/>客户端：arpc_client_for_pc/main.cpp
 <br/>服务器端: arpc_server/main.cpp
 <br/>http的处理库：http_codec/http/http_util.cpp
