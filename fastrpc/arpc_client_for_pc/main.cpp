@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 		//::google::protobuf::Closure *callback = pbext::NewCallback(&echo_done,
 		//	request,
 		//	response,
-		//	callback_callback);
+		//	callback_callback); // 回调可以是类成员或静态函数
 
         stub->Echo(NULL, request, response, callback); // 异步, callback为空则是同步
     }
