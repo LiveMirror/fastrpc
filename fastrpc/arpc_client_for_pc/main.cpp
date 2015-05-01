@@ -34,7 +34,7 @@ XAtomic32 recv_c = 0;
 
 class Test {
 public:
-	void echo_done(echo::EchoRequest* request,
+	void echo_done(echo::EchoRequest* request, //类成员函数做回调
 		echo::EchoResponse* response,
 		::google::protobuf::Closure* done) {
 			std::string res = response->response();
@@ -52,7 +52,7 @@ public:
 	}
 };
 
-void echo_done(echo::EchoRequest* request,
+void echo_done(echo::EchoRequest* request, //静态函数做回调
 	echo::EchoResponse* response,
 	::google::protobuf::Closure* done) {
 		std::string res = response->response();
