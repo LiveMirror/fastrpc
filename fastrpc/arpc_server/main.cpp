@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     RPCREGI_ONEP(server, EchoServiceImpl, &server);
     HTTPREGI(server, MyHttpHandler);
     int p = 123;
-    server.RegiClientCloseHandler(close_handler, &p);
+    server.RegiClientCloseHandler(close_handler, &p); //对客户端掉线或关闭处理函数
     server.start();
 
     return 0;
