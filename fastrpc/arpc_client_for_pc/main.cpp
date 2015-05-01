@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
         echo::EchoResponse* response = new echo::EchoResponse();
         ::google::protobuf::Closure* callback_callback = NULL; // 可以递归无限回调
         ::google::protobuf::Closure *callback = pbext::NewCallback(&test,
-			                                                       &Test::echo_done,
+                                                                    &Test::echo_done,
                                                                    request,
                                                                    response,
                                                                    callback_callback);
