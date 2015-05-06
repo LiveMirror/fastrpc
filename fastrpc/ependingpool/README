@@ -1,54 +1,13 @@
-¹ØÓÚependingpool
+å…³äºependingpool
 ~~~~~~~~~~
 
-Ê¹ÓÃepollµÄpendingpool
-pengingpoolÊÇÒ»¸öTCPÁ¬½Ó³Ø£¬Ïàµ±ÓÚÎªTCPÁ¬½ÓÌá¹©Ò»¸ö»º³åÇø.
+ä½¿ç”¨epollçš„pendingpool
+pengingpoolæ˜¯ä¸€ä¸ªTCPè¿æ¥æ± ï¼Œç›¸å½“äºä¸ºTCPè¿æ¥æä¾›ä¸€ä¸ªç¼“å†²åŒº.
 
-ependingpoolÊ¹ÓÃÁËepoolÄ£ĞÍ£¬ÔËĞĞĞèÒª2.6ÄÚºË»·¾³ÏÂ.
-ÔÚ2.4ÄÚºËÏÂ¿ÉÒÔ±àÒëÍ¨¹ı£¬²»¹ı²»ÄÜÔËĞĞ£¬ĞèÒªÔÚ2.6ÄÚºËÏÂÔËĞĞ
+ependingpoolä½¿ç”¨äº†epoolæ¨¡å‹ï¼Œè¿è¡Œéœ€è¦2.6å†…æ ¸ç¯å¢ƒä¸‹.
+åœ¨2.4å†…æ ¸ä¸‹å¯ä»¥ç¼–è¯‘é€šè¿‡ï¼Œä¸è¿‡ä¸èƒ½è¿è¡Œï¼Œéœ€è¦åœ¨2.6å†…æ ¸ä¸‹è¿è¡Œ
 
-ÔÚÓöµ½´óÁ¿socketµÄÊ±ºò³ÌĞòĞèÒªÊ¹ÓÃulimit·½Ê½Æô¶¯
-Ê¹ÓÃ³¤Á¬½ÓµÄÊ±ºòÇë×¢ÒâÒªÊ¹ÓÃTCP_NODELAY
-
-
-Ê¹ÓÃ·½·¨
-~~~~~~~~
-ÕâÀïÖ»ÑİÊ¾ÁË¾­µäµÄÉú²úÕßÏû·ÑÕßµÄÄ£ĞÍ£¬¾ßÌåµÄÀı×Ó¿ÉÒÔ²Î¿¼testÀïµÄÑùÀıºÍhttp://com.baidu.com/twiki/bin/view/Main/LibependingpoolÏÂµÄÎÄµµËµÃ÷
-
-³õÊ¼»¯:
-  //ÉèÖÃ¿É´æ´¢socketµÄÊıÁ¿, Ä¬ÈÏ500
-	g_workpool.set_sock_num(1000);
-	//ÉèÖÃÒÑ¾ÍĞ÷¶ÓÁĞµÄ³¤¶È, Ä¬ÈÏ100
-	g_workpool.set_queue_len(300);
-  //ÒÔÉÏÁ½¸ö²ÎÊıÉèÖÃºó¾Í²»Òª½øĞĞĞŞ¸Ä
-  
-  //ÉèÖÃepollµÄ¼àÌıµÈ´ıÊ±¼ä(ms), Ä¬ÈÏÎª10ms
-	g_workpool.set_epoll_timeo(50);	
-	//ÉèÖÃsocketµÈ´ı³¬Ê±Ê±¼ä(Ãë), Ä¬ÈÏÎª1s
-	g_workpool.set_conn_timeo(2);	
-	
-  //ÏÈÉèÖÃ¼àÌıÏß³Ì:
-   g_workpool.set_listen_fd(listen_sd);
- 
-   while (1) {
- 	    //¼àÊÓsocket, check_item¼àÊÓsocket£¬²¢·ÅÈë´¦Àí¶ÓÁĞ£¬µÈ´ı¹¤×÷Ïß³Ì½øĞĞ´¦Àí
-       g_workpool.check_item();
-   }
-   
-  ÉèÖÃ¹¤×÷Ïß³Ì£º
-  while (1) {
-       //´ÓÒÑ¾ÍĞ÷µÄ¶ÓÁĞÖĞÖĞÈ¡Ò»¸öÒÑ½¨Á¢ºÃµÄÁ¬½Ó
-       if (g_workpool.fetch_item(&handle, &client) != 0)
-       	continue;
-   	   do_somthing(client);
-           
-       //false¶ÌÁ¬½Ó¹Ø±Õ,³¤Á¬½ÓÊ¹ÓÃg_workpool.reset_item(offset, true);
-       g_workpool.reset_item(offset, false);
-  }
-
-  ĞÂ°æ±¾µÄependingpoolÖĞÔö¼ÓÁË¶ÔÓÚ¶ÁĞ´£¬³¬Ê±µÈÊÂ¼şÉèÖÃ»Øµ÷º¯ÊıµÄ»úÖÆ, ÅäºÏ·Ç¶ÂÈûIO¿ÉÒÔÄ£ÄâÒì²½IO¶ÁĞ´
+åœ¨é‡åˆ°å¤§é‡socketçš„æ—¶å€™ç¨‹åºéœ€è¦ä½¿ç”¨ulimitæ–¹å¼å¯åŠ¨
+ä½¿ç”¨é•¿è¿æ¥çš„æ—¶å€™è¯·æ³¨æ„è¦ä½¿ç”¨TCP_NODELAY
 
 
-·´À¡½¨Òé
-~~~~~~~~
-ÓĞÈÎºÎ·´À¡¼°½¨Òé£¬Çë·¢ËÍÓÊ¼şµ½ com@baidu.com»òÕßcom-dev@baidu.com
