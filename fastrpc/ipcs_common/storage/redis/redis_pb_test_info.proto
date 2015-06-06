@@ -1,8 +1,0 @@
-// Test
-package ipcs_common;
-
-message RedisTestObject {
-    required int32 sun = 1;
-    required int32 moon = 2;
-    required string mercury = 3;
-}
