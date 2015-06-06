@@ -1,0 +1,48 @@
+/**
+************************************ 
+* 	Copyright (c) 2012，Baidu
+*	All rights reserved.
+************************************
+*\n
+* 	@file conn_pool.h
+* 	@breif mysql节点的连接池
+*\n
+* 	@version 0.0.1
+* 	@author clarencelei
+* 	@date 2012.4.5
+*/
+#ifndef _SRC_INCLUDE_CONN_POOL_H_
+#define _SRC_INCLUDE_CONN_POOL_H_
+
+#include <semaphore.h>
+#include <list>
+#include "connection.h"
+#include "common_def.h"
+
+class CConnPool
+{
+public:
+	CConnPool();
+	~CConnPool();
+
+	static CConnPool *GetInstance();
+	static void DestroyInstance();
+
+	int Init(int nNum, const char *strHost, const char *strDb, const char *strUser, const char *strPasswd, const char *strDbType, int nPort);
+	
+	CConnection *GetCon();
+	void UnInit();
+	void Release(CConnection *con);
+	
+
+private:
+	static CConnPool *s_pConnPool; //全局唯一实例
+	pthread_mutex_t m_mutexPool; //互斥锁
+	sem_t m_sem;  // 信号量
+	int m_nNum;   // 初始化节点的数量
+
+	CConnection** m_pPool;  // 初始化时开辟的节点池
+	std::list<CConnection*> m_pFreeNodeList; // 空闲节点指针列表
+};
+
+#endif

@@ -1,0 +1,181 @@
+#include "connection.h"
+
+#include <pthread.h>
+
+#include "my_lib.h"
+
+pthread_mutex_t connect_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+CConnection::CConnection()
+{
+    plog = new BaseTools("mysql.log");
+    if (plog == NULL) {
+        printf("create mysql log fail!");
+        exit(1);
+    }
+}
+
+CConnection::~CConnection()
+{
+    delete plog;
+}
+
+void CConnection::SetLogPath(string &logpath) {
+    plog->SetLogDir(logpath);
+}
+
+int CConnection::Connect(const char *strHost, const char *strUser, const char *strPasswd, const char *strDb, int nPort)
+{
+    if(NULL == strHost || NULL ==strUser || NULL ==strPasswd || NULL == strDb)
+    {
+        //UB_LOG_NOTICE("Invalid Input");
+        return ERROR;
+    }
+
+    MyLib::SafeStrCopy(m_strHost, strHost, HOST_LEN);
+    MyLib::SafeStrCopy(m_strDb, strDb, DBNAME_LEN);
+    MyLib::SafeStrCopy(m_strUser, strUser, USER_LEN);
+    MyLib::SafeStrCopy(m_strPasswd, strPasswd, PASSWD_LEN);
+    m_nPort = nPort;
+
+    pthread_mutex_lock(&connect_mutex);
+    mysql_init(&m_mysql);
+    MYSQL *p_res = mysql_real_connect(&m_mysql, strHost, strUser, strPasswd, strDb, nPort, NULL, 0);
+    pthread_mutex_unlock(&connect_mutex);
+    if(!p_res)
+    {
+        //UB_LOG_NOTICE("Connect db server failed:%s",  mysql_error(&m_mysql));
+        return ERROR;
+    }
+    if(Excute("set names utf8") < 0 || Excute("SET AUTOCOMMIT = 1") < 0)
+    {
+        //UB_LOG_NOTICE("set utf8 failed or set autocommit failed:%s",  mysql_error(&m_mysql));
+        return ERROR;
+    }
+    return OK;
+}
+
+MYSQL_RES *CConnection::Query(const char *strSql)
+{
+    if(NULL == strSql)
+    {
+        plog->WriteLog("error parameter");
+        return NULL;
+    }
+    //CGlobal::s_pLog->LOGLOG("%s", strSql);
+    int nRet = mysql_real_query(&m_mysql, strSql, strlen(strSql));
+    if(nRet)
+    {
+        //mysql数据库失去连接，重新连接一次
+        if(2013 == mysql_errno(&m_mysql) || 2006 == mysql_errno(&m_mysql))
+        {
+            plog->WriteLog("%s", mysql_error(&m_mysql));
+            if(!mysql_real_connect(&m_mysql, m_strHost, m_strUser, m_strPasswd, m_strDb, m_nPort, NULL, 0))
+            {
+                plog->WriteLog("Connect db server failed:%s",  mysql_error(&m_mysql));
+                return NULL;
+            }
+            if(Excute("set names utf8") < 0 || Excute("SET AUTOCOMMIT = 1") < 0)
+            {
+                plog->WriteLog("set utf8 failed:%s",  mysql_error(&m_mysql));
+                return NULL;
+            }
+            nRet = mysql_real_query(&m_mysql, strSql, strlen(strSql));
+            if(nRet)
+            {
+                plog->WriteLog("Query failed,error no:%d, :%s", nRet, mysql_error(&m_mysql));
+                return NULL;
+            }
+        }
+        else
+        {
+            plog->WriteLog("%s", strSql);
+            plog->WriteLog("Query failed,error no:%d, :%s", nRet, mysql_error(&m_mysql));
+            return NULL;
+        }
+    }
+
+    return mysql_store_result(&m_mysql);
+}
+
+MYSQL_ROW CConnection::GetNextRow(MYSQL_RES *res)
+{
+    return mysql_fetch_row(res);
+}
+
+void CConnection::AutoCommit()
+{
+
+}
+
+int CConnection::Excute(const char *strSql)
+{
+    if(strSql == NULL)
+    {
+        plog->WriteLog("error parameter");
+        return ERROR;
+    }
+    //plog->WriteLog("Excute sql %s", strSql);
+
+    int nRet = mysql_real_query(&m_mysql, strSql, strlen(strSql));
+    if(nRet)
+    {
+        //mysql数据库失去连接，重新连接一次
+        if(2013 == mysql_errno(&m_mysql) || 2006 == mysql_errno(&m_mysql))
+        {
+            plog->WriteLog("%s", mysql_error(&m_mysql));
+            if(!mysql_real_connect(&m_mysql, m_strHost, m_strUser, m_strPasswd, m_strDb, m_nPort, NULL, 0))
+            {
+                plog->WriteLog("Connect db server failed:%s",  mysql_error(&m_mysql));
+                return ERROR;
+            }
+            //if(Excute("set names utf8") < 0 || Excute("SET AUTOCOMMIT = 1") < 0)
+        //  {
+        //      plog->WriteLog("set utf8 failed:%s",  mysql_error(&m_mysql));
+        //      return ERROR;
+        //  }
+            const char *strsql1="set names utf8";
+
+            const char * strsql2="SET AUTOCOMMIT = 1";
+            if ( mysql_real_query(&m_mysql,strsql1,strlen(strsql1)) < 0 || mysql_real_query(&m_mysql,strsql2,strlen(strsql2)) <0)
+            {
+                plog->WriteLog("set utf8 failed:%s",  mysql_error(&m_mysql));
+                return ERROR;
+            }
+
+            nRet = mysql_real_query(&m_mysql, strSql, strlen(strSql));
+            if(nRet)
+            {
+                plog->WriteLog("Query failed,:%s", mysql_error(&m_mysql));
+                return ERROR;
+            }
+        }
+        else
+        {
+            plog->WriteLog("Excute failed:%s", mysql_error(&m_mysql));
+            return ERROR;
+        }
+    }
+    return OK;
+}
+
+int CConnection::SetTimeOut(int nTime)
+{
+    char strSql[SQL_LEN];
+    snprintf(strSql, SQL_LEN, "set interactive_timeout=%d", nTime);
+    return Excute(strSql);
+}
+
+void CConnection::Free(MYSQL_RES *res)
+{
+    if(res == NULL)
+    {
+        return;
+    }
+    mysql_free_result(res);
+}
+
+void CConnection::Close()
+{
+    mysql_close(&m_mysql);
+}

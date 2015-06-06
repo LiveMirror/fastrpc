@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RpcClient", "CaseRun\CaseRun.vcxproj", "{C0B55360-89F2-4EA1-8B3A-D9A810271B29}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xcore", "xcore\xcore.vcxproj", "{15BF10EF-8AE3-4A87-844F-99597659BE05}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libprotobuf", "protobuf\vsprojects\libprotobuf.vcxproj", "{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0B55360-89F2-4EA1-8B3A-D9A810271B29}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0B55360-89F2-4EA1-8B3A-D9A810271B29}.Debug|Win32.Build.0 = Debug|Win32
+		{C0B55360-89F2-4EA1-8B3A-D9A810271B29}.Release|Win32.ActiveCfg = Release|Win32
+		{C0B55360-89F2-4EA1-8B3A-D9A810271B29}.Release|Win32.Build.0 = Release|Win32
+		{15BF10EF-8AE3-4A87-844F-99597659BE05}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15BF10EF-8AE3-4A87-844F-99597659BE05}.Debug|Win32.Build.0 = Debug|Win32
+		{15BF10EF-8AE3-4A87-844F-99597659BE05}.Release|Win32.ActiveCfg = Release|Win32
+		{15BF10EF-8AE3-4A87-844F-99597659BE05}.Release|Win32.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Debug|Win32.Build.0 = Debug|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release|Win32.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,86 @@
+﻿Build started 2014/7/28 22:47:12.
+     1>Project "D:\workspace\houtai\houtai\tools\rpc_client_for_win\protobuf\vsprojects\libprotobuf.vcxproj" on node 2 (build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>InitializeBuildStatus:
+         Creating "..\..\libprotobuf.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../src /I. /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LIBPROTOBUF_EXPORTS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\..\\" /Fd"..\..\libprotobuf_d.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\google\protobuf\io\coded_stream.cc ..\src\google\protobuf\stubs\common.cc ..\src\google\protobuf\descriptor.cc ..\src\google\protobuf\descriptor.pb.cc ..\src\google\protobuf\descriptor_database.cc ..\src\google\protobuf\dynamic_message.cc ..\src\google\protobuf\extension_set.cc ..\src\google\protobuf\extension_set_heavy.cc ..\src\google\protobuf\generated_message_reflection.cc ..\src\google\protobuf\generated_message_util.cc ..\src\google\protobuf\io\gzip_stream.cc ..\src\google\protobuf\stubs\hash.cc ..\src\google\protobuf\compiler\importer.cc ..\src\google\protobuf\message.cc ..\src\google\protobuf\message_lite.cc ..\src\google\protobuf\stubs\once.cc ..\src\google\protobuf\compiler\parser.cc ..\src\google\protobuf\io\printer.cc ..\src\google\protobuf\reflection_ops.cc ..\src\google\protobuf\repeated_field.cc ..\src\google\protobuf\service.cc ..\src\google\protobuf\stubs\structurally_valid.cc ..\src\google\protobuf\stubs\strutil.cc ..\src\google\protobuf\stubs\substitute.cc ..\src\google\protobuf\text_format.cc ..\src\google\protobuf\io\tokenizer.cc ..\src\google\protobuf\unknown_field_set.cc ..\src\google\protobuf\wire_format.cc ..\src\google\protobuf\wire_format_lite.cc ..\src\google\protobuf\io\zero_copy_stream.cc ..\src\google\protobuf\io\zero_copy_stream_impl.cc ..\src\google\protobuf\io\zero_copy_stream_impl_lite.cc /wd4244 /wd4267 /wd4018 /wd4355 /wd4800 /wd4251 /wd4996 /wd4146 /wd4305 
+         zero_copy_stream_impl_lite.cc
+         zero_copy_stream_impl.cc
+         zero_copy_stream.cc
+         wire_format_lite.cc
+         wire_format.cc
+         unknown_field_set.cc
+         tokenizer.cc
+         text_format.cc
+         substitute.cc
+         strutil.cc
+         structurally_valid.cc
+         service.cc
+         repeated_field.cc
+         reflection_ops.cc
+         printer.cc
+         parser.cc
+         once.cc
+         message_lite.cc
+         message.cc
+         importer.cc
+         Generating Code...
+         Compiling...
+         hash.cc
+         gzip_stream.cc
+         generated_message_util.cc
+         generated_message_reflection.cc
+         extension_set_heavy.cc
+         extension_set.cc
+         dynamic_message.cc
+         descriptor_database.cc
+         descriptor.pb.cc
+         descriptor.cc
+         common.cc
+         coded_stream.cc
+         Generating Code...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"..\..\libprotobuf.lib" /NOLOGO ..\..\coded_stream.obj
+         ..\..\common.obj
+         ..\..\descriptor.obj
+         ..\..\descriptor.pb.obj
+         ..\..\descriptor_database.obj
+         ..\..\dynamic_message.obj
+         ..\..\extension_set.obj
+         ..\..\extension_set_heavy.obj
+         ..\..\generated_message_reflection.obj
+         ..\..\generated_message_util.obj
+         ..\..\gzip_stream.obj
+         ..\..\hash.obj
+         ..\..\importer.obj
+         ..\..\message.obj
+         ..\..\message_lite.obj
+         ..\..\once.obj
+         ..\..\parser.obj
+         ..\..\printer.obj
+         ..\..\reflection_ops.obj
+         ..\..\repeated_field.obj
+         ..\..\service.obj
+         ..\..\structurally_valid.obj
+         ..\..\strutil.obj
+         ..\..\substitute.obj
+         ..\..\text_format.obj
+         ..\..\tokenizer.obj
+         ..\..\unknown_field_set.obj
+         ..\..\wire_format.obj
+         ..\..\wire_format_lite.obj
+         ..\..\zero_copy_stream.obj
+         ..\..\zero_copy_stream_impl.obj
+         ..\..\zero_copy_stream_impl_lite.obj
+     1>hash.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+         libprotobuf.vcxproj -> D:\workspace\houtai\houtai\tools\rpc_client_for_win\protobuf\vsprojects\..\..\libprotobuf.lib
+       FinalizeBuildStatus:
+         Deleting file "..\..\libprotobuf.unsuccessfulbuild".
+         Touching "..\..\libprotobuf.lastbuildstate".
+     1>Done Building Project "D:\workspace\houtai\houtai\tools\rpc_client_for_win\protobuf\vsprojects\libprotobuf.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:14.33

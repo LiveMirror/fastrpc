@@ -1,0 +1,60 @@
+[2015-06-06 11:47:30] Info:IndexD CClientNetSvr detach thread create,pid=3074,tid=1278752512
+[2015-06-06 11:47:30] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 11:47:30] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 11:47:30] Info:IndexD CClientNetSvr detach thread create,pid=3075,tid=1278752512
+[2015-06-06 11:47:30] Info:IndexD CSearchTheadPool thread create,pid=3074,tid=1270359808
+[2015-06-06 11:47:30] Info:IndexD CSearchTheadPool thread create,pid=3075,tid=1270359808
+[2015-06-06 11:48:34] Info:IndexD CSearchTheadPool thread create,pid=3147,tid=1773647616
+[2015-06-06 11:48:34] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 11:48:34] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 11:48:34] Info:IndexD CClientNetSvr detach thread create,pid=3147,tid=1782040320
+[2015-06-06 11:48:34] Info:IndexD CSearchTheadPool thread create,pid=3148,tid=1773647616
+[2015-06-06 11:48:34] Info:IndexD CClientNetSvr detach thread create,pid=3148,tid=1782040320
+[2015-06-06 11:53:03] Info:IndexD CSearchTheadPool thread create,pid=3261,tid=3520763648
+[2015-06-06 11:53:03] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 11:53:03] Info:IndexD CSearchTheadPool thread create,pid=3262,tid=3520763648
+[2015-06-06 11:53:03] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 11:53:03] Info:IndexD CClientNetSvr detach thread create,pid=3262,tid=3529156352
+[2015-06-06 11:53:03] Info:IndexD CClientNetSvr detach thread create,pid=3261,tid=3529156352
+[2015-06-06 16:36:47] Info:IndexD CSearchTheadPool thread create,pid=6512,tid=1767560960
+[2015-06-06 16:36:47] Info:IndexD CClientNetSvr detach thread create,pid=6513,tid=1775953664
+[2015-06-06 16:36:47] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 16:36:47] Info:IndexD CClientNetSvr detach thread create,pid=6512,tid=1775953664
+[2015-06-06 16:36:47] Info:IndexD CSearchTheadPool thread create,pid=6513,tid=1767560960
+[2015-06-06 16:36:47] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:30:12] Info:IndexD CClientNetSvr detach thread create,pid=7884,tid=1899951872
+[2015-06-06 17:30:12] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:30:12] Info:IndexD CSearchTheadPool thread create,pid=7884,tid=1891559168
+[2015-06-06 17:30:12] Info:IndexD CClientNetSvr detach thread create,pid=7885,tid=1899951872
+[2015-06-06 17:30:12] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:30:12] Info:IndexD CSearchTheadPool thread create,pid=7885,tid=1891559168
+[2015-06-06 17:34:29] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:34:29] Info:IndexD CClientNetSvr detach thread create,pid=8026,tid=3608807168
+[2015-06-06 17:34:29] Info:IndexD CSearchTheadPool thread create,pid=8026,tid=3600414464
+[2015-06-06 17:34:29] Info:IndexD CClientNetSvr detach thread create,pid=8027,tid=3608807168
+[2015-06-06 17:34:29] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:34:29] Info:IndexD CSearchTheadPool thread create,pid=8027,tid=3600414464
+[2015-06-06 17:35:20] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:35:20] Info:IndexD CClientNetSvr detach thread create,pid=8055,tid=2527799040
+[2015-06-06 17:35:20] Info:IndexD CSearchTheadPool thread create,pid=8055,tid=2519406336
+[2015-06-06 17:35:20] Info:IndexD CClientNetSvr detach thread create,pid=8056,tid=2527799040
+[2015-06-06 17:35:20] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:35:20] Info:IndexD CSearchTheadPool thread create,pid=8056,tid=2519406336
+[2015-06-06 17:38:36] Info:IndexD CSearchTheadPool thread create,pid=8275,tid=194389760
+[2015-06-06 17:38:36] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:38:36] Info:IndexD CClientNetSvr detach thread create,pid=8276,tid=202782464
+[2015-06-06 17:38:36] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:38:36] Info:IndexD CSearchTheadPool thread create,pid=8276,tid=194389760
+[2015-06-06 17:38:36] Info:IndexD CClientNetSvr detach thread create,pid=8275,tid=202782464
+[2015-06-06 17:40:17] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:40:17] Info:IndexD CClientNetSvr detach thread create,pid=8311,tid=2900748032
+[2015-06-06 17:40:17] Info:IndexD CSearchTheadPool thread create,pid=8311,tid=2892355328
+[2015-06-06 17:40:17] Info:IndexD CClientNetSvr detach thread create,pid=8312,tid=2900748032
+[2015-06-06 17:40:17] Info:IndexD CSearchTheadPool thread create,pid=8312,tid=2892355328
+[2015-06-06 17:40:17] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:40:39] Info:IndexD CClientNetSvr detach thread create,pid=8350,tid=930723584
+[2015-06-06 17:40:39] Info:IndexD CClientNetSvr detach thread create,pid=8349,tid=930723584
+[2015-06-06 17:40:39] Info:Thread Pool 1 Create.Svr Start with Pool mode.
+[2015-06-06 17:40:39] Info:IndexD CSearchTheadPool thread create,pid=8349,tid=922330880
+[2015-06-06 17:40:39] Info:IndexD CSearchTheadPool thread create,pid=8350,tid=922330880
+[2015-06-06 17:40:39] Info:Thread Pool 1 Create.Svr Start with Pool mode.
