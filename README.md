@@ -1,6 +1,7 @@
 简单易用，几乎和调用本地方法一样使用即可。
 <br/>使用protobuf生成代码 支持同时处理pbrpc调用和http请求
 <br/>客户端支持 windows linux android使用
+<br/>支持多进程协程和多线程两种模式
 <br/>支持同步异步方式调用 支持单向推送 
 <br/>支持闲时关闭链接 支持自动重连与断开事件处理
 <br/>同步压测 4核机子虚拟机
@@ -86,7 +87,7 @@
 <br/>浏览器访问 http://192.168.1.13:8999/xxx?kk=hello
 <br/>
 <br/>上面只是简单演示了同步rpc请求的例子，
-<br/>异步调用rpc、服务器向客户端单向推送和各种网络事件处理的例子参考以下两个main.cpp文件即可
+<br/>异步调用、协程使用、服务器向客户端单向推送、定时器、线程池的使用和各种网络事件处理的例子参考以下两个main.cpp文件即可
 <br/>客户端：arpc_client_for_pc/main.cpp
 <br/>服务器端: arpc_server/main.cpp
 <br/>http的处理库：http_codec/http/http_util.cpp
