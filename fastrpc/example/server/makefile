@@ -5,8 +5,6 @@ else
 DEBUGFLAGS = -O3
 endif
 
-DEBUGFLAGS += -lrt
-
 ROOT_DIR	= $(shell pwd)
 SRC_DIR		= $(ROOT_DIR)
 PRO_ROOT    = ../../
@@ -17,7 +15,7 @@ OBJ_FILES  := $(SRC_FILES_CPP:.cpp=.o )
 OBJ_FILES  += $(SRC_FILES_C:.c=.o)
 OBJ_FILES  += $(SRC_FILES_CC:.cc=.o)
 
-CFLAGS= -Wall -DUNIX -Wno-deprecated -D_REENTRANT -lpthread
+CFLAGS= -Wall -DUNIX -Wno-deprecated -D_REENTRANT -lrt -pthread -lpthread -ldl
 OFLAG = -o
 
 INC_DIR=-I./
@@ -43,7 +41,7 @@ LIBS += $(PRO_ROOT)/xcore/libxcore.a
 all: main;
 
 main: $(OBJ_FILES)
-	$(CC) $(OBJ_FILES) $(INC_DIR) $(LIBS) $(DEBUGFLAGS) $(OFLAG) $(RELEASE)$@
+	$(CC)  $(OBJ_FILES) $(INC_DIR) $(LIBS) $(CFLAGS) $(DEBUGFLAGS) $(OFLAG) $(RELEASE)$@
 	@echo *********Build $@ Successful*********
 	@echo
 

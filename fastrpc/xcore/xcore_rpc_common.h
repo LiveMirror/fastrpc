@@ -18,8 +18,6 @@
 #include "xcore_timer.h"
 #include "coroutine.h"
 
-typedef ::google::protobuf::Closure PbClosure;
-
 class RpcMgr {
 public:
     static void PutOutSideQueue(PbClosure* done);

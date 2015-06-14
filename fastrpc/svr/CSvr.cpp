@@ -420,7 +420,7 @@ void* process(void *argument) {
         {
             string info;
             mysvr->_pool->ThreadInfo(info);
-            printf("svr_id[%u]\n%s\n",svr_id,info.c_str());
+            //printf("svr_id[%u]\n%s\n",svr_id,info.c_str());
         }
         sleep(600);
     }

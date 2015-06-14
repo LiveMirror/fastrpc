@@ -1,4 +1,4 @@
-CC=g++
+CC=g++ -g
 ifeq ($(debug), 1)
 DEBUGFLAGS = -g
 else

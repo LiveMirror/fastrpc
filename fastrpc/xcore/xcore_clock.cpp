@@ -1,6 +1,6 @@
 // 2011-07-13
 // xcore_clock.cpp
-// 
+//
 // ¼ÆÊ±Æ÷Àà
 
 
@@ -17,7 +17,7 @@ namespace xcore {
 
 static uint32 __getNumberOfProcessors()
 {
-	SYSTEM_INFO SysInfo; 
+	SYSTEM_INFO SysInfo;
 	GetSystemInfo(&SysInfo);
 	return SysInfo.dwNumberOfProcessors;
 }
@@ -247,10 +247,10 @@ XTimeSpan XClock::diff_last()
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static XClock __ServerStartClock;
 
 XTimeSpan running_time(void)
 {
+static XClock __ServerStartClock;
 	return __ServerStartClock.peek();
 }
 

@@ -20,7 +20,7 @@ class EchoServiceImpl : public echo::EchoService {
                       ::google::protobuf::Closure* done) {
 
         // 再向server2发请求这里是协程同步会放权，不用担心阻塞
-        echo_service->Echo(NULL, request, response, NULL);
+        //echo_service->Echo(NULL, request, response, NULL);
 
         response->set_response(response->response()+" add server1 echo");
 
@@ -144,7 +144,7 @@ int StartFun(int fd) {
 int main(int argc, char *argv[])
 {
     // 多进程方式启动 ip, port, 启动函数指针, 启动进程个数(不填则自动为cpu个数)
-    StartWithMultProc("127.0.0.1", 8999, StartFun, 2);
+    StartWithMultProc("127.0.0.1", 8999, StartFun, 4);
 
     return 0;
 }

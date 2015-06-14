@@ -133,7 +133,7 @@ public:
     RpcCliMethod* Get(std::string& key) {
         _mux.lock();
         RpcCliMethod* ret = NULL;
-        std::map<std::string, RpcCliMethod*>::iterator it = rpc_method_map_.begin();
+        std::map<std::string, RpcCliMethod*>::iterator it = rpc_method_map_.find(key);
         if (it != rpc_method_map_.end()) {
             ret = it->second;
         }

@@ -13,7 +13,7 @@ HEAD_FILES := $(shell find $(SRC_DIR) -name '*.h*')
 OBJ_FILES  := $(SRC_FILES_CPP:.cpp=.o)
 OBJ_FILES  += $(SRC_FILES_C:.c=.o)
 
-CFLAGS= -lrt -Wall -DUNIX $(DEBUG) -Wno-deprecated -D_REENTRANT
+CFLAGS= -ldl -lrt -Wall -DUNIX $(DEBUG) -Wno-deprecated -D_REENTRANT
 
 INC_DIR=-I./
 INC_DIR+=-I../http_codec/api

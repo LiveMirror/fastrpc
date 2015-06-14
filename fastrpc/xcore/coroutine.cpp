@@ -1,36 +1,17 @@
 #include "coroutine.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <ucontext.h>
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
 #include <stdint.h>
 
-#define STACK_SIZE (1024*1024)
-#define DEFAULT_COROUTINE 16
+CroMgr singleton = coroutine_open();
+CroMgr GetCroMgr() {
+    return singleton;
+}
 
-struct coroutine;
-
-struct schedule {
-    char stack[STACK_SIZE];
-    ucontext_t main;
-    int nco;
-    int cap;
-    int running;
-    struct coroutine **co;
-};
-
-struct coroutine {
-    Closure<void>* func;
-    ::google::protobuf::Closure* pbfunc;
-    ucontext_t ctx;
-    struct schedule * sch;
-    ptrdiff_t cap;
-    ptrdiff_t size;
-    int status;
-    char *stack;
-};
+static PFMutMap pf_map;
 
 struct coroutine *
 _co_new(struct schedule *S , Closure<void>* closure) {
@@ -72,6 +53,7 @@ coroutine_open(void) {
     S->running = -1;
     S->co = (struct coroutine **)malloc(sizeof(struct coroutine *) * S->cap);
     memset(S->co, 0, sizeof(struct coroutine *) * S->cap);
+    S->enable_sys_hook = false;
     return S;
 }
 
@@ -230,11 +212,6 @@ coroutine_running(struct schedule * S) {
 }
 
 
-CroMgr singleton = coroutine_open();
-CroMgr GetCroMgr() {
-    return singleton;
-}
-
 bool ProcessWithNewCro(Closure<void>* closure) {
     CroMgr mgr = GetCroMgr();
     if (-1 != coroutine_running(mgr)) {
@@ -258,3 +235,28 @@ bool ProcessWithNewCro(::google::protobuf::Closure* closure) {
     }
     return true;
 }
+
+void co_resume_in_suspend(CroMgr mgr, int croid) {
+    if (mgr && COROUTINE_SUSPEND == coroutine_status(mgr, croid)) {
+        coroutine_resume(mgr, croid);
+    }
+}
+
+void co_disable_hook_sys() {
+    CroMgr cro_mgr = GetCroMgr();
+    if (cro_mgr) {
+        cro_mgr->enable_sys_hook = 0;
+    }
+}
+
+// 只有当前在协程中才会hook
+bool co_is_enable_sys_hook() {
+    CroMgr cro_mgr = GetCroMgr();
+    return (cro_mgr &&
+            (-1 != coroutine_running(cro_mgr)) &&
+            cro_mgr->enable_sys_hook);
+}
+
+void co_log_err(const char* fmt, ...) {}
+
+

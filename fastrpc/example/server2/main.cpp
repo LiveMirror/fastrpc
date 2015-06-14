@@ -64,7 +64,8 @@ public:
         std::stringstream ss;
         ss << "kk:" << kk << "<br/>"
             << "cmd:" << str_cmd << "<br/>"
-            << "uri:" << get_uri << "<br/>";
+            << "uri:" << get_uri << "<br/>"
+            << "final";
 
         std::string content_type = "text/html";
         std::string add_head = "Connection: keep-alive\r\n";
