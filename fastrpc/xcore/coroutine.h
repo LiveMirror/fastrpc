@@ -26,6 +26,7 @@ struct schedule {
     int running;
     struct coroutine **co;
     bool enable_sys_hook;
+    unsigned threadid;
 };
 
 struct coroutine {
@@ -53,6 +54,7 @@ void coroutine_yield(struct schedule *);
 
 typedef struct schedule * CroMgr;
 extern CroMgr singleton;
+void SetCoroutineUsedByCurThread();
 CroMgr GetCroMgr();
 bool ProcessWithNewCro(Closure<void>* closure);
 bool ProcessWithNewCro(::google::protobuf::Closure* closure);

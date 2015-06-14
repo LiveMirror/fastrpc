@@ -793,7 +793,7 @@ void co_enable_hook_sys()
     CroMgr cro_mgr = GetCroMgr();
     if (cro_mgr)
     {
-        cro_mgr->enable_sys_hook = 1;
+        cro_mgr->enable_sys_hook = true;
     }
 }
 

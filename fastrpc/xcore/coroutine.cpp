@@ -7,6 +7,12 @@
 #include <stdint.h>
 
 CroMgr singleton = coroutine_open();
+// 暂时一个进程就支持一个协程
+// 以后再考虑多线程，不过意义不大
+void SetCoroutineUsedByCurThread() {
+    singleton->threadid = pthread_self();
+}
+
 CroMgr GetCroMgr() {
     return singleton;
 }
@@ -54,6 +60,7 @@ coroutine_open(void) {
     S->co = (struct coroutine **)malloc(sizeof(struct coroutine *) * S->cap);
     memset(S->co, 0, sizeof(struct coroutine *) * S->cap);
     S->enable_sys_hook = false;
+    S->threadid = pthread_self();
     return S;
 }
 
@@ -208,6 +215,7 @@ coroutine_status(struct schedule * S, int id) {
 
 int
 coroutine_running(struct schedule * S) {
+    if (pthread_self() != S->threadid) return -1;
     return S->running;
 }
 
@@ -245,7 +253,7 @@ void co_resume_in_suspend(CroMgr mgr, int croid) {
 void co_disable_hook_sys() {
     CroMgr cro_mgr = GetCroMgr();
     if (cro_mgr) {
-        cro_mgr->enable_sys_hook = 0;
+        cro_mgr->enable_sys_hook = false;
     }
 }
 

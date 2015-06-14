@@ -86,7 +86,7 @@ int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
     ss << "svr_id:" << svr->_svr_id
         << " cli:" << cli_flow
         << " param:" << *((int*)param) << "\n";
-    printf(ss.str().c_str());
+    //printf(ss.str().c_str());
     return 0;
 }
 

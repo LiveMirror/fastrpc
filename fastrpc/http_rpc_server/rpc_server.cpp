@@ -7,6 +7,7 @@
 
 
 void* ProcLoop(void* args) {
+    SetCoroutineUsedByCurThread();
     //RpcServer* rpc_server = (RpcServer*)args;
     while(true) {
         PbClosure* pb_closure = RpcMgr::GetOutSideQueue(1000000);
@@ -202,11 +203,11 @@ void* CUploadDownWebSvr::Run(CDataBuf *item, CASyncSvr* svr)
     return NULL;
 }
 
-int core_count() {  
-    int count = sysconf(_SC_NPROCESSORS_CONF);  
+int core_count() {
+    int count = sysconf(_SC_NPROCESSORS_CONF);
     if (count < 1) count = 1;
-    return count;  
-} 
+    return count;
+}
 
 bool RpcServer::start() {
     LOG_OPEN(LOG_DEBUG,LOG_TYPE_DAILY,"./","arpc_server");

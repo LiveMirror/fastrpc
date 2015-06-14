@@ -31,7 +31,9 @@
 
 using std::map;
 
-#define try_time 10
+#define try_time 1000
+
+XAtomic64 recv_c = 0;
 
 void hook_sock_job(int i) {
     // 开始sys hook后
@@ -49,14 +51,17 @@ void hook_sock_job(int i) {
         << "Host: 127.0.0.1:8998\r\n"
         << "\r\n";
     std::string send_str = ss.str();
-    printf("%d send %d\n", sock.get_handle(), i);
+    //printf("%d send %d\n", sock.get_handle(), i);
     sock.send_n(send_str.c_str(), send_str.size(), 10000);
     char buf[10240] = {0};
     while (strstr(buf, "final") == NULL) {
         sock.recv(buf, 10240);
     }
-    printf("%d recv %d\n", sock.get_handle(), i);
+    //printf("%d recv %d\n", sock.get_handle(), i);
 
+    if (++recv_c == try_time) {
+        printf("send all finish\n");
+    }
 
     sock.close();
     co_disable_hook_sys();
