@@ -34,6 +34,9 @@ using std::map;
 #define try_time 10
 
 void hook_sock_job(int i) {
+    // 开始sys hook后
+    // 系统的socket操作函数遇到阻塞会自动放权
+    // 不用修改任何代码，可将同步socket变异步
     co_enable_hook_sys();
     XSocket sock;
     sock.open(SOCK_STREAM);
