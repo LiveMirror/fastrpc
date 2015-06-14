@@ -29,6 +29,7 @@ _co_new(struct schedule *S , Closure<void>* closure) {
     co->size = 0;
     co->status = COROUTINE_READY;
     co->stack = NULL;
+    co->enable_sys_hook = false;
     return co;
 }
 
@@ -42,6 +43,7 @@ _co_new(struct schedule *S , ::google::protobuf::Closure* closure) {
     co->size = 0;
     co->status = COROUTINE_READY;
     co->stack = NULL;
+    co->enable_sys_hook = false;
     return co;
 }
 
@@ -59,7 +61,6 @@ coroutine_open(void) {
     S->running = -1;
     S->co = (struct coroutine **)malloc(sizeof(struct coroutine *) * S->cap);
     memset(S->co, 0, sizeof(struct coroutine *) * S->cap);
-    S->enable_sys_hook = false;
     S->threadid = pthread_self();
     return S;
 }
@@ -215,7 +216,7 @@ coroutine_status(struct schedule * S, int id) {
 
 int
 coroutine_running(struct schedule * S) {
-    if (pthread_self() != S->threadid) return -1;
+    if ((unsigned)pthread_self() != S->threadid) return -1;
     return S->running;
 }
 
@@ -252,17 +253,19 @@ void co_resume_in_suspend(CroMgr mgr, int croid) {
 
 void co_disable_hook_sys() {
     CroMgr cro_mgr = GetCroMgr();
-    if (cro_mgr) {
-        cro_mgr->enable_sys_hook = false;
-    }
+    int id = coroutine_running(cro_mgr);
+    assert(id >= 0);
+    struct coroutine * C = cro_mgr->co[id];
+    C->enable_sys_hook = false;
 }
 
 // 只有当前在协程中才会hook
 bool co_is_enable_sys_hook() {
     CroMgr cro_mgr = GetCroMgr();
-    return (cro_mgr &&
-            (-1 != coroutine_running(cro_mgr)) &&
-            cro_mgr->enable_sys_hook);
+    int id = coroutine_running(cro_mgr);
+    if (-1 == id) return false;
+    struct coroutine * C = cro_mgr->co[id];
+    return C->enable_sys_hook;
 }
 
 void co_log_err(const char* fmt, ...) {}

@@ -28,10 +28,11 @@
 #include "xcore_atomic.h"
 #include "coroutine.h"
 #include "xcore_socket.h"
+#include "xcore_mutex.h"
 
 using std::map;
 
-#define try_time 1000
+#define try_time 10
 
 XAtomic64 recv_c = 0;
 
@@ -51,13 +52,13 @@ void hook_sock_job(int i) {
         << "Host: 127.0.0.1:8998\r\n"
         << "\r\n";
     std::string send_str = ss.str();
-    //printf("%d send %d\n", sock.get_handle(), i);
-    sock.send_n(send_str.c_str(), send_str.size(), 10000);
+    printf("%d send %d\n", sock.get_handle(), i);
+    sock.send_n(send_str.c_str(), send_str.size(), 100000);
     char buf[10240] = {0};
     while (strstr(buf, "final") == NULL) {
         sock.recv(buf, 10240);
     }
-    //printf("%d recv %d\n", sock.get_handle(), i);
+    printf("%d recv %d\n", sock.get_handle(), i);
 
     if (++recv_c == try_time) {
         printf("send all finish\n");
@@ -70,7 +71,6 @@ void hook_sock_job(int i) {
 static TimerMgr hook_timer_mgr;
 
 int main(int argc, char *argv[]) {
-
     for (int i =0; i < try_time; ++i) {
         ::google::protobuf::Closure* routine =
             ::google::protobuf::NewCallback(&hook_sock_job,i);

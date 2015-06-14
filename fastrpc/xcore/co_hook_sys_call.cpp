@@ -76,19 +76,21 @@ unsigned ALL_EPOLL_EV = EPOLLIN | EPOLLOUT | EPOLLHUP | EPOLLERR;
 
 void EpollDel(int sockfd, unsigned events) {
     struct epoll_event ev;
-    ev.data.u64 = 0UL;
-    ev.data.fd = sockfd;
+    ev.data.u32 = 0UL;
     ev.events = events;
     if (epoll_ctl(hook_epollfd, EPOLL_CTL_DEL, sockfd, &ev) < 0) {
         //printf("epoll_ctl del socket:%d fail\n", sockfd);
     }
 }
 
-void EpollAdd(int sockfd, unsigned events) {
+void EpollAdd(int sockfd,unsigned ev_uid, unsigned events) {
     struct epoll_event ev;
-    ev.data.u64 = 0UL;
-    ev.data.fd = sockfd;
+    ev.data.u32 = ev_uid;
     ev.events = events | EPOLLONESHOT;
+    while (-1 == hook_epollfd) {
+        // 刚启动进程时就注册的要等一会
+        usleep(1000);
+    }
     if (epoll_ctl(hook_epollfd, EPOLL_CTL_ADD, sockfd, &ev) < 0) {
         //printf("epoll_ctl add socket:%d fail\n", sockfd);
     }
@@ -116,17 +118,15 @@ void* HookEpollLoop(void *argument) {
     hook_epollfd = epoll_create( MAX_HOOK_SOCK_NUM );
     ASSERT( hook_epollfd != -1 );
     while( true ) {
-        std::set<int> sock_set;
+        std::map<unsigned, POFD> sock_set;
         int number = epoll_wait( hook_epollfd, events, MAX_HOOK_SOCK_NUM, -1 );
         ASSERT( ( number < 0 ) && ( errno != EINTR ) );
         for ( int i = 0; i < number; i++ ) {
-            int sockfd = events[i].data.fd;
-            POFD pofd = wait_pf_map.Get(sockfd);
-            if (-1 == pofd.croid) {
-                EpollDel(sockfd, ALL_EPOLL_EV);
+            unsigned ev_uid = events[i].data.u32;
+            POFD pofd = wait_pf_map.Get(ev_uid);
+            if (0 == pofd.cuid) {
                 continue;
             }
-            sock_set.insert(sockfd);
             if( events[i].events & EPOLLHUP ) {
                 pofd.revents |= POLLHUP;
             } else if( events[i].events & EPOLLERR ) {
@@ -138,16 +138,24 @@ void* HookEpollLoop(void *argument) {
             } else {
                 printf("not support event\n");
             }
-            wait_pf_map.Set(sockfd, pofd);
+            if (wait_pf_map.Set(ev_uid, pofd) &&
+                0 != pofd.revents) {
+                sock_set[ev_uid] = pofd;
+            }
         }
 
-        std::set<int>::iterator it = sock_set.begin();
+        std::map<unsigned, POFD>::iterator it = sock_set.begin();
         for(; it != sock_set.end(); ++it) {
-            POFD pofd = wait_pf_map.Get(*it);
-            if (-1 == pofd.croid) {
-                continue;
+            POFD pofd = it->second;
+            if (pofd.revents == 0) {
+                printf("notify ev is null\n");
+                abort();
             }
-            PbClosure* clo = clo_map.Pop(pofd.croid);
+            if (0 == pofd.cuid) {
+                printf("notify croid is  -1\n");
+                abort();
+            }
+            PbClosure* clo = clo_map.Pop(pofd.cuid);
             if (clo) RpcMgr::PutOutSideQueue(clo);
         }
 
@@ -287,8 +295,8 @@ static inline rpchook_t * alloc_by_fd( int fd )
 	if( fd > -1 && fd < (int)sizeof(g_rpchook_socket_fd) / (int)sizeof(g_rpchook_socket_fd[0]) )
 	{
 		rpchook_t *lp = (rpchook_t*)calloc( 1,sizeof(rpchook_t) );
-		lp->read_timeout.tv_sec = 1;
-		lp->write_timeout.tv_sec = 1;
+		lp->read_timeout.tv_sec = 30;
+		lp->write_timeout.tv_sec = 30;
 		g_rpchook_socket_fd[ fd ] = lp;
 		return lp;
 	}
@@ -612,50 +620,86 @@ ssize_t recv( int socket, void *buffer, size_t length, int flags )
 
 }
 
-void TimeOut_Job(int croid) {
-    PbClosure* clo = clo_map.Pop(croid);
+static XMutex cu_mutex;
+static unsigned cuid = 0;
+
+unsigned NextNewId(unsigned& cliflow) {
+    unsigned new_id;
+    cu_mutex.lock();
+    cliflow = ((cliflow == 0 || cliflow == 0xffffffffUL ) ? 1 : cliflow+1);
+    new_id = cliflow;
+    cu_mutex.unlock();
+    return new_id;
+}
+
+void TimeOut_Job(unsigned u_croid) {
+    printf("wait sock time out\n");
+    PbClosure* clo = clo_map.Pop(u_croid);
     if (clo) RpcMgr::PutOutSideQueue(clo);
 }
 
 int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
+    unsigned* id_arr = new unsigned[nfds];
+    unsigned u_croid = NextNewId(cuid);
+    for (nfds_t i = 0; i < nfds; ++i) {
+        id_arr[i] = NextNewId(cuid);
+    }
     CroMgr mgr = GetCroMgr();
     int croid = coroutine_running(mgr);
+    if (croid == -1) {
+        printf("can not be -1\n");
+        abort();
+    }
     PbClosure* callback =
-        ::google::protobuf::NewCallback(&co_resume_in_suspend, mgr, croid);
-    clo_map.Insert(croid, callback);
+        ::google::protobuf::NewCallback(&coroutine_resume, mgr, croid);
+    clo_map.Insert(u_croid, callback);
     // 存放事件结果,epoll_wait返回的事件会存到这里
     for (nfds_t i = 0; i < nfds; ++i) {
         struct pollfd& sub_pollfd = fds[i];
+        unsigned ev_uid = id_arr[i];
         POFD  pofd;
-        pofd.croid = croid;
-        wait_pf_map.Insert(sub_pollfd.fd, pofd);
+        pofd.cuid = u_croid;
+        wait_pf_map.Insert(ev_uid, pofd);
     }
     // 注册给另外一个线程的epoll(timeout=-1)，本线程不用轮询
+    std::map<int, unsigned> cuid_dic;
     for (nfds_t i = 0; i < nfds; ++i) {
         struct pollfd& sub_pollfd = fds[i];
+        unsigned ev_uid = id_arr[i];
         unsigned epoll_evs = PollEvent2Epoll(sub_pollfd.events);
-        EpollAdd(sub_pollfd.fd, epoll_evs);
+        EpollAdd(sub_pollfd.fd, ev_uid, epoll_evs);
     }
     // 超时处理
-    Closure<void>* timeout_job =
-        NewPermanentClosure(TimeOut_Job, croid);
-    hook_timer_mgr.AddJob(timeout, timeout_job, 1);
+    unsigned timer_id = -1;
+    if (timeout >= 0) {
+        Closure<void>* timeout_job =
+            NewPermanentClosure(TimeOut_Job, u_croid);
+        timer_id = hook_timer_mgr.AddJob(timeout, timeout_job, 1);
+    }
     coroutine_yield(mgr);
+    if (timeout >= 0) {
+        hook_timer_mgr.DelJob(timer_id);
+    }
     for (nfds_t i = 0; i < nfds; ++i) {
         struct pollfd& sub_pollfd = fds[i];
-        EpollDel(sub_pollfd.fd, ALL_EPOLL_EV);
+        EpollDel(sub_pollfd.fd, PollEvent2Epoll(sub_pollfd.events));
     }
     // 收割事件果实了
     int ev_fd_num = 0;
     for (nfds_t i = 0; i < nfds; ++i) {
         struct pollfd& sub_pollfd = fds[i];
-        POFD pofd = wait_pf_map.Pop(sub_pollfd.fd);
-        if (-1 == pofd.croid) continue;
+        unsigned ev_uid = id_arr[i];
+        POFD pofd = wait_pf_map.Pop(ev_uid);
         if (0 != pofd.revents) {
             ++ev_fd_num;
             sub_pollfd.revents = EpollEvent2Poll(pofd.revents);
         }
     }
+    if (0 == ev_fd_num) {
+        printf("poll time out\n");
+        abort();
+    }
+    delete []id_arr;
     return ev_fd_num;
 }
 
@@ -791,10 +835,10 @@ int fcntl(int fildes, int cmd, ...)
 void co_enable_hook_sys()
 {
     CroMgr cro_mgr = GetCroMgr();
-    if (cro_mgr)
-    {
-        cro_mgr->enable_sys_hook = true;
-    }
+    int id = coroutine_running(cro_mgr);
+    assert(id >= 0);
+    struct coroutine * C = cro_mgr->co[id];
+    C->enable_sys_hook = true;
 }
 
 

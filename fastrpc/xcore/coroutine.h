@@ -25,7 +25,6 @@ struct schedule {
     int cap;
     int running;
     struct coroutine **co;
-    bool enable_sys_hook;
     unsigned threadid;
 };
 
@@ -38,6 +37,7 @@ struct coroutine {
     ptrdiff_t size;
     int status;
     char *stack;
+    bool enable_sys_hook;
 };
 
 struct schedule * coroutine_open(void);
@@ -69,26 +69,31 @@ void co_log_err(const char* fmt, ...);
 struct MyPollFd {
 public:
     MyPollFd() {
-        croid = -1;
+        cuid = 0;
         revents = 0;
     }
-    int croid;
+    unsigned cuid;
     short revents;
 };
 typedef struct MyPollFd POFD;
 
 class ClosureMap {
 public:
-    bool Insert(int key, PbClosure* closure) {
+    bool Insert(unsigned key, PbClosure* closure) {
         _mux.lock();
+        std::map<unsigned, PbClosure*>::iterator it = clo_map_.find(key);
+        if (it != clo_map_.end()) {
+            printf("clo map key conflict\n");
+            abort();
+        }
         clo_map_[key] = closure;
         _mux.unlock();
         return true;
     }
-    PbClosure* Pop(int key) {
+    PbClosure* Pop(unsigned key) {
         _mux.lock();
         PbClosure* ret = NULL;
-        std::map<int, PbClosure*>::iterator it = clo_map_.find(key);
+        std::map<unsigned, PbClosure*>::iterator it = clo_map_.find(key);
         if (it != clo_map_.end()) {
             ret = it->second;
             clo_map_.erase(it);
@@ -96,55 +101,61 @@ public:
         _mux.unlock();
         return ret;
     }
-    std::map<int, PbClosure*> clo_map_;
+    std::map<unsigned, PbClosure*> clo_map_;
     XMutex _mux;
 };
 
 class PFMutMap {
 public:
-    bool Insert(int key, POFD& a_pfd) {
+    bool Insert(unsigned key, POFD& a_pfd) {
         _mux.lock();
-        pofd_map_[key] = a_pfd;
+        POFD* node = new POFD();
+        *node = a_pfd;
+        pofd_map_[key] = node;
         _mux.unlock();
         return true;
     }
 
-    POFD Pop(int key) {
+    POFD Pop(unsigned key) {
         _mux.lock();
         POFD ret;
-        std::map<int, POFD>::iterator it = pofd_map_.find(key);
+        std::map<unsigned, POFD*>::iterator it = pofd_map_.find(key);
         if (it != pofd_map_.end()) {
-            ret = it->second;
+            POFD* node = it->second;
+            ret = *node;
+            delete node;
             pofd_map_.erase(it);
         }
         _mux.unlock();
         return ret;
     }
 
-    POFD Get(int key) {
+    POFD Get(unsigned key) {
         _mux.lock();
         POFD ret;
-        std::map<int, POFD>::iterator it = pofd_map_.find(key);
+        std::map<unsigned, POFD*>::iterator it = pofd_map_.find(key);
         if (it != pofd_map_.end()) {
-            ret = it->second;
+            POFD* node = it->second;
+            ret = *node;
         }
         _mux.unlock();
         return ret;
     }
 
-    bool Set(int key, POFD& a_pofd) {
+    bool Set(unsigned key, POFD& a_pofd) {
         bool ret = false;
         _mux.lock();
-        std::map<int, POFD>::iterator it = pofd_map_.find(key);
+        std::map<unsigned, POFD*>::iterator it = pofd_map_.find(key);
         if (it != pofd_map_.end()) {
-             it->second = a_pofd;
-             ret = true;
+            POFD* node = it->second;
+            *node = a_pofd;
+            ret = true;
         }
         _mux.unlock();
         return ret;
     }
 
-    std::map<int, POFD> pofd_map_;
+    std::map<unsigned, POFD*> pofd_map_;
     XMutex _mux;
 };
 
