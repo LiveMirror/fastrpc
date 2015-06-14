@@ -3,6 +3,7 @@
 <br/>客户端支持 windows linux android使用
 <br/>支持多进程协程和多线程两种模式
 <br/>支持同步异步方式调用 支持单向推送 
+<br/>支持hook sys socket，不用修改任何代码让你的同步send recv变异步
 <br/>支持闲时关闭链接 支持自动重连与断开事件处理
 <br/>同步压测 4核机子虚拟机
 <br/>简单echo(因为nginx是读文件公平竞争 我们也是读文件) 1000并发 6wqps; nginx 4.5wqps
