@@ -166,6 +166,7 @@ public:
 class RpcServer {
 public:
     RpcServer(std::string host, int port) {
+        listen_fd_ = -1;
         host_ = host;
         port_ = port;
         rpc_pop_index = 0;
