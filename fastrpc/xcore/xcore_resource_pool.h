@@ -67,7 +67,7 @@ public:
 private:
     void PutCroQue(int croid) {
         m_cro_mut.lock();
-        m_wait_cro_que.push_front(croid);
+        m_wait_cro_que.push_back(croid);
         m_cro_mut.unlock();
     }
 
