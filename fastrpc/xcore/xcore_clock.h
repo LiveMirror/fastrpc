@@ -1,6 +1,6 @@
 // 2011-07-13
 // xcore_clock.h
-// 
+//
 // 计时器类(修改系统时间不受影响)
 
 
@@ -10,6 +10,7 @@
 #include "xcore_define.h"
 #include "xcore_time_span.h"
 #include "xcore_smart_ptr.h"
+#include "xcore_mutex.h"
 
 namespace xcore {
 
@@ -34,6 +35,8 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+
+extern XClock* static_clock;
 
 // get time since server starting
 XTimeSpan running_time(void);

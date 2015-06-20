@@ -149,6 +149,7 @@ public:
 
 	XClockImpl(const XClockImpl& from)
 	{
+        ASSERT(0x0 != &from.m_start);
 		memcpy(&m_start, &from.m_start, sizeof(m_start));
 		memcpy(&m_last, &from.m_last, sizeof(m_last));
 	}
@@ -157,6 +158,7 @@ public:
 	{
 		if (this != &from)
 		{
+            ASSERT(0x0 != &from.m_start);
 			memcpy(&m_start, &from.m_start, sizeof(m_start));
 			memcpy(&m_last, &from.m_last, sizeof(m_last));
 		}
@@ -246,12 +248,19 @@ XTimeSpan XClock::diff_last()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-
+static XMutex cmut;
+XClock* static_clock = NULL;
 
 XTimeSpan running_time(void)
 {
-static XClock __ServerStartClock;
-	return __ServerStartClock.peek();
+    if (NULL == static_clock) {
+        usleep(1000);
+        printf("init clock\n");
+        cmut.lock();
+        static_clock = new XClock();
+        cmut.unlock();
+    }
+    return static_clock->peek();
 }
 
 } // namespace xcore
