@@ -19,22 +19,22 @@ CFLAGS= -Wall -DUNIX -Wno-deprecated -D_REENTRANT -lrt -pthread -lpthread -ldl
 OFLAG = -o
 
 INC_DIR=-I./
-INC_DIR+=-I./protobuf
+#INC_DIR+=-I./protobuf
+INC_DIR+=-I$(PRO_ROOT)/protobuf/include
 INC_DIR+=-I$(PRO_ROOT)/svr -I$(PRO_ROOT)/http_codec/api -I$(PRO_ROOT)/ependingpool/output/include/
 INC_DIR+=-I$(PRO_ROOT)/http_codec/http #-I$(PRO_ROOT)/http_codec/json
 INC_DIR+=-I$(PRO_ROOT)/comm/include
-INC_DIR+=-I$(PRO_ROOT)/protobuf/include
 INC_DIR+=-I$(PRO_ROOT)/xcore/include
 INC_DIR+=-I$(PRO_ROOT)/http_rpc_server
 INC_DIR+=-I$(PRO_ROOT)/http_rpc_client
 
 LIBS = $(PRO_ROOT)/http_rpc_server/librpc_server.a
 LIBS += $(PRO_ROOT)/http_rpc_client/librpc_client.a
+LIBS += $(PRO_ROOT)/xcore/libxcore.a
+LIBS += $(PRO_ROOT)/protobuf/lib/libprotobuf.a
 LIBS += $(PRO_ROOT)/svr/libasvr.a $(PRO_ROOT)/http_codec/libhttpapi.a
 LIBS += $(PRO_ROOT)/ependingpool/output/libependingpool.a $(PRO_ROOT)/ullib/libullib.a
 LIBS += $(PRO_ROOT)/comm/output/libcomm.a
-LIBS += $(PRO_ROOT)/protobuf/lib/libprotobuf.a
-LIBS += $(PRO_ROOT)/xcore/libxcore.a
 
 .PHONY: all clean
 

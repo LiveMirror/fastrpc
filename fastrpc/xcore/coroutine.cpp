@@ -61,7 +61,7 @@ coroutine_open(void) {
     S->running = -1;
     S->co = (struct coroutine **)malloc(sizeof(struct coroutine *) * S->cap);
     memset(S->co, 0, sizeof(struct coroutine *) * S->cap);
-    S->threadid = pthread_self();
+    S->threadid = -1;
     return S;
 }
 

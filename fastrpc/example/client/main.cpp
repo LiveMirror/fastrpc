@@ -116,10 +116,11 @@ void cro_job(echo::EchoService_Stub::Stub* stub, int i) {
 }
 
 int main(int argc, char *argv[]) {
+    SetCoroutineUsedByCurThread();
     Test test;
     ::google::protobuf::RpcChannel* client;
     echo::EchoService_Stub::Stub* stub;
-    client = new RpcClient("127.0.0.1", 8999, 5000); // 1::host 2:port 3:超时时间 4:是否多线程模式
+    client = new RpcClient("127.0.0.1", 8997, 5000); // 1::host 2:port 3:超时时间 4:是否多线程模式
     if (!((RpcClient*)client)->IsConnected()) {
         delete client;
         exit(0);

@@ -6,7 +6,6 @@
 // Description:
 
 #include "rpc_client.h"
-#include "echo.pb.h"
 #include "xcore_thread.h"
 #include "xcore_base64.h"
 #include <string>
@@ -71,6 +70,9 @@ void hook_sock_job(int i) {
 static TimerMgr hook_timer_mgr;
 
 int main(int argc, char *argv[]) {
+    // 为当前线程初始化协程
+    SetCoroutineUsedByCurThread();
+
     for (int i =0; i < try_time; ++i) {
         ::google::protobuf::Closure* routine =
             ::google::protobuf::NewCallback(&hook_sock_job,i);

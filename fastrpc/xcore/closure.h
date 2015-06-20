@@ -1,14 +1,9 @@
-// Copyright (c) 2013, Baidu Inc.
+// Copyright (c) 2013, tencent Inc.
 // All rights reserved.
 //
-// Author: Pengchong <pengchong@baidu.com>
+// Author: jack
 // Created: 01/26/13
 // Description:  A closure (also lexical closure or function closure) is a
-// function or reference to a function together with a referencing
-// environment  - a table storing a reference to each of the non-local
-// variables (also called free variables) of that function.
-// Please refer to http://en.wikipedia.org/wiki/Closure_(computer_science)
-// Do not edit it directly !
 
 #ifndef IPCS_COMMON_BASE_CLOSURE_H
 #define IPCS_COMMON_BASE_CLOSURE_H

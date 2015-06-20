@@ -75,6 +75,8 @@ public:
 #define ProcessType void*
 #endif//__GNUC__
 
+#define TPRun(...) AddJob(NewClosure(__VA_ARGS__))
+
 ProcessType TPProcess(void *argument);
 
 class TPMgr {

@@ -1,6 +1,8 @@
 #include "rpc_server.h"
 #include "echo.pb.h"
 #include "rpc_client.h"
+#include "xcore_resource_pool.h"
+#include <sstream>
 
 class EchoServiceImpl : public echo::EchoService {
 
@@ -50,7 +52,20 @@ public:
 
 class MyHttpHandler : public HttpHandler {
 public:
+    ResourcePool<int> res_pool;
     MyHttpHandler() {
+        // 测试资源池（数据库连接池可类似使用）
+        for (int i = 0; i < 16; ++i) {
+            int* res = new int;
+            *res = i;
+            res_pool.PutResQue(res);
+        }
+    }
+    ~MyHttpHandler() {
+        for (int i = 0; i < 16; ++i) {
+            int* res = res_pool.GetResQue();
+            delete res;
+        }
     }
 
     virtual void Init(CASyncSvr* svr) {}
@@ -64,8 +79,12 @@ public:
         std::stringstream ss;
         ss << "kk:" << kk << "<br/>"
             << "cmd:" << str_cmd << "<br/>"
-            << "uri:" << get_uri << "<br/>"
+            << "uri:" << get_uri << "<br/>";
+
+        int* res = res_pool.Get();
+        ss << " add res:" << *res << "<br/>"
             << "final";
+        res_pool.Release(res);
 
         std::string content_type = "text/html";
         std::string add_head = "Connection: keep-alive\r\n";

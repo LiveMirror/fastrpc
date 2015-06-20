@@ -20,7 +20,7 @@ class EchoServiceImpl : public echo::EchoService {
                       ::google::protobuf::Closure* done) {
 
         // 再向server2发请求这里是协程同步会放权，不用担心阻塞
-        //echo_service->Echo(NULL, request, response, NULL);
+        echo_service->Echo(NULL, request, response, NULL);
 
         response->set_response(response->response()+" add server1 echo");
 
@@ -33,10 +33,9 @@ class EchoServiceImpl : public echo::EchoService {
 
         timer_mgr.AddJob(1000, period_job, 5);
 
-        Closure<void>* tp_job =
-            NewClosure(this, &EchoServiceImpl::TestThreadPool, response);
 
-        tp_mgr->AddJob(tp_job);// 这里会放权,等线程池执行完后resume
+        // 切换到多线程执行,放权,等线程池执行完后resume
+        tp_mgr->TPRun(this, &EchoServiceImpl::TestThreadPool, response);
 
         if (done) {
             done->Run();
@@ -76,6 +75,15 @@ public:
     virtual void Init(CASyncSvr* svr) {}
     virtual void OnRec(HttpRequest* request,
                        ::google::protobuf::Closure *done) {
+
+        ::echo::EchoRequest req;
+        ::echo::EchoResponse res;
+        req.set_message("browse req");
+
+        // 再向server2发请求这里是协程同步会放权，不用担心阻塞
+        echo_service->Echo(NULL, &req, &res, NULL);
+
+
         CHttpParser* ps = request->ps;
         ps->parse_form_body();
         std::string kk = ps->get_param("kk");
@@ -84,7 +92,8 @@ public:
         std::stringstream ss;
         ss << "kk:" << kk << "<br/>"
             << "cmd:" << str_cmd << "<br/>"
-            << "uri:" << get_uri << "<br/>";
+            << "uri:" << get_uri << "<br/>"
+            << "rpc res:" << res.DebugString();
 
         std::string content_type = "text/html";
         std::string add_head = "Connection: keep-alive\r\n";
@@ -144,7 +153,7 @@ int StartFun(int fd) {
 int main(int argc, char *argv[])
 {
     // 多进程方式启动 ip, port, 启动函数指针, 启动进程个数(不填则自动为cpu个数)
-    StartWithMultProc("127.0.0.1", 8999, StartFun, 4);
+    StartWithMultProc("127.0.0.1", 8997, StartFun, 4);
 
     return 0;
 }

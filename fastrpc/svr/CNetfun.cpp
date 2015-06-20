@@ -146,6 +146,12 @@ int do_tcplisten(const char *strip,int port, int queue)
         close(listenfd);
         return -1;
     }
+    
+
+    struct linger so_linger;
+    so_linger.l_onoff = 1;
+    so_linger.l_linger = 0;
+    setsockopt(listenfd,SOL_SOCKET,SO_LINGER,&so_linger,sizeof(so_linger));
 
     return listenfd;
 }
