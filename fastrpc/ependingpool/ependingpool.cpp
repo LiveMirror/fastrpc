@@ -289,12 +289,6 @@ int ependingpool::get_write_timeo()
 
 int ependingpool::set_epoll_timeo(int timeo)
 {
-	if (timeo < 0) {
-		EPPOOLLOG(UL_LOG_WARNING, "invalid timeout %d milliseconds. time_out keep unchanged, %d.",
-				timeo, m_ep_timeo);
-		return -1;
-	}
-
 	m_ep_timeo = timeo;
 	return 0;
 }
