@@ -255,7 +255,6 @@ XTimeSpan running_time(void)
 {
     if (NULL == static_clock) {
         usleep(1000);
-        printf("init clock\n");
         cmut.lock();
         static_clock = new XClock();
         cmut.unlock();
