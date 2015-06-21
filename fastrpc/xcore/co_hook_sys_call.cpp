@@ -89,7 +89,7 @@ void EpollAdd(int sockfd,unsigned ev_uid, unsigned events) {
     ev.events = events | EPOLLONESHOT;
     while (-1 == hook_epollfd) {
         // 刚启动进程时就注册的要等一会
-        usleep(1000);
+        usleep(10);
     }
     if (epoll_ctl(hook_epollfd, EPOLL_CTL_ADD, sockfd, &ev) < 0) {
         //printf("epoll_ctl add socket:%d fail\n", sockfd);

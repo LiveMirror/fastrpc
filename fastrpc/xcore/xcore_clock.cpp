@@ -256,7 +256,7 @@ XTimeSpan running_time(void)
     if (NULL == static_clock) {
         usleep(1000);
         cmut.lock();
-        static_clock = new XClock();
+        if (NULL == static_clock) static_clock = new XClock();
         cmut.unlock();
     }
     return static_clock->peek();
