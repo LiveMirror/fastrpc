@@ -90,10 +90,10 @@ public:
         string str_cmd = ps->get_object();
         string get_uri = ps->get_uri();
         std::stringstream ss;
-        ss << "kk:" << kk << "<br/>"
-            << "cmd:" << str_cmd << "<br/>"
-            << "uri:" << get_uri << "<br/>"
-            << "rpc res:" << res.DebugString();
+        ss << "kk:" << kk << "<br/>";
+            //<< "cmd:" << str_cmd << "<br/>"
+            //<< "uri:" << get_uri << "<br/>"
+            //<< "rpc res:" << res.DebugString();
 
         std::string content_type = "text/html";
         std::string add_head = "Connection: keep-alive\r\n";

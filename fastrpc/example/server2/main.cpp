@@ -20,13 +20,13 @@ class EchoServiceImpl : public echo::EchoService {
         response->set_response(response->response()+" add server2 echo");
 
         // 演示定时推送
-        RpcController* p_con = (RpcController*)controller;
-        unsigned cli_flow = p_con->_cli_flow;
-        CASyncSvr* svr = p_con->_svr;
-        Closure<void>* period_job =
-            NewPermanentClosure(this, &EchoServiceImpl::PeriodPush, svr, cli_flow); // 注意这里一定要用permanentclosure
+        //RpcController* p_con = (RpcController*)controller;
+        //unsigned cli_flow = p_con->_cli_flow;
+        //CASyncSvr* svr = p_con->_svr;
+        //Closure<void>* period_job =
+        //    NewPermanentClosure(this, &EchoServiceImpl::PeriodPush, svr, cli_flow); // 注意这里一定要用permanentclosure
 
-        timer_mgr.AddJob(1000, period_job, 5);
+        //timer_mgr.AddJob(1000, period_job, 5);
 
         if (done) {
             done->Run();

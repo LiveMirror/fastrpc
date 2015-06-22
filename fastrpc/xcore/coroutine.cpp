@@ -262,6 +262,7 @@ void co_disable_hook_sys() {
 // 只有当前在协程中才会hook
 bool co_is_enable_sys_hook() {
     CroMgr cro_mgr = GetCroMgr();
+    if (!cro_mgr) return false;
     int id = coroutine_running(cro_mgr);
     if (-1 == id) return false;
     struct coroutine * C = cro_mgr->co[id];
