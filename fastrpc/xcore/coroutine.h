@@ -41,6 +41,7 @@ struct coroutine {
 };
 
 struct schedule * coroutine_open(void);
+struct schedule * coroutine_create(void);
 void coroutine_close(struct schedule *);
 
 int coroutine_new(struct schedule *, Closure<void>* closure);

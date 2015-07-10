@@ -163,7 +163,6 @@ void* CUploadDownWebSvr::Run(CDataBuf *item, CASyncSvr* svr)
         const ::google::protobuf::MethodDescriptor *method = rpc_method->method_;
         ::google::protobuf::Message *request = rpc_method->request_->New();
         ::google::protobuf::Message *response = rpc_method->response_->New();
-        ::google::protobuf::RpcController* rpc_controller = new RpcController(svr, cli_flow);
         int headlen = item->len - content_len;
         char* content = item->data + headlen;
         if (!request->ParseFromArray(content, content_len)) {
@@ -173,6 +172,7 @@ void* CUploadDownWebSvr::Run(CDataBuf *item, CASyncSvr* svr)
             LOG(LOG_ALL,"%s decode error\n", opcode.c_str());
             return NULL;
         }
+        ::google::protobuf::RpcController* rpc_controller = new RpcController(svr, cli_flow);
         HandleServiceEntry *entry = new HandleServiceEntry(method, request, response, svr,
                                                            cli_flow, cli_id, rpc_controller);
         ::google::protobuf::Closure *done = ::google::protobuf::NewCallback(&HandleServiceDone,

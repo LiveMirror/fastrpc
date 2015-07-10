@@ -65,6 +65,12 @@ coroutine_open(void) {
     return S;
 }
 
+struct schedule * coroutine_create(void) {
+    struct schedule * new_s = coroutine_open();
+    new_s->threadid = pthread_self();
+    return new_s;
+}
+
 void
 coroutine_close(struct schedule *S) {
     int i;

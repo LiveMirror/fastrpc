@@ -75,7 +75,22 @@ public:
 #define ProcessType void*
 #endif//__GNUC__
 
+class QueMgr {
+public:
+    void PutQueue(Closure<void>* closure);
+    Closure<void>* GetQueue();
+    std::deque<Closure<void>*> m_queue;
+    XSemaphore m_sem;
+    XMutex m_mux;
+};
+
 #define TPRun(...) AddJob(NewClosure(__VA_ARGS__))
+#define TPAsynRun(...) AsynAddJob(NewClosure(__VA_ARGS__))
+
+struct ThreadCroInfo {
+    CroMgr cro_mgr;
+    QueMgr* que_mgr; 
+};
 
 ProcessType TPProcess(void *argument);
 
@@ -84,23 +99,30 @@ public:
     TPMgr(int a_thread_num);
     ~TPMgr();
 
-    void PutProcQueue(Closure<void>* closure);
-    Closure<void>* GetProcQueue();
-
     int AddJob(Closure<void>* closure);
+    int AsynAddJob(Closure<void>* closure);
 
 public:
     bool m_is_stop;
     int m_thread_num;
-    std::deque<Closure<void>*> proc_queue;
 #ifdef __WINDOWS__
     std::vector<HANDLE> proc_thread_list;
 #endif//__WINDOWS__
 #ifdef __GNUC__
     std::vector<pthread_t> proc_thread_list;
 #endif//__GNUC__
-    XSemaphore m_proc_sem;
-    XMutex m_proc_mux;
+    unsigned cur_use_tid;
+
+    std::vector<unsigned> tid_list;
+    XMutex m_mut_for_start;
+
+public:
+    static void AddThreadCroInfo();
+    static void DelThreadCroInfo();
+    static ThreadCroInfo* GetThreadCroInfo(unsigned tid = 0);
+public:
+    static std::map<unsigned, ThreadCroInfo> th_cro_map;
+    static XMutex th_mut;
 };
 
 #endif // end of _XCORE_RPC_COMMON_H_

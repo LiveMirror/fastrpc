@@ -70,11 +70,12 @@ public:
     MyHttpHandler(::google::protobuf::RpcChannel* a_rpc_client) {
         m_rpc_client = (RpcClient*)a_rpc_client;
         echo_service = new echo::EchoService_Stub::Stub(m_rpc_client);
+        tp_mgr = new TPMgr(2);
     }
 
     virtual void Init(CASyncSvr* svr) {}
-    virtual void OnRec(HttpRequest* request,
-                       ::google::protobuf::Closure *done) {
+    void test_tp_run(HttpRequest* request,
+            ::google::protobuf::Closure *done) {
 
         ::echo::EchoRequest req;
         ::echo::EchoResponse res;
@@ -90,14 +91,14 @@ public:
         string str_cmd = ps->get_object();
         string get_uri = ps->get_uri();
         std::stringstream ss;
-        ss << "kk:" << kk << "<br/>";
-            //<< "cmd:" << str_cmd << "<br/>"
-            //<< "uri:" << get_uri << "<br/>"
-            //<< "rpc res:" << res.DebugString();
+        ss << "kk:" << kk << "<br/>"
+            << "cmd:" << str_cmd << "<br/>"
+            << "uri:" << get_uri << "<br/>"
+            << "rpc res:" << res.DebugString();
 
         std::string content_type = "text/html";
         std::string add_head = "Connection: keep-alive\r\n";
-        CHttpResponseMaker::make_string(ss.str(),
+        CHttpResponseMaker::make_string(res.response(),
                                         request->response,
                                         content_type,
                                         add_head);
@@ -106,10 +107,18 @@ public:
             done->Run();
         }
     }
+
+    virtual void OnRec(HttpRequest* request,
+                       ::google::protobuf::Closure *done) {
+        // 扔到线程池去执行，线程池中rpc调用也会同步转异步
+        tp_mgr->TPRun(this, &MyHttpHandler::test_tp_run, request, done);
+        //test_tp_run(request, done);
+    }
     virtual void Finish(CASyncSvr* svr) {}
 
     RpcClient* m_rpc_client;
     echo::EchoService_Stub::Stub* echo_service;
+    TPMgr* tp_mgr;
 };
 
 int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
@@ -117,7 +126,7 @@ int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
     ss << "svr_id:" << svr->_svr_id
         << " cli:" << cli_flow
         << " param:" << *((int*)param) << "\n";
-    printf(ss.str().c_str());
+    //printf(ss.str().c_str());
     return 0;
 }
 
@@ -153,7 +162,7 @@ int StartFun(int fd) {
 int main(int argc, char *argv[])
 {
     // 多进程方式启动 ip, port, 启动函数指针, 启动进程个数(不填则自动为cpu个数)
-    StartWithMultProc("127.0.0.1", 8997, StartFun, 4);
+    StartWithMultProc("127.0.0.1", 8997, StartFun, 2);
 
     return 0;
 }

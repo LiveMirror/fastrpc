@@ -36,26 +36,45 @@ void TimeCleaner::on_timer(XTimer* pTimer, uint32 id, void* ptr) {
         std::cout << key_ << "callback time out\n";
 }
 
+// 线程池执行rpc回调要重新分配到对应的线程的队列
+void PushToTPQue(ThreadCroInfo* tc_info, Closure<void>* closure) {
+    tc_info->que_mgr->PutQueue(closure);
+}
+
 void RpcClient::SingleThreadMode(const ::google::protobuf::MethodDescriptor* method,
                            ::google::protobuf::RpcController* controller,
                            const ::google::protobuf::Message* request,
                            ::google::protobuf::Message* response,
                            ::google::protobuf::Closure* done) {
-    std::string opcode = method->full_name();
-    RpcCliMethod* cli_method = NULL;
     CroMgr mgr = GetCroMgr();
     int croid = coroutine_running(mgr);
+    ThreadCroInfo* tc_info = NULL;
+    if (-1 == croid) {
+        // 说明在非主线程即线程池中调用
+        tc_info = TPMgr::GetThreadCroInfo();
+        assert(NULL != tc_info);
+        mgr = tc_info->cro_mgr;
+        croid = coroutine_running(mgr);
+        assert(-1 != croid);
+    }
+
+    std::string opcode = method->full_name();
+    RpcCliMethod* cli_method = NULL;
     Monitor* monitor = NULL;
     if (NULL == done) { // done参数空表示同步模式
         ::google::protobuf::Closure* syn_done = NULL;
         ::google::protobuf::Closure* cro_done = NULL;
         bool need_copy = false;
-        // 当前不是协程，用wait阻塞代替yield
+        // 不是协程的情况(前面已经assert这一流程不再执行，暂时保留代码)
         if (-1 == croid) {
             monitor = new Monitor();
             syn_done = ::google::protobuf::NewCallback(&FinishWait,monitor);
-        } else { // 走协程,回调时resume
+        } else if (NULL == tc_info) { // 主线程调用rpc 
             cro_done = ::google::protobuf::NewCallback(&coroutine_resume, mgr, croid);
+            need_copy = true; // 可能是局部变量，在协程外使用要复制一份
+        } else { // 线程池调用rpc
+            Closure<void>* resume_clo = NewClosure(coroutine_resume, mgr, croid);
+            cro_done = ::google::protobuf::NewCallback(&PushToTPQue, tc_info, resume_clo);
             need_copy = true; // 可能是局部变量，在协程外使用要复制一份
         }
         cli_method = new RpcCliMethod(controller,
@@ -89,7 +108,6 @@ void RpcClient::SingleThreadMode(const ::google::protobuf::MethodDescriptor* met
     timer.schedule(tc, (uint32)time_out_);
     PutSendQueue(ss.str());
     if (-1 != croid && NULL == done) {
-        CroMgr mgr = GetCroMgr();
         coroutine_yield(mgr); // 同步协程模式要放权
         RpcCliMethod* rcm = cro_callback_map.Pop(cli_id);
         if (rcm) {
@@ -122,9 +140,7 @@ void RpcClient::MultiThreadMode(const ::google::protobuf::MethodDescriptor* meth
     std::string opcode = method->full_name();
     Monitor* monitor = NULL;
     RpcCliMethod* cli_method = NULL;
-    // 多线程模式不支持协程，一个协程只能在一个线程内使用
-    // 如果业务要多线程,那可能要加锁,协程内使用锁是很危险
-    // 所以还不如多进程内单线程模式。
+    // 多线程模式不支持协程，要使用多线程用线程池就行，后面考虑多线程模式都可以去掉
     CroMgr mgr = GetCroMgr();
     int croid = coroutine_running(mgr);
     assert(-1 == croid);
@@ -224,7 +240,9 @@ void ProcessReturnData(std::string data, RpcClient* pcli) {
         content_str.assign(content, content_len);
         ::google::protobuf::Closure* done = pbext::NewCallback(cli._ext_processer,
                 mes_name, content_str, cli._ext_param);
-        PushCallBack(cli, done);
+        ::google::protobuf::Closure* cro_closure =
+            ::google::protobuf::NewCallback(&RpcMgr::RunWithCoroutine, done);
+        PushCallBack(cli, cro_closure);
         return;
     }
     RpcCliMethod* rcm = cli.callback_map.Pop(cli_id);
