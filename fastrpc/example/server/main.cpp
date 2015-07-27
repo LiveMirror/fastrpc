@@ -70,7 +70,7 @@ public:
     MyHttpHandler(::google::protobuf::RpcChannel* a_rpc_client) {
         m_rpc_client = (RpcClient*)a_rpc_client;
         echo_service = new echo::EchoService_Stub::Stub(m_rpc_client);
-        tp_mgr = new TPMgr(2);
+        tp_mgr = new TPMgr(20);
     }
 
     virtual void Init(CASyncSvr* svr) {}
@@ -112,7 +112,6 @@ public:
                        ::google::protobuf::Closure *done) {
         // 扔到线程池去执行，线程池中rpc调用也会同步转异步
         tp_mgr->TPRun(this, &MyHttpHandler::test_tp_run, request, done);
-        //test_tp_run(request, done);
     }
     virtual void Finish(CASyncSvr* svr) {}
 

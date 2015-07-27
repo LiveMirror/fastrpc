@@ -7,7 +7,7 @@ DEBUG = -g
 
 
 CFLAGS= -Wall -DUNIX $(DEBUG) -Wno-deprecated -D_REENTRANT
-CFLAGS+=-I../ependingpool/output/include/ -I../ullib/include
+CFLAGS+=-I../ependingpool/output/include/ #-I../ullib/include
 CFLAGS+=-I../http_codec/api -I./
 
 OBJS = CSvr.o CCliNetD.o CBackNetD.o CCliNetD.o CMainD.o CNetfun.o CRWCache.o CTcpSocket.o
