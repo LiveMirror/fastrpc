@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -45,13 +45,24 @@ namespace cpp {
 namespace {
 
 void SetMessageVariables(const FieldDescriptor* descriptor,
-                         map<string, string>* variables) {
-  SetCommonFieldVariables(descriptor, variables);
+                         map<string, string>* variables,
+                         const Options& options) {
+  SetCommonFieldVariables(descriptor, variables, options);
   (*variables)["type"] = FieldMessageTypeName(descriptor);
+  if (descriptor->options().weak() || !descriptor->containing_oneof()) {
+    (*variables)["non_null_ptr_to_name"] =
+        StrCat("this->", (*variables)["name"], "_");
+  }
   (*variables)["stream_writer"] = (*variables)["declared_type"] +
       (HasFastArraySerialization(descriptor->message_type()->file()) ?
        "MaybeToArray" :
        "");
+  // NOTE: Escaped here to unblock proto1->proto2 migration.
+  // TODO(liujisi): Extend this to apply for other conflicting methods.
+  (*variables)["release_name"] =
+      SafeFunctionName(descriptor->containing_type(),
+                       descriptor, "release_");
+  (*variables)["full_name"] = descriptor->full_name();
 }
 
 }  // namespace
@@ -59,9 +70,10 @@ void SetMessageVariables(const FieldDescriptor* descriptor,
 // ===================================================================
 
 MessageFieldGenerator::
-MessageFieldGenerator(const FieldDescriptor* descriptor)
+MessageFieldGenerator(const FieldDescriptor* descriptor,
+                      const Options& options)
   : descriptor_(descriptor) {
-  SetMessageVariables(descriptor, &variables_);
+  SetMessageVariables(descriptor, &variables_, options);
 }
 
 MessageFieldGenerator::~MessageFieldGenerator() {}
@@ -75,26 +87,181 @@ void MessageFieldGenerator::
 GenerateAccessorDeclarations(io::Printer* printer) const {
   printer->Print(variables_,
     "inline const $type$& $name$() const$deprecation$;\n"
-    "inline $type$* mutable_$name$()$deprecation$;\n");
+    "inline $type$* mutable_$name$()$deprecation$;\n"
+    "inline $type$* $release_name$()$deprecation$;\n"
+    "inline void set_allocated_$name$($type$* $name$)$deprecation$;\n");
+  if (SupportsArenas(descriptor_)) {
+    printer->Print(variables_,
+      "inline $type$* unsafe_arena_release_$name$()$deprecation$;\n"
+      "inline void unsafe_arena_set_allocated_$name$(\n"
+      "    $type$* $name$)$deprecation$;\n");
+  }
 }
 
 void MessageFieldGenerator::
 GenerateInlineAccessorDefinitions(io::Printer* printer) const {
   printer->Print(variables_,
     "inline const $type$& $classname$::$name$() const {\n"
-    "  return $name$_ != NULL ? *$name$_ : *default_instance_->$name$_;\n"
-    "}\n"
-    "inline $type$* $classname$::mutable_$name$() {\n"
-    "  _set_bit($index$);\n"
-    "  if ($name$_ == NULL) $name$_ = new $type$;\n"
-    "  return $name$_;\n"
-    "}\n");
+    "  // @@protoc_insertion_point(field_get:$full_name$)\n");
+
+  PrintHandlingOptionalStaticInitializers(
+    variables_, descriptor_->file(), printer,
+    // With static initializers.
+    "  return $name$_ != NULL ? *$name$_ : *default_instance_->$name$_;\n",
+    // Without.
+    "  return $name$_ != NULL ? *$name$_ : *default_instance().$name$_;\n");
+
+  if (SupportsArenas(descriptor_)) {
+    printer->Print(variables_,
+      "}\n"
+      "inline $type$* $classname$::mutable_$name$() {\n"
+      "  $set_hasbit$\n"
+      "  if ($name$_ == NULL) {\n");
+    if (SupportsArenas(descriptor_->message_type())) {
+      printer->Print(variables_,
+      "    $name$_ = ::google::protobuf::Arena::CreateMessage< $type$ >(\n"
+      "        GetArenaNoVirtual());\n");
+    } else {
+      printer->Print(variables_,
+       "    $name$_ = ::google::protobuf::Arena::Create< $type$ >(\n"
+       "        GetArenaNoVirtual());\n");
+    }
+    printer->Print(variables_, "  }\n"
+      "  // @@protoc_insertion_point(field_mutable:$full_name$)\n"
+      "  return $name$_;\n"
+      "}\n"
+      "inline $type$* $classname$::$release_name$() {\n"
+      "  $clear_hasbit$\n"
+      "  if (GetArenaNoVirtual() != NULL) {\n"
+      "    if ($name$_ == NULL) {\n"
+      "      return NULL;\n"
+      "    } else {\n"
+      "      $type$* temp = new $type$;\n"
+      "      temp->MergeFrom(*$name$_);\n"
+      "      $name$_ = NULL;\n"
+      "      return temp;\n"
+      "    }\n"
+      "  } else {\n"
+      "    $type$* temp = $name$_;\n"
+      "    $name$_ = NULL;\n"
+      "    return temp;\n"
+      "  }\n"
+      "}\n"
+      "inline $type$* $classname$::unsafe_arena_release_$name$() {\n"
+      "  $clear_hasbit$\n"
+      "  $type$* temp = $name$_;\n"
+      "  $name$_ = NULL;\n"
+      "  return temp;\n"
+      "}\n"
+      "inline void $classname$::set_allocated_$name$($type$* $name$) {\n"
+      "  if (GetArenaNoVirtual() == NULL) {\n"
+      "    delete $name$_;\n"
+      "  }\n"
+      "  if ($name$ != NULL) {\n");
+    if (SupportsArenas(descriptor_->message_type())) {
+      // If we're on an arena and the incoming message is not, simply Own() it
+      // rather than copy to the arena -- either way we need a heap dealloc,
+      // so we might as well defer it. Otherwise, if incoming message is on a
+      // different ownership domain (specific arena, or the heap) than we are,
+      // copy to our arena (or heap, as the case may be).
+      printer->Print(variables_,
+        "    if (GetArenaNoVirtual() != NULL && \n"
+        "        ::google::protobuf::Arena::GetArena($name$) == NULL) {\n"
+        "      GetArenaNoVirtual()->Own($name$);\n"
+        "    } else if (GetArenaNoVirtual() !=\n"
+        "               ::google::protobuf::Arena::GetArena($name$)) {\n"
+        "      $type$* new_$name$ = \n"
+        "            ::google::protobuf::Arena::CreateMessage< $type$ >(\n"
+        "            GetArenaNoVirtual());\n"
+        "      new_$name$->CopyFrom(*$name$);\n"
+        "      $name$ = new_$name$;\n"
+        "    }\n");
+    } else {
+      printer->Print(variables_,
+        "    if (GetArenaNoVirtual() != NULL) {\n"
+        "      GetArenaNoVirtual()->Own($name$);\n"
+        "    }\n");
+    }
+
+    printer->Print(variables_,
+      "  }\n"
+      "  $name$_ = $name$;\n"
+      "  if ($name$) {\n"
+      "    $set_hasbit$\n"
+      "  } else {\n"
+      "    $clear_hasbit$\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_set_allocated:$full_name$)\n"
+      "}\n"
+      "inline void $classname$::unsafe_arena_set_allocated_$name$(\n"
+      "    $type$* $name$) {\n"
+      // If we're not on an arena, free whatever we were holding before.
+      // (If we are on arena, we can just forget the earlier pointer.)
+      "  if (GetArenaNoVirtual() == NULL) {\n"
+      "    delete $name$_;\n"
+      "  }\n"
+      "  $name$_ = $name$;\n"
+      "  if ($name$) {\n"
+      "    $set_hasbit$\n"
+      "  } else {\n"
+      "    $clear_hasbit$\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_unsafe_arena_set_allocated"
+      ":$full_name$)\n"
+      "}\n");
+  } else {
+    printer->Print(variables_,
+      "}\n"
+      "inline $type$* $classname$::mutable_$name$() {\n"
+      "  $set_hasbit$\n"
+      "  if ($name$_ == NULL) {\n"
+      "    $name$_ = new $type$;\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_mutable:$full_name$)\n"
+      "  return $name$_;\n"
+      "}\n"
+      "inline $type$* $classname$::$release_name$() {\n"
+      "  $clear_hasbit$\n"
+      "  $type$* temp = $name$_;\n"
+      "  $name$_ = NULL;\n"
+      "  return temp;\n"
+      "}\n"
+      "inline void $classname$::set_allocated_$name$($type$* $name$) {\n"
+      "  delete $name$_;\n");
+
+    if (SupportsArenas(descriptor_->message_type())) {
+      printer->Print(variables_,
+      "  if ($name$ != NULL && $name$->GetArena() != NULL) {\n"
+      "    $type$* new_$name$ = new $type$;\n"
+      "    new_$name$->CopyFrom(*$name$);\n"
+      "    $name$ = new_$name$;\n"
+      "  }\n");
+    }
+
+    printer->Print(variables_,
+      "  $name$_ = $name$;\n"
+      "  if ($name$) {\n"
+      "    $set_hasbit$\n"
+      "  } else {\n"
+      "    $clear_hasbit$\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_set_allocated:$full_name$)\n"
+      "}\n");
+  }
 }
 
 void MessageFieldGenerator::
 GenerateClearingCode(io::Printer* printer) const {
-  printer->Print(variables_,
-    "if ($name$_ != NULL) $name$_->$type$::Clear();\n");
+  if (!HasFieldPresence(descriptor_->file())) {
+    // If we don't have has-bits, message presence is indicated only by ptr !=
+    // NULL. Thus on clear, we need to delete the object.
+    printer->Print(variables_,
+      "if ($name$_ != NULL) delete $name$_;\n"
+      "$name$_ = NULL;\n");
+  } else {
+    printer->Print(variables_,
+      "if ($name$_ != NULL) $name$_->$type$::Clear();\n");
+  }
 }
 
 void MessageFieldGenerator::
@@ -130,7 +297,7 @@ void MessageFieldGenerator::
 GenerateSerializeWithCachedSizes(io::Printer* printer) const {
   printer->Print(variables_,
     "::google::protobuf::internal::WireFormatLite::Write$stream_writer$(\n"
-    "  $number$, this->$name$(), output);\n");
+    "  $number$, *$non_null_ptr_to_name$, output);\n");
 }
 
 void MessageFieldGenerator::
@@ -138,7 +305,7 @@ GenerateSerializeWithCachedSizesToArray(io::Printer* printer) const {
   printer->Print(variables_,
     "target = ::google::protobuf::internal::WireFormatLite::\n"
     "  Write$declared_type$NoVirtualToArray(\n"
-    "    $number$, this->$name$(), target);\n");
+    "    $number$, *$non_null_ptr_to_name$, target);\n");
 }
 
 void MessageFieldGenerator::
@@ -146,15 +313,201 @@ GenerateByteSize(io::Printer* printer) const {
   printer->Print(variables_,
     "total_size += $tag_size$ +\n"
     "  ::google::protobuf::internal::WireFormatLite::$declared_type$SizeNoVirtual(\n"
-    "    this->$name$());\n");
+    "    *$non_null_ptr_to_name$);\n");
+}
+
+// ===================================================================
+
+MessageOneofFieldGenerator::
+MessageOneofFieldGenerator(const FieldDescriptor* descriptor,
+                           const Options& options)
+  : MessageFieldGenerator(descriptor, options) {
+  SetCommonOneofFieldVariables(descriptor, &variables_);
+}
+
+MessageOneofFieldGenerator::~MessageOneofFieldGenerator() {}
+
+void MessageOneofFieldGenerator::
+GenerateInlineAccessorDefinitions(io::Printer* printer) const {
+  if (SupportsArenas(descriptor_)) {
+    printer->Print(variables_,
+      "inline const $type$& $classname$::$name$() const {\n"
+      "  // @@protoc_insertion_point(field_get:$full_name$)\n"
+      "  return has_$name$() ? *$oneof_prefix$$name$_\n"
+      "                      : $type$::default_instance();\n"
+      "}\n"
+      "inline $type$* $classname$::mutable_$name$() {\n"
+      "  if (!has_$name$()) {\n"
+      "    clear_$oneof_name$();\n"
+      "    set_has_$name$();\n");
+    if (SupportsArenas(descriptor_->message_type())) {
+      printer->Print(variables_,
+         "    $oneof_prefix$$name$_ = \n"
+         "      ::google::protobuf::Arena::CreateMessage< $type$ >(\n"
+         "      GetArenaNoVirtual());\n");
+    } else {
+      printer->Print(variables_,
+         "    $oneof_prefix$$name$_ = \n"
+         "      ::google::protobuf::Arena::Create< $type$ >(\n"
+         "      GetArenaNoVirtual());\n");
+    }
+    printer->Print(variables_,
+      "  }\n"
+      "  // @@protoc_insertion_point(field_mutable:$full_name$)\n"
+      "  return $oneof_prefix$$name$_;\n"
+      "}\n"
+      "inline $type$* $classname$::$release_name$() {\n"
+      "  if (has_$name$()) {\n"
+      "    clear_has_$oneof_name$();\n"
+      "    if (GetArenaNoVirtual() != NULL) {\n"
+      // N.B.: safe to use the underlying field pointer here because we are sure
+      // that it is non-NULL (because has_$name$() returned true).
+      "      $type$* temp = new $type$;\n"
+      "      temp->MergeFrom(*$oneof_prefix$$name$_);\n"
+      "      $oneof_prefix$$name$_ = NULL;\n"
+      "      return temp;\n"
+      "    } else {\n"
+      "      $type$* temp = $oneof_prefix$$name$_;\n"
+      "      $oneof_prefix$$name$_ = NULL;\n"
+      "      return temp;\n"
+      "    }\n"
+      "  } else {\n"
+      "    return NULL;\n"
+      "  }\n"
+      "}\n"
+      "inline $type$* $classname$::unsafe_arena_release_$name$() {\n"
+      "  if (has_$name$()) {\n"
+      "    clear_has_$oneof_name$();\n"
+      "    $type$* temp = $oneof_prefix$$name$_;\n"
+      "    $oneof_prefix$$name$_ = NULL;\n"
+      "    return temp;\n"
+      "  } else {\n"
+      "    return NULL;\n"
+      "  }\n"
+      "}\n"
+      "inline void $classname$::set_allocated_$name$($type$* $name$) {\n"
+      "  clear_$oneof_name$();\n"
+      "  if ($name$) {\n");
+
+    if (SupportsArenas(descriptor_->message_type())) {
+      printer->Print(variables_,
+        // If incoming message is on the heap and we are on an arena, just Own()
+        // it (see above). If it's on a different arena than we are or one of us
+        // is on the heap, we make a copy to our arena/heap.
+        "    if (GetArenaNoVirtual() != NULL &&\n"
+        "        ::google::protobuf::Arena::GetArena($name$) == NULL) {\n"
+        "      GetArenaNoVirtual()->Own($name$);\n"
+        "    } else if (GetArenaNoVirtual() !=\n"
+        "               ::google::protobuf::Arena::GetArena($name$)) {\n"
+        "      $type$* new_$name$ = \n"
+        "          ::google::protobuf::Arena::CreateMessage< $type$ >(\n"
+        "          GetArenaNoVirtual());\n"
+        "      new_$name$->CopyFrom(*$name$);\n"
+        "      $name$ = new_$name$;\n"
+        "    }\n");
+    } else {
+      printer->Print(variables_,
+        "    if (GetArenaNoVirtual() != NULL) {\n"
+        "      GetArenaNoVirtual()->Own($name$);\n"
+        "    }\n");
+    }
+
+    printer->Print(variables_,
+      "    set_has_$name$();\n"
+      "    $oneof_prefix$$name$_ = $name$;\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_set_allocated:$full_name$)\n"
+      "}\n"
+      "inline void $classname$::unsafe_arena_set_allocated_$name$("
+      "$type$* $name$) {\n"
+      // We rely on the oneof clear method to free the earlier contents of this
+      // oneof. We can directly use the pointer we're given to set the new
+      // value.
+      "  clear_$oneof_name$();\n"
+      "  if ($name$) {\n"
+      "    set_has_$name$();\n"
+      "    $oneof_prefix$$name$_ = $name$;\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:"
+      "$full_name$)\n"
+      "}\n");
+  } else {
+    printer->Print(variables_,
+      "inline const $type$& $classname$::$name$() const {\n"
+      "  // @@protoc_insertion_point(field_get:$full_name$)\n"
+      "  return has_$name$() ? *$oneof_prefix$$name$_\n"
+      "                      : $type$::default_instance();\n"
+      "}\n"
+      "inline $type$* $classname$::mutable_$name$() {\n"
+      "  if (!has_$name$()) {\n"
+      "    clear_$oneof_name$();\n"
+      "    set_has_$name$();\n"
+      "    $oneof_prefix$$name$_ = new $type$;\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_mutable:$full_name$)\n"
+      "  return $oneof_prefix$$name$_;\n"
+      "}\n"
+      "inline $type$* $classname$::$release_name$() {\n"
+      "  if (has_$name$()) {\n"
+      "    clear_has_$oneof_name$();\n"
+      "    $type$* temp = $oneof_prefix$$name$_;\n"
+      "    $oneof_prefix$$name$_ = NULL;\n"
+      "    return temp;\n"
+      "  } else {\n"
+      "    return NULL;\n"
+      "  }\n"
+      "}\n"
+      "inline void $classname$::set_allocated_$name$($type$* $name$) {\n"
+      "  clear_$oneof_name$();\n"
+      "  if ($name$) {\n");
+    if (SupportsArenas(descriptor_->message_type())) {
+      printer->Print(variables_,
+        "    if ($name$->GetArena() != NULL) {\n"
+        "      $type$* new_$name$ = new $type$;\n"
+        "      new_$name$->CopyFrom(*$name$);\n"
+        "      $name$ = new_$name$;\n"
+        "    }\n");
+    }
+    printer->Print(variables_,
+      "    set_has_$name$();\n"
+      "    $oneof_prefix$$name$_ = $name$;\n"
+      "  }\n"
+      "  // @@protoc_insertion_point(field_set_allocated:$full_name$)\n"
+      "}\n");
+  }
+}
+
+void MessageOneofFieldGenerator::
+GenerateClearingCode(io::Printer* printer) const {
+  if (SupportsArenas(descriptor_)) {
+    printer->Print(variables_,
+      "if (GetArenaNoVirtual() == NULL) {\n"
+      "  delete $oneof_prefix$$name$_;\n"
+      "}\n");
+  } else {
+    printer->Print(variables_,
+      "delete $oneof_prefix$$name$_;\n");
+  }
+}
+
+void MessageOneofFieldGenerator::
+GenerateSwappingCode(io::Printer* printer) const {
+  // Don't print any swapping code. Swapping the union will swap this field.
+}
+
+void MessageOneofFieldGenerator::
+GenerateConstructorCode(io::Printer* printer) const {
+  // Don't print any constructor code. The field is in a union. We allocate
+  // space only when this field is used.
 }
 
 // ===================================================================
 
 RepeatedMessageFieldGenerator::
-RepeatedMessageFieldGenerator(const FieldDescriptor* descriptor)
+RepeatedMessageFieldGenerator(const FieldDescriptor* descriptor,
+                              const Options& options)
   : descriptor_(descriptor) {
-  SetMessageVariables(descriptor, &variables_);
+  SetMessageVariables(descriptor, &variables_, options);
 }
 
 RepeatedMessageFieldGenerator::~RepeatedMessageFieldGenerator() {}
@@ -182,21 +535,26 @@ void RepeatedMessageFieldGenerator::
 GenerateInlineAccessorDefinitions(io::Printer* printer) const {
   printer->Print(variables_,
     "inline const $type$& $classname$::$name$(int index) const {\n"
-    "  return $name$_.Get(index);\n"
+    "  // @@protoc_insertion_point(field_get:$full_name$)\n"
+    "  return $name$_.$cppget$(index);\n"
     "}\n"
     "inline $type$* $classname$::mutable_$name$(int index) {\n"
+    "  // @@protoc_insertion_point(field_mutable:$full_name$)\n"
     "  return $name$_.Mutable(index);\n"
     "}\n"
     "inline $type$* $classname$::add_$name$() {\n"
+    "  // @@protoc_insertion_point(field_add:$full_name$)\n"
     "  return $name$_.Add();\n"
     "}\n");
   printer->Print(variables_,
     "inline const ::google::protobuf::RepeatedPtrField< $type$ >&\n"
     "$classname$::$name$() const {\n"
+    "  // @@protoc_insertion_point(field_list:$full_name$)\n"
     "  return $name$_;\n"
     "}\n"
     "inline ::google::protobuf::RepeatedPtrField< $type$ >*\n"
     "$classname$::mutable_$name$() {\n"
+    "  // @@protoc_insertion_point(field_mutable_list:$full_name$)\n"
     "  return &$name$_;\n"
     "}\n");
 }
@@ -213,7 +571,7 @@ GenerateMergingCode(io::Printer* printer) const {
 
 void RepeatedMessageFieldGenerator::
 GenerateSwappingCode(io::Printer* printer) const {
-  printer->Print(variables_, "$name$_.Swap(&other->$name$_);\n");
+  printer->Print(variables_, "$name$_.UnsafeArenaSwap(&other->$name$_);\n");
 }
 
 void RepeatedMessageFieldGenerator::
@@ -237,7 +595,7 @@ GenerateMergeFromCodedStream(io::Printer* printer) const {
 void RepeatedMessageFieldGenerator::
 GenerateSerializeWithCachedSizes(io::Printer* printer) const {
   printer->Print(variables_,
-    "for (int i = 0; i < this->$name$_size(); i++) {\n"
+    "for (unsigned int i = 0, n = this->$name$_size(); i < n; i++) {\n"
     "  ::google::protobuf::internal::WireFormatLite::Write$stream_writer$(\n"
     "    $number$, this->$name$(i), output);\n"
     "}\n");
@@ -246,7 +604,7 @@ GenerateSerializeWithCachedSizes(io::Printer* printer) const {
 void RepeatedMessageFieldGenerator::
 GenerateSerializeWithCachedSizesToArray(io::Printer* printer) const {
   printer->Print(variables_,
-    "for (int i = 0; i < this->$name$_size(); i++) {\n"
+    "for (unsigned int i = 0, n = this->$name$_size(); i < n; i++) {\n"
     "  target = ::google::protobuf::internal::WireFormatLite::\n"
     "    Write$declared_type$NoVirtualToArray(\n"
     "      $number$, this->$name$(i), target);\n"

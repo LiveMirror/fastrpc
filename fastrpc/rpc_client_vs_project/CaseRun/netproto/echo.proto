@@ -1,18 +1,21 @@
+syntax = "proto3";
 package echo;
 
 message EchoRequest
 {
-  required string message = 1;
+  string message = 1;
+  optional string aaa = 2;
+  map<string, string> values = 3;
 };
 
 message EchoResponse
 {
-  required string response = 1;
+  string response = 1;
 };
 
 message DummyRequest
 {
-  required string message = 1;
+  string message = 1;
 };
 
 message DummyResponse

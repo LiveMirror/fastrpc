@@ -121,9 +121,6 @@ ThreadCroInfo* TPMgr::GetThreadCroInfo(unsigned tid) {
     if (it != th_cro_map.end()) {
         ret = &(it->second);
     }
-    else {
-        printf("tid:%lu not found\n", tid);
-    }
     th_mut.unlock();
     return ret;
 }

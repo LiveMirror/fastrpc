@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -35,10 +35,18 @@ package com.google.protobuf;
  *
  * @author cpovirk@google.com (Chris Povirk)
  */
-public final class ServiceException extends Exception {
+public class ServiceException extends Exception {
   private static final long serialVersionUID = -1219262335729891920L;
 
   public ServiceException(final String message) {
     super(message);
+  }
+
+  public ServiceException(final Throwable cause) {
+    super(cause);
+  }
+
+  public ServiceException(final String message, final Throwable cause) {
+    super(message, cause);
   }
 }

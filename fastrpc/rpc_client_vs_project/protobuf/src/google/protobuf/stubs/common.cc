@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -110,13 +110,13 @@ void DefaultLogHandler(LogLevel level, const char* filename, int line,
 
   // We use fprintf() instead of cerr because we want this to work at static
   // initialization time.
-  fprintf(stderr, "libprotobuf %s %s:%d] %s\n",
+  fprintf(stderr, "[libprotobuf %s %s:%d] %s\n",
           level_names[level], filename, line, message.c_str());
   fflush(stderr);  // Needed on MSVC.
 }
 
-void NullLogHandler(LogLevel level, const char* filename, int line,
-                    const string& message) {
+void NullLogHandler(LogLevel /* level */, const char* /* filename */,
+                    int /* line */, const string& /* message */) {
   // Nothing.
 }
 
@@ -171,6 +171,7 @@ DECLARE_STREAM_OPERATOR(uint         , "%u" )
 DECLARE_STREAM_OPERATOR(long         , "%ld")
 DECLARE_STREAM_OPERATOR(unsigned long, "%lu")
 DECLARE_STREAM_OPERATOR(double       , "%g" )
+DECLARE_STREAM_OPERATOR(void*        , "%p" )
 #undef DECLARE_STREAM_OPERATOR
 
 LogMessage::LogMessage(LogLevel level, const char* filename, int line)
@@ -183,15 +184,19 @@ void LogMessage::Finish() {
   if (level_ != LOGLEVEL_FATAL) {
     InitLogSilencerCountOnce();
     MutexLock lock(log_silencer_count_mutex_);
-    suppress = internal::log_silencer_count_ > 0;
+    suppress = log_silencer_count_ > 0;
   }
 
   if (!suppress) {
-    internal::log_handler_(level_, filename_, line_, message_);
+    log_handler_(level_, filename_, line_, message_);
   }
 
   if (level_ == LOGLEVEL_FATAL) {
+#if PROTOBUF_USE_EXCEPTIONS
+    throw FatalException(filename_, line_, message_);
+#else
     abort();
+#endif
   }
 }
 
@@ -316,6 +321,24 @@ void Mutex::AssertHeld() {
 #endif
 
 // ===================================================================
+// emulates google3/util/endian/endian.h
+//
+// TODO(xiaofeng): PROTOBUF_LITTLE_ENDIAN is unfortunately defined in
+// google/protobuf/io/coded_stream.h and therefore can not be used here.
+// Maybe move that macro definition here in the furture.
+uint32 ghtonl(uint32 x) {
+  union {
+    uint32 result;
+    uint8 result_array[4];
+  };
+  result_array[0] = static_cast<uint8>(x >> 24);
+  result_array[1] = static_cast<uint8>((x >> 16) & 0xFF);
+  result_array[2] = static_cast<uint8>((x >> 8) & 0xFF);
+  result_array[3] = static_cast<uint8>(x & 0xFF);
+  return result;
+}
+
+// ===================================================================
 // Shutdown support.
 
 namespace internal {
@@ -360,6 +383,14 @@ void ShutdownProtobufLibrary() {
   delete internal::shutdown_functions_mutex;
   internal::shutdown_functions_mutex = NULL;
 }
+
+#if PROTOBUF_USE_EXCEPTIONS
+FatalException::~FatalException() throw() {}
+
+const char* FatalException::what() const throw() {
+  return message_.c_str();
+}
+#endif
 
 }  // namespace protobuf
 }  // namespace google

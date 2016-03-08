@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -35,9 +35,14 @@
 #ifndef GOOGLE_PROTOBUF_COMPILER_CPP_MESSAGE_H__
 #define GOOGLE_PROTOBUF_COMPILER_CPP_MESSAGE_H__
 
+#include <memory>
+#ifndef _SHARED_PTR_H
+#include <google/protobuf/stubs/shared_ptr.h>
+#endif
 #include <string>
-#include <google/protobuf/stubs/common.h>
+#include <vector>
 #include <google/protobuf/compiler/cpp/cpp_field.h>
+#include <google/protobuf/compiler/cpp/cpp_options.h>
 
 namespace google {
 namespace protobuf {
@@ -56,8 +61,7 @@ class ExtensionGenerator;      // extension.h
 class MessageGenerator {
  public:
   // See generator.cc for the meaning of dllexport_decl.
-  explicit MessageGenerator(const Descriptor* descriptor,
-                            const string& dllexport_decl);
+  MessageGenerator(const Descriptor* descriptor, const Options& options);
   ~MessageGenerator();
 
   // Header stuff.
@@ -128,9 +132,12 @@ class MessageGenerator {
   void GenerateSharedConstructorCode(io::Printer* printer);
   // Generate the shared destructor code.
   void GenerateSharedDestructorCode(io::Printer* printer);
+  // Generate the arena-specific destructor code.
+  void GenerateArenaDestructorCode(io::Printer* printer);
 
   // Generate standard Message methods.
   void GenerateClear(io::Printer* printer);
+  void GenerateOneofClear(io::Printer* printer);
   void GenerateMergeFromCodedStream(io::Printer* printer);
   void GenerateSerializeWithCachedSizes(io::Printer* printer);
   void GenerateSerializeWithCachedSizesToArray(io::Printer* printer);
@@ -153,11 +160,14 @@ class MessageGenerator {
 
   const Descriptor* descriptor_;
   string classname_;
-  string dllexport_decl_;
+  Options options_;
   FieldGeneratorMap field_generators_;
-  scoped_array<scoped_ptr<MessageGenerator> > nested_generators_;
-  scoped_array<scoped_ptr<EnumGenerator> > enum_generators_;
-  scoped_array<scoped_ptr<ExtensionGenerator> > extension_generators_;
+  vector< vector<string> > runs_of_fields_;  // that might be trivially cleared
+  google::protobuf::scoped_array<google::protobuf::scoped_ptr<MessageGenerator> > nested_generators_;
+  google::protobuf::scoped_array<google::protobuf::scoped_ptr<EnumGenerator> > enum_generators_;
+  google::protobuf::scoped_array<google::protobuf::scoped_ptr<ExtensionGenerator> > extension_generators_;
+  int num_required_fields_;
+  bool uses_string_;
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MessageGenerator);
 };

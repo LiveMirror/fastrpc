@@ -6,7 +6,7 @@ This directory contains the Python Protocol Buffers runtime library.
 Normally, this directory comes as part of the protobuf package, available
 from:
 
-  http://code.google.com/p/protobuf
+  https://developers.google.com/protocol-buffers/
 
 The complete package includes the C++ source code, which includes the
 Protocol Compiler (protoc).  If you downloaded this package from PyPI
@@ -26,7 +26,7 @@ join the Protocol Buffers discussion list and let us know!
 Installation
 ============
 
-1) Make sure you have Python 2.4 or newer.  If in doubt, run:
+1) Make sure you have Python 2.6 or newer.  If in doubt, run:
 
      $ python -V
 
@@ -35,7 +35,7 @@ Installation
    If you would rather install it manually, you may do so by following
    the instructions on this page:
 
-     http://peak.telecommunity.com/DevCenter/EasyInstall#installation-instructions
+     https://packaging.python.org/en/latest/installing.html#setup-for-installing-packages
 
 3) Build the C++ code, or install a binary distribution of protoc.  If
    you install a binary distribution, make sure that it is the same
@@ -43,9 +43,14 @@ Installation
 
      $ protoc --version
 
-4) Run the tests:
+4) Build and run the tests:
 
-     $ python setup.py test
+     $ python setup.py build
+     $ python setup.py google_test
+
+     If you want to build/test c++ implementation, run:
+     $ python setup.py build --cpp_implementation
+     $ python setup.py google_test --cpp_implementation
 
    If some tests fail, this library may not work correctly on your
    system.  Continue at your own risk.
@@ -61,8 +66,13 @@ Installation
 5) Install:
 
      $ python setup.py install
+     or:
+     $ python setup.py install --cpp_implementation
 
    This step may require superuser privileges.
+   NOTE: To use C++ implementation, you need to install C++ protobuf runtime
+   library of the same version and export the environment variable before this
+   step. See the "C++ Implementation" section below for more details.
 
 Usage
 =====
@@ -70,4 +80,27 @@ Usage
 The complete documentation for Protocol Buffers is available via the
 web at:
 
-  http://code.google.com/apis/protocolbuffers/
+  https://developers.google.com/protocol-buffers/
+
+C++ Implementation
+==================
+
+The C++ implementation for Python messages is built as a Python extension to
+improve the overall protobuf Python performance.
+
+To use the C++ implementation, you need to:
+1) Install the C++ protobuf runtime library, please see instructions in the
+   parent directory.
+2) Export an environment variable:
+
+  $ export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=cpp
+  $ export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2
+
+You need to export this variable before running setup.py script to build and
+install the extension.  You must also set the variable at runtime, otherwise
+the pure-Python implementation will be used. In a future release, we will
+change the default so that C++ implementation is used whenever it is available.
+It is strongly recommended to run `python setup.py test` after setting the
+variable to "cpp", so the tests will be against C++ implemented Python
+messages.
+

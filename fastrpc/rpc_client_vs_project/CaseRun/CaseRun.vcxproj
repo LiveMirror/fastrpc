@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\protobuf\debug;$(SolutionDir)\xcore\debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\protobuf\vsprojects\Debug;$(SolutionDir)\xcore\debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>libxcore.lib;libprotobuf.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

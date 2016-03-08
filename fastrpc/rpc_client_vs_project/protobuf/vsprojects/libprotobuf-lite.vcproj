@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="libprotobuf-lite"
 	ProjectGUID="{49EA010D-706F-4BE2-A397-77854B72A040}"
 	Keyword="Win32Proj"
@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			IntermediateDirectory="$(OutDir)\$(ProjectName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -81,7 +81,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			IntermediateDirectory="$(OutDir)\$(ProjectName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -164,6 +164,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\google\protobuf\stubs\pbconfig.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\extension_set.h"
 				>
 			</File>
@@ -188,11 +192,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\google\protobuf\stubs\atomicops.h"
+			>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h"
+			>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\platform_macros.h"
+			>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\repeated_field.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\stubs\stl_util-inl.h"
+				RelativePath="..\src\google\protobuf\stubs\stl_util.h"
 				>
 			</File>
 			<File
@@ -211,6 +227,18 @@
 				RelativePath="..\src\google\protobuf\io\zero_copy_stream_impl_lite.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\stringprintf.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\template_util.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\type_traits.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -224,11 +252,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\google\protobuf\io\coded_stream.cc"
+				RelativePath="..\src\google\protobuf\stubs\atomicops_internals_x86_gcc.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\src\google\protobuf\stubs\common.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\once.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\stringprintf.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\arena.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\arenastring.cc"
 				>
 			</File>
 			<File
@@ -240,15 +288,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\stubs\hash.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\src\google\protobuf\message_lite.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\stubs\once.cc"
 				>
 			</File>
 			<File
@@ -257,6 +297,10 @@
 			</File>
 			<File
 				RelativePath="..\src\google\protobuf\wire_format_lite.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\io\coded_stream.cc"
 				>
 			</File>
 			<File

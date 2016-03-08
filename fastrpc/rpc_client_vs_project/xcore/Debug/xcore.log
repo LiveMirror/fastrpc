@@ -1,5 +1,9 @@
-﻿Build started 2014/7/29 13:13:01.
+﻿生成启动时间为 2015/8/13 21:53:14。
+     1>项目“E:\workspace3\rpc_client_vs_project\rpc_client_vs_project\xcore\xcore.vcxproj”在节点 2 上(clean 个目标)。
+     1>_PrepareForClean:
+         正在删除文件“.\Debug\libxcore.lastbuildstate”。
+     1>已完成生成项目“E:\workspace3\rpc_client_vs_project\rpc_client_vs_project\xcore\xcore.vcxproj”(clean 个目标)的操作。
 
-Build succeeded.
+生成成功。
 
-Time Elapsed 00:00:00.00
+已用时间 00:00:00.01

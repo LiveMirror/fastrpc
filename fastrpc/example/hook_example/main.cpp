@@ -42,7 +42,7 @@ void hook_sock_job(int i) {
     co_enable_hook_sys();
     XSocket sock;
     sock.open(SOCK_STREAM);
-    if (!sock.connect(XSockAddr("127.0.0.1", 8998))) {
+    if (sock.connect(XSockAddr("127.0.0.1", 8998), 1000) < 0) {
         printf("connect fail\n");
         abort();
     }
@@ -53,11 +53,10 @@ void hook_sock_job(int i) {
     std::string send_str = ss.str();
     printf("%d send %d\n", sock.get_handle(), i);
     sock.send_n(send_str.c_str(), send_str.size(), 100000);
-    char buf[10240] = {0};
-    while (strstr(buf, "final") == NULL) {
-        sock.recv(buf, 10240);
-    }
-    printf("%d recv %d\n", sock.get_handle(), i);
+
+    string res;
+    sock.recv_one_http(res, 2000);
+    printf("%d recv %s\n", sock.get_handle(), res.c_str());
 
     if (++recv_c == try_time) {
         printf("send all finish\n");

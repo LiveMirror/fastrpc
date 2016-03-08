@@ -21,6 +21,7 @@ class EchoServiceImpl : public echo::EchoService {
 
         // 再向server2发请求这里是协程同步会放权，不用担心阻塞
         echo_service->Echo(NULL, request, response, NULL);
+        printf("recv request from client and send to server2\n");
 
         response->set_response(response->response()+" add server1 echo");
 
@@ -145,7 +146,7 @@ int StartFun(int fd) {
 
     // 创建rpcclient和server2(8998端口)通信
     ::google::protobuf::RpcChannel* client =
-        new RpcClient("127.0.0.1", 8998, 5000); // 1::host 2:port 3:超时时间
+        new RpcClient("127.0.0.1", 8996, 5000); // 1::host 2:port 3:超时时间
     ((RpcClient*)client)->RegiExtProcesser(ext_processer, NULL); // 处理服务器主动推的消息
     // 注册rpc服务
     ::google::protobuf::Service *rpc_service = new EchoServiceImpl(&server, client);

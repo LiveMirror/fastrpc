@@ -66,7 +66,7 @@ void echo_done(echo::EchoRequest* request,
         delete request; // 回调要注意内存释放
         delete response;
         if (++recv_c == try_time) {
-            std::cout << "finish\n";
+			std::cout << "finish\n";
         }
 }
 
@@ -111,7 +111,7 @@ void cro_job(echo::EchoService_Stub::Stub* stub, int i) {
 
     //std::cout << "222:" << res.response() << std::endl;
     if (++recv_c == try_time) {
-        std::cout << "finish\n";
+        printf("finish\n");
     }
 }
 

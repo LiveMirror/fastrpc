@@ -1,5 +1,9 @@
-﻿Build started 2014/7/29 13:13:03.
+﻿生成启动时间为 2015/8/13 21:53:20。
+     1>项目“E:\workspace3\rpc_client_vs_project\rpc_client_vs_project\CaseRun\CaseRun.vcxproj”在节点 2 上(clean 个目标)。
+     1>_PrepareForClean:
+         正在删除文件“Debug\RpcClient.lastbuildstate”。
+     1>已完成生成项目“E:\workspace3\rpc_client_vs_project\rpc_client_vs_project\CaseRun\CaseRun.vcxproj”(clean 个目标)的操作。
 
-Build succeeded.
+生成成功。
 
-Time Elapsed 00:00:00.00
+已用时间 00:00:00.04

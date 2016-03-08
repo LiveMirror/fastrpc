@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -36,6 +36,11 @@ import com.google.protobuf.UnittestLite.TestAllExtensionsLite;
 import com.google.protobuf.UnittestLite.TestNestedExtensionLite;
 
 import junit.framework.TestCase;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Test lite runtime.
@@ -112,5 +117,45 @@ public class LiteTest extends TestCase {
         UnittestLite.optionalNestedEnumExtensionLite));
     assertEquals(7, message2.getExtension(
         UnittestLite.optionalNestedMessageExtensionLite).getBb());
+  }
+
+  public void testSerialize() throws Exception {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    TestAllTypesLite expected =
+      TestAllTypesLite.newBuilder()
+                      .setOptionalInt32(123)
+                      .addRepeatedString("hello")
+                      .setOptionalNestedMessage(
+                          TestAllTypesLite.NestedMessage.newBuilder().setBb(7))
+                      .build();
+    ObjectOutputStream out = new ObjectOutputStream(baos);
+    try {
+      out.writeObject(expected);
+    } finally {
+      out.close();
+    }
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ObjectInputStream in = new ObjectInputStream(bais);
+    TestAllTypesLite actual = (TestAllTypesLite) in.readObject();
+    assertEquals(expected.getOptionalInt32(), actual.getOptionalInt32());
+    assertEquals(expected.getRepeatedStringCount(),
+        actual.getRepeatedStringCount());
+    assertEquals(expected.getRepeatedString(0),
+        actual.getRepeatedString(0));
+    assertEquals(expected.getOptionalNestedMessage().getBb(),
+        actual.getOptionalNestedMessage().getBb());
+  }
+  
+  public void testClone() {
+    TestAllTypesLite.Builder expected = TestAllTypesLite.newBuilder()
+        .setOptionalInt32(123);
+   assertEquals(
+       expected.getOptionalInt32(), expected.clone().getOptionalInt32());
+   
+   TestAllExtensionsLite.Builder expected2 = TestAllExtensionsLite.newBuilder()
+       .setExtension(UnittestLite.optionalInt32ExtensionLite, 123);
+   assertEquals(
+       expected2.getExtension(UnittestLite.optionalInt32ExtensionLite),
+       expected2.clone().getExtension(UnittestLite.optionalInt32ExtensionLite));
   }
 }

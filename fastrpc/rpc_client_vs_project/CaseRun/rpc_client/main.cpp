@@ -25,8 +25,6 @@
 
 #include "pbext.h"
 #include "xcore_atomic.h"
-#include "codeconverter.h"
-#include "scopelocale.h"
 
 using std::map;
 
@@ -84,7 +82,7 @@ int main(int argc, char *argv[]) {
 	Test test;
     ::google::protobuf::RpcChannel* client;
     echo::EchoService_Stub::Stub* stub;
-    client = new RpcClient(2, "192.168.1.13", 8999, 5000); // 1:并发sock数 2:host 3:ip 4:超时时间
+    client = new RpcClient(2, "10.12.16.178", 8998, 5000); // 1:并发sock数 2:host 3:ip 4:超时时间
 	if (!((RpcClient*)client)->IsConnected()) {
 		delete client;
 		exit(0);
@@ -99,23 +97,23 @@ int main(int argc, char *argv[]) {
 	}
     stub = new echo::EchoService_Stub::Stub(client);
 
-    for (int i =0; i < 5; ++i) {
-        echo::EchoRequest* request = new echo::EchoRequest();
-        request->set_message("client_hello");
-        echo::EchoResponse* response = new echo::EchoResponse();
-        ::google::protobuf::Closure* callback_callback = NULL; // 可以递归无限回调
-        ::google::protobuf::Closure *callback = pbext::NewCallback(&test,
-			                                                       &Test::echo_done,
-                                                                   request,
-                                                                   response,
-                                                                   callback_callback);
-		//::google::protobuf::Closure *callback = pbext::NewCallback(&echo_done,
-		//	request,
-		//	response,
-		//	callback_callback);
+  //  for (int i =0; i < 5; ++i) {
+  //      echo::EchoRequest* request = new echo::EchoRequest();
+  //      request->set_message("client_hello");
+  //      echo::EchoResponse* response = new echo::EchoResponse();
+  //      ::google::protobuf::Closure* callback_callback = NULL; // 可以递归无限回调
+  //      ::google::protobuf::Closure *callback = pbext::NewCallback(&test,
+		//	                                                       &Test::echo_done,
+  //                                                                 request,
+  //                                                                 response,
+  //                                                                 callback_callback);
+		////::google::protobuf::Closure *callback = pbext::NewCallback(&echo_done,
+		////	request,
+		////	response,
+		////	callback_callback);
 
-        stub->Echo(NULL, request, response, callback); // 异步, callback为空则是同步
-    }
+  //      stub->Echo(NULL, request, response, callback); // 异步, callback为空则是同步
+  //  }
 
     echo::EchoRequest req;
     req.set_message("cli hello 2");

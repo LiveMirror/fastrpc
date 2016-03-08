@@ -65,6 +65,7 @@ bool XSocket::open(int type)
 {
 	this->close();
 	m_sock = ::socket(PF_INET, type, 0);
+    this->set_nonblock(true); // add by seinathe 2016.01.06 Ä¬ÈÏ¶¼Òì²½°É
 	return (XCORE_INVALID_SOCKET != m_sock);
 }
 
@@ -76,29 +77,108 @@ bool XSocket::bind(const XSockAddr& addr)
 	return (0 == ::bind(m_sock, addr, sizeof(sockaddr)));
 }
 
+int XSocket::connect(const XSockAddr& addr, int timeout_ms)
+{
+    if (m_sock == XCORE_INVALID_SOCKET) return false;
+
+    int ret = ::connect(m_sock, addr, sizeof(sockaddr));
+    bool first = true;
+    if (ret < 0)
+    {
+        do {
+            if (!first) {
+                if (!can_send(timeout_ms)) {
+                    return -2;
+                }
+                ret = ::connect(m_sock, addr, sizeof(sockaddr));
+                if (0 == ret) return true;
+            } else {
+                first = false;
+            }
+            if (_is_can_restore())
+            {
+                continue;
+            }
+            //else if (_is_would_block())
+            else if ((EAGAIN == errno) ||
+                    (EWOULDBLOCK == errno) ||
+                    (EINPROGRESS == errno))
+            {
+                continue;
+            }
+            else if ((EALREADY == errno) ||
+                    (EISCONN == errno))
+            {
+                return 1;
+            }
+            printf("connect errno:%d\n", errno);
+            return -1;
+        } while (true);
+    }
+    return 1;
+}
+
 bool XSocket::connect(const XSockAddr& addr)
 {
-	if (m_sock == XCORE_INVALID_SOCKET) return false;
+    if (m_sock == XCORE_INVALID_SOCKET) return false;
 
-	do
-	{
-		int ret = ::connect(m_sock, addr, sizeof(sockaddr));
-		if (ret < 0)
-		{
-			if (_is_can_restore())
-			{
-				continue;
-			}
-			else if (_is_already() || _is_would_block())
-			{
-				return true;
-			}
-			return false;
-		}
-		return true;
-	} while (false);
+    int ret = ::connect(m_sock, addr, sizeof(sockaddr));
+    bool first = true;
+    if (ret < 0)
+    {
+        do {
+            if (!first) {
+                if (!can_send(20000)) {
+                    return false;
+                }
+                ret = ::connect(m_sock, addr, sizeof(sockaddr));
+                if (0 == ret) return true;
+            } else {
+                first = false;
+            }
+            if (_is_can_restore())
+            {
+                continue;
+            }
+            //else if (_is_would_block())
+            else if ((EAGAIN == errno) ||
+                    (EWOULDBLOCK == errno) ||
+                    (EINPROGRESS == errno))
+            {
+                continue;
+            }
+            else if ((EALREADY == errno) ||
+                    (EISCONN == errno))
+            {
+                return true;
+            }
+            printf("connect errno:%d\n", errno);
+            return false;
+        } while (true);
+    }
+    return true;
 
-	return false;
+	//if (m_sock == XCORE_INVALID_SOCKET) return false;
+
+	//do
+	//{
+	//	int ret = ::connect(m_sock, addr, sizeof(sockaddr));
+	//	if (ret < 0)
+	//	{
+	//		if (_is_can_restore())
+	//		{
+	//			continue;
+	//		}
+	//		else if (_is_already() || _is_would_block())
+	//		{
+	//			return true;
+	//		}
+	//		return false;
+	//	}
+	//	return true;
+	//} while (false);
+
+	//return false;
 }
 
 bool XSocket::listen(const XSockAddr& addr, int backlog)
@@ -461,6 +541,7 @@ int is_http_complete(const char* p_data, unsigned int data_len) {
     return -1;
 }
 
+
 int XSocket::recv_one_http(char*& buf, int& len,
                        char*& last_left, int& left_len,
                        char*& http_head, int timeout_ms) {
@@ -513,6 +594,20 @@ int XSocket::recv_one_http(char*& buf, int& len,
         }
     } while(recvsize < len);
     return -1;
+}
+
+int XSocket::recv_one_http(std::string& one_http, int timeout_ms) {
+    int buf_size = 1024*100;
+    char *buf = (char*)malloc(buf_size);
+    char *last_left = buf;
+    int left_len = 0;
+    char* http_head = NULL;
+    int one_len = recv_one_http(buf, buf_size, last_left, left_len, http_head, timeout_ms);
+    if (one_len > 0) {
+        one_http.assign(buf, one_len);
+    }
+    free(buf);
+    return one_len;
 }
 
 bool XSocket::mutex_close() {

@@ -19,6 +19,8 @@ class EchoServiceImpl : public echo::EchoService {
 
         response->set_response(response->response()+" add server2 echo");
 
+        printf("recv request from server1\n");
+
         //// 演示定时推送
         //RpcController* p_con = (RpcController*)controller;
         //unsigned cli_flow = p_con->_cli_flow;
@@ -111,7 +113,7 @@ int close_handler(CASyncSvr* svr, unsigned cli_flow, void* param) {
 
 int main(int argc, char *argv[])
 {
-    RpcServer server("127.0.0.1", 8998);
+    RpcServer server("127.0.0.1", 8996);
     ::google::protobuf::Service *rpc_service = new EchoServiceImpl(&server);
     server.RegiService(rpc_service);
     HttpHandler *http_handler = new MyHttpHandler();

@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// http://code.google.com/p/protobuf/
+// https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -45,6 +45,7 @@
 
 #include <zlib.h>
 
+#include <google/protobuf/stubs/common.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 
 namespace google {
@@ -98,6 +99,7 @@ class LIBPROTOBUF_EXPORT GzipInputStream : public ZeroCopyInputStream {
   void* output_buffer_;
   void* output_position_;
   size_t output_buffer_length_;
+  int64 byte_count_;
 
   int Inflate(int flush);
   void DoNextOutput(const void** data, int* size);
@@ -144,12 +146,6 @@ class LIBPROTOBUF_EXPORT GzipOutputStream : public ZeroCopyOutputStream {
       ZeroCopyOutputStream* sub_stream,
       const Options& options);
 
-  // DEPRECATED:  Use one of the above constructors instead.
-  GzipOutputStream(
-      ZeroCopyOutputStream* sub_stream,
-      Format format,
-      int buffer_size = -1) GOOGLE_ATTRIBUTE_DEPRECATED;
-
   virtual ~GzipOutputStream();
 
   // Return last error message or NULL if no error.
@@ -165,6 +161,13 @@ class LIBPROTOBUF_EXPORT GzipOutputStream : public ZeroCopyOutputStream {
   // necessary.
   // Compression may be less efficient stopping and starting around flushes.
   // Returns true if no error.
+  //
+  // Please ensure that block size is > 6. Here is an excerpt from the zlib
+  // doc that explains why:
+  //
+  // In the case of a Z_FULL_FLUSH or Z_SYNC_FLUSH, make sure that avail_out
+  // is greater than six to avoid repeated flush markers due to
+  // avail_out == 0 on return.
   bool Flush();
 
   // Writes out all data and closes the gzip stream.

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="tests"
 	ProjectGUID="{4DF72760-C055-40A5-A77E-30A17E2AC2DB}"
 	RootNamespace="tests"
@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			IntermediateDirectory="$(OutDir)\$(ProjectName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -46,7 +46,7 @@
 				AdditionalOptions="/wd4244 /wd4267 /wd4018 /wd4355 /wd4800 /wd4251 /wd4996 /wd4146 /wd4305"
 				Optimization="0"
 				AdditionalIncludeDirectories="../src;.;../gtest/include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_VARIADIC_MAX=10;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -96,7 +96,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			IntermediateDirectory="$(OutDir)\$(ProjectName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -122,7 +122,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4244 /wd4267 /wd4018 /wd4355 /wd4800 /wd4251 /wd4996 /wd4146 /wd4305"
 				AdditionalIncludeDirectories="../src;.;../gtest/include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_VARIADIC_MAX=10;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\google\protobuf\unittest_import_public.pb.h"
+				>
+			</File>
+			<File
 				RelativePath=".\google\protobuf\unittest_lite_imports_nonline.pb.h"
 				>
 			</File>
@@ -243,7 +247,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\google\protobuf\io\coded_stream_unittest.cc"
+				RelativePath="..\src\google\protobuf\arenastring_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\arena_unittest.cc"
 				>
 			</File>
 			<File
@@ -251,23 +259,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\compiler\mock_code_generator.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\stubs\common_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\src\google\protobuf\compiler\cpp\cpp_bootstrap_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\compiler\cpp\cpp_unittest.cc"
 				>
 			</File>
 			<File
@@ -275,7 +267,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\google\protobuf\compiler\cpp\cpp_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\compiler\importer_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\compiler\java\java_doc_comment_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\compiler\java\java_plugin_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\compiler\mock_code_generator.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\compiler\parser_unittest.cc"
 				>
 			</File>
 			<File
@@ -291,6 +303,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\google\protobuf\drop_unknown_fields_test.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\dynamic_message_unittest.cc"
 				>
 			</File>
@@ -299,31 +315,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\testing\file.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\src\google\protobuf\generated_message_reflection_unittest.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\testing\googletest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\compiler\importer_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\message_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\stubs\once_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\compiler\parser_unittest.cc"
+				RelativePath="..\src\google\protobuf\io\coded_stream_unittest.cc"
 				>
 			</File>
 			<File
@@ -331,11 +327,63 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\google\protobuf\io\tokenizer_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\io\zero_copy_stream_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\map_field_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\map_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\map_test_util.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\message_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\no_field_presence_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\preserve_unknown_enum_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\proto3_arena_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\reflection_ops_unittest.cc"
 				>
 			</File>
 			<File
+				RelativePath="..\src\google\protobuf\repeated_field_reflection_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\repeated_field_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\common_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\once_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\stringprintf_unittest.cc"
 				>
 			</File>
 			<File
@@ -347,47 +395,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\google\protobuf\stubs\template_util_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\stubs\type_traits_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\testing\file.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\google\protobuf\testing\googletest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\google\protobuf\test_util.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\src\google\protobuf\text_format_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\google\protobuf\io\tokenizer_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_custom_options.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_embed_optimize_for.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_import.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_lite_imports_nonlite.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_mset.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_optimize_for.pb.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\google\protobuf\unittest_no_generic_services.pb.cc"
 				>
 			</File>
 			<File
@@ -399,21 +427,113 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\io\zero_copy_stream_unittest.cc"
+				RelativePath=".\google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\map_lite_unittest.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\map_proto2_unittest.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\map_unittest.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_arena.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_custom_options.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_drop_unknown_fields.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_embed_optimize_for.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_empty.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_import_lite.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_import.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_import_public_lite.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_import_public.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_lite_imports_nonlite.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_lite.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_mset.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_no_arena_import.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_no_arena.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_no_field_presence.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_no_generic_services.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_optimize_for.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_preserve_unknown_enum.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\google\protobuf\unittest_proto3_arena.pb.cc"
 				>
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\src\google\protobuf\compiler\cpp\cpp_test_bad_identifiers.proto"
+			RelativePath="..\src\google\protobuf\map_lite_unittest.proto"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Generating cpp_test_bad_identifiers.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto&#x0D;&#x0A;"
-					Outputs="google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.h;google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.cc"
+					Description="Generating map_lite_unittest.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/map_lite_unittest.proto"
+					Outputs="google\protobuf\map_lite_unittest.pb.h;google\protobuf\map_lite_unittest.pb.cc"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
@@ -421,9 +541,57 @@
 				>
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Generating cpp_test_bad_identifiers.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto&#x0D;&#x0A;"
-					Outputs="google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.h;google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.cc"
+					Description="Generating map_lite_unittest.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/map_lite_unittest.proto"
+					Outputs="google\protobuf\map_lite_unittest.pb.h;google\protobuf\map_lite_unittest.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\map_proto2_unittest.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating map_proto2_unittest.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/map_proto2_unittest.proto"
+					Outputs="google\protobuf\map_proto2_unittest.pb.h;google\protobuf\map_proto2_unittest.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating map_proto2_unittest.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/map_proto2_unittest.proto"
+					Outputs="google\protobuf\map_proto2_unittest.pb.h;google\protobuf\map_proto2_unittest.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\map_unittest.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating map_unittest.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/map_unittest.proto"
+					Outputs="google\protobuf\map_unittest.pb.h;google\protobuf\map_unittest.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating map_unittest.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/map_unittest.proto"
+					Outputs="google\protobuf\map_unittest.pb.h;google\protobuf\map_unittest.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -436,7 +604,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest.proto"
 					Outputs="google\protobuf\unittest.pb.h;google\protobuf\unittest.pb.cc"
 				/>
 			</FileConfiguration>
@@ -446,8 +614,32 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest.proto"
 					Outputs="google\protobuf\unittest.pb.h;google\protobuf\unittest.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_arena.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_arena.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_arena.proto"
+					Outputs="google\protobuf\unittest_arena.pb.h;google\protobuf\unittest_arena.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_arena.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_arena.proto"
+					Outputs="google\protobuf\unittest_arena.pb.h;google\protobuf\unittest_arena.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -460,7 +652,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_custom_options.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_custom_options.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_custom_options.proto"
 					Outputs="google\protobuf\unittest_custom_options.pb.h;google\protobuf\unittest_custom_options.pb.cc"
 				/>
 			</FileConfiguration>
@@ -470,8 +662,32 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_custom_options.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_custom_options.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_custom_options.proto"
 					Outputs="google\protobuf\unittest_custom_options.pb.h;google\protobuf\unittest_custom_options.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_drop_unknown_fields.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_drop_unknown_fields.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_drop_unknown_fields.proto"
+					Outputs="google\protobuf\unittest_drop_unknown_fields.pb.h;google\protobuf\unittest_drop_unknown_fields.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_drop_unknown_fields.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_drop_unknown_fields.proto"
+					Outputs="google\protobuf\unittest_drop_unknown_fields.pb.h;google\protobuf\unittest_drop_unknown_fields.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -484,7 +700,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_embed_optimize_for.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_embed_optimize_for.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_embed_optimize_for.proto"
 					Outputs="google\protobuf\unittest_embed_optimize_for.pb.h;google\protobuf\unittest_embed_optimize_for.pb.cc"
 				/>
 			</FileConfiguration>
@@ -494,8 +710,56 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_embed_optimize_for.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_embed_optimize_for.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_embed_optimize_for.proto"
 					Outputs="google\protobuf\unittest_embed_optimize_for.pb.h;google\protobuf\unittest_embed_optimize_for.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_empty.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_empty.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_empty.proto"
+					Outputs="google\protobuf\unittest_empty.pb.h;google\protobuf\unittest_empty.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_empty.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_empty.proto"
+					Outputs="google\protobuf\unittest_empty.pb.h;google\protobuf\unittest_empty.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_import_lite.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_import_lite.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import_lite.proto"
+					Outputs="google\protobuf\unittest_import_lite.pb.h;google\protobuf\unittest_import_lite.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_import_lite.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import_lite.proto"
+					Outputs="google\protobuf\unittest_import_lite.pb.h;google\protobuf\unittest_import_lite.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -508,7 +772,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_import.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import.proto"
 					Outputs="google\protobuf\unittest_import.pb.h;google\protobuf\unittest_import.pb.cc"
 				/>
 			</FileConfiguration>
@@ -518,8 +782,56 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_import.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import.proto"
 					Outputs="google\protobuf\unittest_import.pb.h;google\protobuf\unittest_import.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_import_public_lite.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_import_public_lite.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import_public_lite.proto"
+					Outputs="google\protobuf\unittest_import_public_lite.pb.h;google\protobuf\unittest_import_public_lite.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_import_public_lite.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import_public_lite.proto"
+					Outputs="google\protobuf\unittest_import_public_lite.pb.h;google\protobuf\unittest_import_public_lite.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_import_public.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_import_public.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import_public.proto"
+					Outputs="google\protobuf\unittest_import_public.pb.h;google\protobuf\unittest_import_public.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_import_public.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_import_public.proto"
+					Outputs="google\protobuf\unittest_import_public.pb.h;google\protobuf\unittest_import_public.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -532,7 +844,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_lite_imports_nonlite.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_lite_imports_nonlite.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_lite_imports_nonlite.proto"
 					Outputs="google\protobuf\unittest_lite_imports_nonlite.pb.h;google\protobuf\unittest_lite_imports_nonlite.pb.cc"
 				/>
 			</FileConfiguration>
@@ -542,8 +854,32 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_lite_imports_nonlite.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_lite_imports_nonlite.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_lite_imports_nonlite.proto"
 					Outputs="google\protobuf\unittest_lite_imports_nonlite.pb.h;google\protobuf\unittest_lite_imports_nonlite.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_lite.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_lite.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_lite.proto"
+					Outputs="google\protobuf\unittest_lite.pb.h;google\protobuf\unittest_lite.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_lite.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_lite.proto"
+					Outputs="google\protobuf\unittest_lite.pb.h;google\protobuf\unittest_lite.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -556,7 +892,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_mset.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_mset.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_mset.proto"
 					Outputs="google\protobuf\unittest_mset.pb.h;google\protobuf\unittest_mset.pb.cc"
 				/>
 			</FileConfiguration>
@@ -566,22 +902,22 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_mset.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_mset.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_mset.proto"
 					Outputs="google\protobuf\unittest_mset.pb.h;google\protobuf\unittest_mset.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
 		<File
-			RelativePath="..\src\google\protobuf\unittest_optimize_for.proto"
+			RelativePath="..\src\google\protobuf\unittest_no_arena_import.proto"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Generating unittest_optimize_for.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_optimize_for.proto&#x0D;&#x0A;"
-					Outputs="google\protobuf\unittest_optimize_for.pb.h;google\protobuf\unittest_optimize_for.pb.cc"
+					Description="Generating unittest_no_arena_import.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_arena_import.proto"
+					Outputs="google\protobuf\unittest_no_arena_import.pb.h;google\protobuf\unittest_no_arena_import.pb.cc"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
@@ -589,9 +925,57 @@
 				>
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Generating unittest_optimize_for.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_optimize_for.proto&#x0D;&#x0A;"
-					Outputs="google\protobuf\unittest_optimize_for.pb.h;google\protobuf\unittest_optimize_for.pb.cc"
+					Description="Generating unittest_no_arena_import.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_arena_import.proto"
+					Outputs="google\protobuf\unittest_no_arena_import.pb.h;google\protobuf\unittest_no_arena_import.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_no_arena.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_no_arena.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_arena.proto"
+					Outputs="google\protobuf\unittest_no_arena.pb.h;google\protobuf\unittest_no_arena.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_no_arena.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_arena.proto"
+					Outputs="google\protobuf\unittest_no_arena.pb.h;google\protobuf\unittest_no_arena.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_no_field_presence.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_no_field_presence.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_field_presence.proto"
+					Outputs="google\protobuf\unittest_no_field_presence.pb.h;google\protobuf\unittest_no_field_presence.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_no_field_presence.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_field_presence.proto"
+					Outputs="google\protobuf\unittest_no_field_presence.pb.h;google\protobuf\unittest_no_field_presence.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>
@@ -604,7 +988,7 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_no_generic_services.pb.{h,cc}..."
-					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_generic_services.proto&#x0D;&#x0A;"
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_generic_services.proto"
 					Outputs="google\protobuf\unittest_no_generic_services.pb.h;google\protobuf\unittest_no_generic_services.pb.cc"
 				/>
 			</FileConfiguration>
@@ -614,8 +998,104 @@
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Generating unittest_no_generic_services.pb.{h,cc}..."
-					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_generic_services.proto&#x0D;&#x0A;"
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_no_generic_services.proto"
 					Outputs="google\protobuf\unittest_no_generic_services.pb.h;google\protobuf\unittest_no_generic_services.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_optimize_for.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_optimize_for.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_optimize_for.proto"
+					Outputs="google\protobuf\unittest_optimize_for.pb.h;google\protobuf\unittest_optimize_for.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_optimize_for.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_optimize_for.proto"
+					Outputs="google\protobuf\unittest_optimize_for.pb.h;google\protobuf\unittest_optimize_for.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_preserve_unknown_enum.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_preserve_unknown_enum.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_preserve_unknown_enum.proto"
+					Outputs="google\protobuf\unittest_preserve_unknown_enum.pb.h;google\protobuf\unittest_preserve_unknown_enum.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_preserve_unknown_enum.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_preserve_unknown_enum.proto"
+					Outputs="google\protobuf\unittest_preserve_unknown_enum.pb.h;google\protobuf\unittest_preserve_unknown_enum.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\unittest_proto3_arena.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_proto3_arena.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_proto3_arena.proto"
+					Outputs="google\protobuf\unittest_proto3_arena.pb.h;google\protobuf\unittest_proto3_arena.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating unittest_proto3_arena.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/unittest_proto3_arena.proto"
+					Outputs="google\protobuf\unittest_proto3_arena.pb.h;google\protobuf\unittest_proto3_arena.pb.cc"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\src\google\protobuf\compiler\cpp\cpp_test_bad_identifiers.proto"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating cpp_test_bad_identifiers.pb.{h,cc}..."
+					CommandLine="Debug\protoc -I../src --cpp_out=. ../src/google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto"
+					Outputs="google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.h;google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.cc"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Generating cpp_test_bad_identifiers.pb.{h,cc}..."
+					CommandLine="Release\protoc -I../src --cpp_out=. ../src/google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto"
+					Outputs="google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.h;google\protobuf\compiler\cpp\cpp_test_bad_identifiers.pb.cc"
 				/>
 			</FileConfiguration>
 		</File>

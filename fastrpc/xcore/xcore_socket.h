@@ -45,6 +45,7 @@ public:
 	bool open(int type = SOCK_STREAM);
 	bool bind(const XSockAddr& addr);
 	bool connect(const XSockAddr& addr);
+    int connect(const XSockAddr& addr, int timeout_ms);
 	bool listen(const XSockAddr& addr, int backlog = -1);
 	bool accept(XSocket &sock, XSockAddr* remote_addr = NULL);
 	bool shutdown();
@@ -81,6 +82,7 @@ public:
 	int recvfrom(void* buf, int len, XSockAddr& addr);
 	int send_n(const void* buf, int len, int timeout_ms = -1);
 	int recv_n(void* buf, int len, int timeout_ms = -1);
+    int recv_one_http(std::string& one_http, int timeout_ms);
     int recv_one_http(char*& buf, int& len,
                                char*& last_left, int& left_len,
                                char*& http_head, int timeout_ms);

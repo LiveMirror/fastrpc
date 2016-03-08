@@ -50,12 +50,13 @@ void RpcClient::SingleThreadMode(const ::google::protobuf::MethodDescriptor* met
     int croid = coroutine_running(mgr);
     ThreadCroInfo* tc_info = NULL;
     if (-1 == croid) {
-        // 说明在非主线程即线程池中调用
         tc_info = TPMgr::GetThreadCroInfo();
-        assert(NULL != tc_info);
-        mgr = tc_info->cro_mgr;
-        croid = coroutine_running(mgr);
-        assert(-1 != croid);
+        if (NULL != tc_info) {
+            // 说明在线程池中调用
+            mgr = tc_info->cro_mgr;
+            croid = coroutine_running(mgr);
+            assert(-1 != croid);
+        }
     }
 
     std::string opcode = method->full_name();
@@ -65,8 +66,7 @@ void RpcClient::SingleThreadMode(const ::google::protobuf::MethodDescriptor* met
         ::google::protobuf::Closure* syn_done = NULL;
         ::google::protobuf::Closure* cro_done = NULL;
         bool need_copy = false;
-        // 不是协程的情况(前面已经assert这一流程不再执行，暂时保留代码)
-        if (-1 == croid) {
+        if (-1 == croid) {// 同步的情况
             monitor = new Monitor();
             syn_done = ::google::protobuf::NewCallback(&FinishWait,monitor);
         } else if (NULL == tc_info) { // 主线程调用rpc 
