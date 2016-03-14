@@ -535,7 +535,12 @@ int is_http_complete(const char* p_data, unsigned int data_len) {
             return content_length + head_len;
         }
     } else {
-        // 没 Content-Length ，那就是只有头部了
+        // try find chunkend
+        char* chunk_end = find_str_begin(p_data,data_len,"\r\n0\r\n\r\n",7);
+        if (chunk_end) {
+            return (chunk_end + 7 - p_data);
+        }
+        // 那就是只有头部了
         return head_len;
     }
     return -1;
