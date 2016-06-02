@@ -4,6 +4,7 @@
 #include<strstream>
 #include<sstream>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "alloc.h"
 #include "malloc.h"

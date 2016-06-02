@@ -32,7 +32,7 @@ LIBS = $(PRO_ROOT)/http_rpc_server/librpc_server.a
 LIBS += $(PRO_ROOT)/http_rpc_client/librpc_client.a
 LIBS += $(PRO_ROOT)/svr/libasvr.a $(PRO_ROOT)/http_codec/libhttpapi.a
 LIBS += $(PRO_ROOT)/ependingpool/output/libependingpool.a
-LIBS += $(PRO_ROOT)/comm/output/libcomm.a
+#LIBS += $(PRO_ROOT)/comm/output/libcomm.a
 LIBS += $(PRO_ROOT)/protobuf/lib/libprotobuf.a
 LIBS += $(PRO_ROOT)/xcore/libxcore.a
 
