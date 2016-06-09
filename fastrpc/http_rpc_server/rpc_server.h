@@ -40,7 +40,7 @@ using namespace std;
 
 #define RPCIONUM 4
 #define RPCWORKNUM 2
-#define RPCSOCKNUM 20000
+#define RPCSOCKNUM 100000
 
 #define RPCREGI(x, y)      \
     for(int i = 0; i < x.rpc_size; ++i) {   \
