@@ -697,7 +697,6 @@ int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
     }
     if (0 == ev_fd_num) {
         printf("poll time out\n");
-        abort();
     }
     delete []id_arr;
     return ev_fd_num;
