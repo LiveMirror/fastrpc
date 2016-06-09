@@ -7,8 +7,9 @@
 #include <stdint.h>
 
 CroMgr singleton = coroutine_open();
-// 暂时一个进程就支持一个协程
-// 以后再考虑多线程，不过意义不大
+// 目前是每个线程都有协程
+// 但是只有一个主线程首先处理client消息，控制定时器、线程池调度
+// 该函数就是用来设置该线程的
 void SetCoroutineUsedByCurThread() {
     singleton->threadid = pthread_self();
 }
