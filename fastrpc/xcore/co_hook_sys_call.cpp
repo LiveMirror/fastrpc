@@ -65,7 +65,7 @@ static inline pid_t GetPid()
 	char **p = (char**)pthread_self();
 	return p ? *(pid_t*)(p + 18) : getpid();
 }
-#define MAX_HOOK_SOCK_NUM 20000
+#define MAX_HOOK_SOCK_NUM 100000
 static rpchook_t *g_rpchook_socket_fd[MAX_HOOK_SOCK_NUM] = { 0 };
 static PFMutMap wait_pf_map;
 static ClosureMap clo_map;
