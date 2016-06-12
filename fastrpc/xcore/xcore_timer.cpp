@@ -44,9 +44,11 @@ public:
     ~__TimerTask() {
         if (m_callback) {
             delete m_callback;
+            m_callback = NULL;
         }
         if (m_ptrData) {
             delete m_ptrData;
+            m_ptrData = NULL;
         }
     }
 
