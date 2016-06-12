@@ -37,8 +37,8 @@ public:
         repeat = a_repeat;
     }
     virtual ~CroTimer() {
-        if (closure)
-            delete closure;
+        //if (closure)
+        //    delete closure;
     }
     virtual void on_timer(XTimer* pTimer, uint32 id, void* ptr);
     int repeat;
