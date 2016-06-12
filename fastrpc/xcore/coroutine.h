@@ -21,9 +21,9 @@ typedef ::google::protobuf::Closure PbClosure;
 struct schedule {
     char stack[STACK_SIZE];
     ucontext_t main;
-    int nco;
-    int cap;
-    int running;
+    int64_t nco;
+    int64_t cap;
+    int64_t running;
     struct coroutine **co;
     unsigned threadid;
 };

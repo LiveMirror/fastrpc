@@ -632,10 +632,12 @@ unsigned NextNewId(unsigned& cliflow) {
     return new_id;
 }
 
-void TimeOut_Job(unsigned u_croid) {
-    printf("wait sock time out\n");
+void TimeOut_Job(unsigned u_croid, int timeout, char *istimeout) {
+    printf("wait sock time out: %d, %u\n", timeout, u_croid);
     PbClosure* clo = clo_map.Pop(u_croid);
     if (clo) RpcMgr::PutOutSideQueue(clo);
+    if (clo) printf("putoutsidequeue\n");
+    istimeout[0] = 1;
 }
 
 int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
@@ -671,13 +673,16 @@ int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
     }
     // 超时处理
     unsigned timer_id = -1;
+    char *istimeout = new char[1];
+    istimeout[0] = 0;
+
     if (timeout >= 0) {
         Closure<void>* timeout_job =
-            NewPermanentClosure(TimeOut_Job, u_croid);
+            NewPermanentClosure(TimeOut_Job, u_croid, timeout, istimeout);
         timer_id = hook_timer_mgr.AddJob(timeout, timeout_job, 1);
     }
     coroutine_yield(mgr);
-    if (timeout >= 0) {
+    if (timeout >= 0 && istimeout[0] == 0) {
         hook_timer_mgr.DelJob(timer_id);
     }
     for (nfds_t i = 0; i < nfds; ++i) {
@@ -698,6 +703,11 @@ int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
     if (0 == ev_fd_num) {
         printf("poll time out\n");
     }
+    if (istimeout[0] == 1) {
+        printf("timeout but ev_fd_num: %d\n", ev_fd_num);
+    }
+
+    delete []istimeout;
     delete []id_arr;
     return ev_fd_num;
 }

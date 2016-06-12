@@ -112,7 +112,7 @@ private:
 	typedef multimap<void*, void*> Index;
 	typedef multimap<void*, void*>::iterator IdxIter;
 	Table            m_tasks;
-	Index            m_indexs;
+	//Index            m_indexs;
 	XCritical        m_lock;
 	XCritical        m_lock_curr;
 	volatile uint32  m_curr_id;
@@ -138,7 +138,7 @@ bool XTimer::XTimerImpl::stop() {
 		delete (__TimerTask*)it->second;
 	}
 	m_tasks.clear();
-	m_indexs.clear();
+	//m_indexs.clear();
 	for (Iter it = m_tasks.begin(); it != m_tasks.end(); ++it)
 	{
 		xsem.post();
@@ -160,7 +160,7 @@ uint32 XTimer::XTimerImpl::schedule(XTimer::ICallBack* callback, uint32 interval
 
 	XLockGuard<XCritical> lock(m_lock);  // auto lock
 	m_tasks.insert(make_pair(task_->m_expires, task_));
-	if (ptr) m_indexs.insert(make_pair(ptr, task_));
+	//if (ptr) m_indexs.insert(make_pair(ptr, task_));
     xsem.post();
 	return task_->m_id;
 }
@@ -199,30 +199,30 @@ uint32 XTimer::XTimerImpl::cancel(uint32 id)
 uint32 XTimer::XTimerImpl::cancel(void* ptr)
 {
 	uint32 count = 0;
-	bool bWait = false;
-	IdxIter begin_, end_, tmp_;
-	if (ptr == NULL) return 0;
+	//bool bWait = false;
+	//IdxIter begin_, end_, tmp_;
+	//if (ptr == NULL) return 0;
 
-	m_lock.lock();  // lock
-	begin_ = m_indexs.lower_bound(ptr);
-	end_   = m_indexs.upper_bound(ptr);
-	for (tmp_ = begin_; tmp_ != end_; ++tmp_)
-	{
-		__TimerTask* task_ = (__TimerTask*)tmp_->second;
-		if (m_curr_id == task_->m_id) bWait = true;
-		ASSERT(!task_->m_del_flag);
-		task_->m_del_flag = true;
-		count++;
-	}
-	m_indexs.erase(begin_, end_);
-	m_lock.unlock();  // unlock
+	//m_lock.lock();  // lock
+	//begin_ = m_indexs.lower_bound(ptr);
+	//end_   = m_indexs.upper_bound(ptr);
+	//for (tmp_ = begin_; tmp_ != end_; ++tmp_)
+	//{
+	//	__TimerTask* task_ = (__TimerTask*)tmp_->second;
+	//	if (m_curr_id == task_->m_id) bWait = true;
+	//	ASSERT(!task_->m_del_flag);
+	//	task_->m_del_flag = true;
+	//	count++;
+	//}
+	//m_indexs.erase(begin_, end_);
+	//m_lock.unlock();  // unlock
 
-	if (bWait)
-	{
-		m_lock_curr.lock();  // wait on_timer() finished.
-		m_lock_curr.unlock();
-	}
-    xsem.post();
+	//if (bWait)
+	//{
+	//	m_lock_curr.lock();  // wait on_timer() finished.
+	//	m_lock_curr.unlock();
+	//}
+    //xsem.post();
 	return count;
 }
 
@@ -325,17 +325,17 @@ void XTimer::XTimerImpl::_adjust_front()
 
 void XTimer::XTimerImpl::_del_index(void* task, void* ptr)
 {
-	if (ptr == NULL) return;
-	IdxIter begin_ = m_indexs.lower_bound(ptr);
-	IdxIter end_   = m_indexs.upper_bound(ptr);
-	for ( ; begin_ != end_; ++begin_)
-	{
-		if (task == begin_->second)
-		{
-			m_indexs.erase(begin_);
-			break;
-		}
-	}
+	//if (ptr == NULL) return;
+	//IdxIter begin_ = m_indexs.lower_bound(ptr);
+	//IdxIter end_   = m_indexs.upper_bound(ptr);
+	//for ( ; begin_ != end_; ++begin_)
+	//{
+	//	if (task == begin_->second)
+	//	{
+	//		m_indexs.erase(begin_);
+	//		break;
+	//	}
+	//}
 	return;
 }
 

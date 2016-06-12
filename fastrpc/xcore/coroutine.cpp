@@ -92,6 +92,7 @@ coroutine_new(struct schedule *S, Closure<void>* closure) {
     if (S->nco >= S->cap) {
         int id = S->cap;
         S->co = (struct coroutine **)realloc(S->co, S->cap * 2 * sizeof(struct coroutine *));
+        printf("resize to %d\n", S->cap * 2);
         memset(S->co + S->cap , 0 , sizeof(struct coroutine *) * S->cap);
         S->co[S->cap] = co;
         S->cap *= 2;
@@ -118,6 +119,7 @@ coroutine_new(struct schedule *S, ::google::protobuf::Closure* closure) {
     if (S->nco >= S->cap) {
         int id = S->cap;
         S->co = (struct coroutine **)realloc(S->co, S->cap * 2 * sizeof(struct coroutine *));
+        printf("resize to %d\n", S->cap * 2);
         memset(S->co + S->cap , 0 , sizeof(struct coroutine *) * S->cap);
         S->co[S->cap] = co;
         S->cap *= 2;
