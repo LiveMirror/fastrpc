@@ -37,10 +37,11 @@ void DeleteAfterRun(Closure<void>* closure) {
 }
 
 void CroTimer::on_timer(XTimer* pTimer, uint32 id, void* ptr) {
+    if (NULL == closure) return;
     --repeat;
     PbClosure* cro_closure = NULL;
     if (repeat <= 0) {
-        Closure<void>* del_closure = NewPermanentClosure(DeleteAfterRun, closure);
+        Closure<void>* del_closure = NewClosure(DeleteAfterRun, closure);
         cro_closure =
             ::google::protobuf::NewCallback(&RpcMgr::RunWithCoroutine, del_closure);
         closure = NULL;

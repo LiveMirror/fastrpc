@@ -91,11 +91,11 @@ coroutine_new(struct schedule *S, Closure<void>* closure) {
     struct coroutine *co = _co_new(S, closure);
     if (S->nco >= S->cap) {
         int id = S->cap;
-        S->co = (struct coroutine **)realloc(S->co, S->cap * 2 * sizeof(struct coroutine *));
-        printf("resize to %d\n", S->cap * 2);
-        memset(S->co + S->cap , 0 , sizeof(struct coroutine *) * S->cap);
+        S->co = (struct coroutine **)realloc(S->co, (S->cap + 1024) * sizeof(struct coroutine *));
+        printf("resize to %d\n", S->cap + 1024);
+        memset(S->co + S->cap , 0 , sizeof(struct coroutine *) * 1024);
         S->co[S->cap] = co;
-        S->cap *= 2;
+        S->cap += 1024;
         ++S->nco;
         return id;
     } else {
@@ -118,11 +118,11 @@ coroutine_new(struct schedule *S, ::google::protobuf::Closure* closure) {
     struct coroutine *co = _co_new(S, closure);
     if (S->nco >= S->cap) {
         int id = S->cap;
-        S->co = (struct coroutine **)realloc(S->co, S->cap * 2 * sizeof(struct coroutine *));
-        printf("resize to %d\n", S->cap * 2);
-        memset(S->co + S->cap , 0 , sizeof(struct coroutine *) * S->cap);
+        S->co = (struct coroutine **)realloc(S->co, (S->cap + 1024) * sizeof(struct coroutine *));
+        printf("resize to %d\n", S->cap + 1024);
+        memset(S->co + S->cap , 0 , sizeof(struct coroutine *) * 1024);
         S->co[S->cap] = co;
-        S->cap *= 2;
+        S->cap += 1024;
         ++S->nco;
         return id;
     } else {

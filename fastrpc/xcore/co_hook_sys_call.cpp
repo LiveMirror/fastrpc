@@ -633,7 +633,7 @@ unsigned NextNewId(unsigned& cliflow) {
 }
 
 void TimeOut_Job(unsigned u_croid, int timeout, char *istimeout) {
-    printf("wait sock time out: %d, %u\n", timeout, u_croid);
+    //printf("wait sock time out: %d, %u\n", timeout, u_croid);
     PbClosure* clo = clo_map.Pop(u_croid);
     if (clo) RpcMgr::PutOutSideQueue(clo);
     if (clo) printf("putoutsidequeue\n");

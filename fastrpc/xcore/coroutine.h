@@ -13,7 +13,7 @@
 #include <poll.h>
 #include <google/protobuf/stubs/common.h>
 
-#define STACK_SIZE (1024*1024*8)
+#define STACK_SIZE (1024*1024*1)
 #define DEFAULT_COROUTINE 16
 
 typedef ::google::protobuf::Closure PbClosure;
