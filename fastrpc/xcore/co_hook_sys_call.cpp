@@ -845,7 +845,9 @@ void co_enable_hook_sys()
     CroMgr cro_mgr = GetCroMgr();
     int id = coroutine_running(cro_mgr);
     assert(id >= 0);
-    struct coroutine * C = cro_mgr->co[id];
+    CoMap::iterator it = cro_mgr->co_dic.find(id);
+    assert(it != cro_mgr->co_dic.end());
+    struct coroutine * C = it->second;
     C->enable_sys_hook = true;
 }
 

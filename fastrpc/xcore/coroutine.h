@@ -12,19 +12,20 @@
 #include <ucontext.h>
 #include <poll.h>
 #include <google/protobuf/stubs/common.h>
+#include <map>
 
 #define STACK_SIZE (1024*1024*1)
 #define DEFAULT_COROUTINE 16
 
 typedef ::google::protobuf::Closure PbClosure;
 
+typedef std::map<int, struct coroutine *> CoMap;
+
 struct schedule {
     char stack[STACK_SIZE];
     ucontext_t main;
-    int64_t nco;
-    int64_t cap;
     int64_t running;
-    struct coroutine **co;
+    CoMap co_dic;
     unsigned threadid;
 };
 
