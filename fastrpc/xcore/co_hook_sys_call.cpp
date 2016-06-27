@@ -633,9 +633,11 @@ unsigned NextNewId(unsigned& cliflow) {
 }
 
 void TimeOut_Job(unsigned u_croid, int timeout/*, char *istimeout*/) {
-    //printf("wait sock time out: %d, %u\n", timeout, u_croid);
     PbClosure* clo = clo_map.Pop(u_croid);
     if (clo) RpcMgr::PutOutSideQueue(clo);
+    //if (clo) {
+    //printf("wait sock time out: %d, %u\n", timeout, u_croid);
+    //}
     //istimeout[0] = 1;
 }
 
@@ -682,7 +684,7 @@ int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
     }
     coroutine_yield(mgr);
     if (timeout >= 0/* && istimeout[0] == 0*/) {
-        hook_timer_mgr.DelJob(timer_id);
+        //hook_timer_mgr.DelJob(timer_id); // 定时器不删除，在业务(TimeOut_Job)里抢资源控制不执行更高性能
     }
     for (nfds_t i = 0; i < nfds; ++i) {
         struct pollfd& sub_pollfd = fds[i];
