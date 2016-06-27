@@ -683,9 +683,9 @@ int co_poll(struct pollfd fds[], nfds_t nfds, int timeout) {
         timer_id = hook_timer_mgr.AddJob(timeout, timeout_job, 1);
     }
     coroutine_yield(mgr);
-    if (timeout >= 0/* && istimeout[0] == 0*/) {
-        //hook_timer_mgr.DelJob(timer_id); // 定时器不删除，在业务(TimeOut_Job)里抢资源控制不执行更高性能
-    }
+    //if (timeout >= 0/* && istimeout[0] == 0*/) {
+    //    hook_timer_mgr.DelJob(timer_id); // 定时器不删除，在业务(TimeOut_Job)里抢资源控制不执行更高性能
+    //}
     for (nfds_t i = 0; i < nfds; ++i) {
         struct pollfd& sub_pollfd = fds[i];
         EpollDel(sub_pollfd.fd, PollEvent2Epoll(sub_pollfd.events));

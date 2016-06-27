@@ -111,6 +111,10 @@ private:
 	typedef multimap<XTimeSpan, void*>::iterator Iter;
 	typedef multimap<void*, void*> Index;
 	typedef multimap<void*, void*>::iterator IdxIter;
+    typedef map<uint32,void*> IdDic;
+    typedef map<uint32,void*>::iterator IdDicIter;
+
+    IdDic            m_id_dic;
 	Table            m_tasks;
 	//Index            m_indexs;
 	XCritical        m_lock;
@@ -133,6 +137,7 @@ bool XTimer::XTimerImpl::stop() {
     isstop = true;
 	m_lock.lock();
 	m_lock_curr.lock();
+    m_id_dic.clear();
 	for (Iter it = m_tasks.begin(); it != m_tasks.end(); ++it)
 	{
 		delete (__TimerTask*)it->second;
@@ -160,6 +165,7 @@ uint32 XTimer::XTimerImpl::schedule(XTimer::ICallBack* callback, uint32 interval
 
 	XLockGuard<XCritical> lock(m_lock);  // auto lock
 	m_tasks.insert(make_pair(task_->m_expires, task_));
+    m_id_dic.insert(make_pair(task_->m_id,task_));
 	//if (ptr) m_indexs.insert(make_pair(ptr, task_));
     xsem.post();
 	return task_->m_id;
@@ -171,20 +177,18 @@ uint32 XTimer::XTimerImpl::cancel(uint32 id)
 	if (id == 0) return 0;
 
 	m_lock.lock();
-	for (Iter it = m_tasks.begin(); it != m_tasks.end(); ++it)
-	{
+    IdDicIter it = m_id_dic.find(id);
+    if (it != m_id_dic.end()) {
 		__TimerTask* task_ = (__TimerTask*)it->second;
-		if (task_->m_id == id)
-		{
-			if (!task_->m_del_flag)
-			{
-				_del_index(task_, task_->m_ptrData);
-				task_->m_del_flag = true;
-				count++;
-			}
-			break;
-		}
-	}
+        if (!task_->m_del_flag)
+        {
+                _del_index(task_, task_->m_ptrData);
+                task_->m_del_flag = true;
+                m_id_dic.erase(it);
+                count++;
+        }
+    }
+
 	m_lock.unlock();
 
 	if (m_curr_id == id)
@@ -269,6 +273,7 @@ bool XTimer::XTimerImpl::_once_run()
 		{
 			_del_index(task_, task_->m_ptrData);
 			m_tasks.erase(m_tasks.begin());
+            m_id_dic.erase(task_->m_id);
 			delete task_;
 			task_ = NULL;
 			bRet = true;
