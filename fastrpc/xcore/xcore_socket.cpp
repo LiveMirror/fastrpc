@@ -644,8 +644,8 @@ bool XSocket::reconnect(const XSockAddr& addr) {
 			}
 			xcore::sleep(waittime);
 			waittime *= 2;
-			if (waittime > 10000) {
-				waittime = 100;
+			if (waittime > 4000) {
+                break;
 			}
 		}
 		mutex_.unlock();

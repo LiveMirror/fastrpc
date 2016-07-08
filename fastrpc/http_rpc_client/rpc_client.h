@@ -71,10 +71,10 @@ public:
         XSocket* sock = new XSocket();
         sock->open(SOCK_STREAM);
         sock->set_nonblock(true);
-        sock->connect(XSockAddr(host, port));
+        bool bRet = sock->connect(XSockAddr(host, port));
         param->sock = sock;
         m_param = param;
-        if (!sock->can_send()) {
+        if (!bRet || !sock->can_send()) {
             printf("rpc connect to server fail.");
             sock->close();
             _is_connected = false;
@@ -121,6 +121,7 @@ public:
         CloseAll();
     }
 
+private:
     void CloseAll() {
         _is_connected = false;
         isstop = true;
@@ -170,6 +171,7 @@ public:
         timer.stop();
     }
 
+public:
     static int OutSideProcess(unsigned msec);
 
 	void RegiExtProcesser(ext_process* ext_processer, void* param) {
