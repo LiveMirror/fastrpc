@@ -24,11 +24,14 @@ public:
     static PbClosure* GetOutSideQueue(unsigned msec);
     static void RunWithCoroutine(PbClosure* closure);
     static void RunWithCoroutine(Closure<void>* closure);
+    static void AsynRunWithCoro(Closure<void>* closure);
 
     static std::deque< PbClosure* > outside_queue;
     static XSemaphore   m_recvsem;
     static XMutex       m_recvmux;
 };
+
+#define AsynRun(...) RpcMgr::AsynRunWithCoro(NewClosure(__VA_ARGS__))
 
 class CroTimer : public xcore::XTimer::ICallBack {
 public:

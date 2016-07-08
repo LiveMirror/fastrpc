@@ -31,6 +31,11 @@ void RpcMgr::RunWithCoroutine(Closure<void>* closure) {
     ProcessWithNewCro(closure);
 }
 
+void RpcMgr::AsynRunWithCoro(Closure<void>* closure) {
+    PbClosure* cro_closure = ::google::protobuf::NewCallback(&RpcMgr::RunWithCoroutine, closure);
+    RpcMgr::PutOutSideQueue(cro_closure);
+}
+
 void DeleteAfterRun(Closure<void>* closure) {
     closure->Run();
     delete closure;
